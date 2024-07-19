@@ -1,10 +1,8 @@
-<<<<<<< HEAD
 # Frontend
 
 This repository includes the frontend part for the Map Application for Networks. The aim of this website is to create an adaptable website that shows what institutions or people in different roles are engaged in or what kind of jobs they are open to. The aim is to make it easier for people to interact by marking them on the map. React and Leaflet libraries will be used in the project.
 
 # Initialization & Setup
-=======
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -75,4 +73,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
->>>>>>> Initialize project using Create React App

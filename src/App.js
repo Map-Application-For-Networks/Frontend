@@ -10,6 +10,21 @@ import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css';
 import L from 'leaflet';
 import 'leaflet.locatecontrol';
 
+//<---GLOBAL VARIABLES --->
+
+//Adjusting the coordinates that are shown when the map initialized
+var DEFAULT_LATITUDE = 40.89
+var DEFAULT_LONGITUDE =  29.37
+
+//Adjusting the zoom when the map initialized
+const DEFAULT_ZOOM = 14
+
+//Adjusting the map URL 
+const DEFULT_URL = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}" // There can be alternative map providers. See the document.
+
+//<---GLOBAL VARIABLES --->
+
+// <---FINDING THE CURRENT LOCATION --->
 function LocateControl() {
   const map = useMap();
 
@@ -35,11 +50,9 @@ function LocateControl() {
 
   return null;
 }
+// <---!FINDING THE CURRENT LOCATION --->
 
-
-var DEFAULT_LATITUDE = 40.89
-var DEFAULT_LONGITUDE =  29.37
-
+//<---ICONS--->
 const laboratoryIcon = new Icon({
   iconSize: [50,50],
   iconUrl: require("./icons/Laboratory.png"),
@@ -55,6 +68,9 @@ const sponsorCompanyIcon = new Icon({
   iconUrl: require("./icons/SponsorCompany.png"),
 });
 
+//<---!ICONS--->
+
+//<---SETTING ICONS ACCORDING TO ROLES ---> 
 const setIconForRole = (role) => {
   if (role === "Sponsor Company") 
   {
@@ -70,8 +86,9 @@ const setIconForRole = (role) => {
   } 
   
 };
+//<---!SETTING ICONS ACCORDING TO ROLES ---> 
 
-
+//<---DATA POINTS --->
 const markers = [
   {
     geocode: [41.0082, 28.9784],
@@ -148,9 +165,11 @@ const markers = [
     popUp: "Hello, I am pop up 15",
     role: "Research Facility"
   }
-];
+]; // The points can be changed and the API can be implented this part.
 
-// custom cluster icon
+//<--!DATA POINTS --->
+
+// <---!CLUSTER POINTS FUNCTIONALITY --->
 const createClusterCustomIcon = function (cluster) {
   return new divIcon({
     html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
@@ -159,14 +178,15 @@ const createClusterCustomIcon = function (cluster) {
   });
 };
 
+// <---!CLUSTER POINTS FUNCTIONALITY --->
+
+// <--- MAIN DESIGN PART --->
 function App() {
   return (
-    <MapContainer center = {[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom = {14} fullscreenControlOptions = {"left"} >
-        {/*Several maps API can be implemented. Please see the example file docs.*/}
-       
+    <MapContainer center = {[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom = {DEFAULT_ZOOM} fullscreenControlOptions = {"left"} >
         <TileLayer
           attribution='Tiles &copy; Esri'
-          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
+          url= {DEFULT_URL}
         />
         <FullscreenControl />
         <LocateControl />

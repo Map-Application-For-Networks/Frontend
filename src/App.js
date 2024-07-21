@@ -22,7 +22,7 @@ var DEFAULT_LONGITUDE =  29.37
 const DEFAULT_ZOOM = 14
 
 //Adjusting the map URL 
-const DEFULT_URL = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}" // There can be alternative map providers. See the document.
+const DEFULT_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"//"https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}" // There can be alternative map providers. See the document.
 
 //<---GLOBAL VARIABLES --->
 
@@ -248,7 +248,7 @@ function App() {
   return (
     <MapContainer center={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom={DEFAULT_ZOOM}>
       <TileLayer
-        attribution='Tiles &copy; Esri'
+        attribution='&copy; <a href="https://www.carto.com/attributions">CARTO</a>'//'Tiles &copy; Esri'
         url={DEFULT_URL}
       />
       <FullscreenControl />

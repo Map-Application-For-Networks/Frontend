@@ -18,8 +18,8 @@
 
 /* height of the container */
 .leaflet-container {
-  height: 30vh;
-  width: 50%;
+  height: 60vh;
+  width: 60%;
 
 }
 
@@ -35,3 +35,27 @@
   font-size: 1.2rem;
   box-shadow: 0 0 0px 5px rgb(79, 84, 221);
 }
+
+.leaflet-popup-content {
+  text-align: center; /* Center the text content */
+  max-width: 300px; /* Optional: to limit the width of the popup */
+}
+
+.leaflet-popup-content h2 {
+  margin-top: 0;
+}
+
+.leaflet-popup-content ul {
+  padding-left: 0;
+  list-style-type: none; /* Remove default list style */
+}
+
+.leaflet-popup-content ul li {
+  padding: 4px 0; /* Add some padding to list items */
+}
+
+.leaflet-popup-content strong {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+} 

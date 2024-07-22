@@ -1,16 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup, useMap} from "react-leaflet";
+import { MapContainer, TileLayer, Marker} from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { FullscreenControl } from "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/styles.css";
-import { Icon, divIcon, point } from "leaflet";
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css';
-import L from 'leaflet';
 import 'leaflet.locatecontrol';
-import { Tag } from "antd";
-import tastanlabImage from './icons/tastanlab.png';
+import 'leaflet-geosearch/dist/geosearch.css';
+import LocateControl from './components/LocateControl';
+import SearchControl from './components/SearchControl';
+import MapEventHandler from './components/MapEventHandler';
+import CustomPopup from './components/CustomPopup'; 
+import { setIconForRole , createClusterCustomIcon} from './iconHelper';
+
 
 //<---GLOBAL VARIABLES --->
 
@@ -22,73 +25,9 @@ var DEFAULT_LONGITUDE =  29.37
 const DEFAULT_ZOOM = 14
 
 //Adjusting the map URL 
-const DEFULT_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"//"https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}" // There can be alternative map providers. See the document.
+const DEFAULT_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"//"https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}" // There can be alternative map providers. See the document.
 
-//<---GLOBAL VARIABLES --->
-
-// <---FINDING THE CURRENT LOCATION --->
-function LocateControl() {
-  const map = useMap();
-
-  useEffect(() => {
-    // This ensures the control is only added once
-    const locator = L.control.locate({
-      position: 'topleft',
-      flyTo: true,
-      keepCurrentZoomLevel: true,
-      showPopup: true,
-      locateOptions: {
-        enableHighAccuracy: true,
-      },
-    });
-
-    locator.addTo(map);
-
-    // Cleanup function to remove the control when the component unmounts
-    return () => {
-      locator.remove();
-    };
-  }, [map]);  // Ensures effect runs only once when the map instance is available
-
-  return null;
-}
-// <---!FINDING THE CURRENT LOCATION --->
-
-//<---ICONS--->
-const laboratoryIcon = new Icon({
-  iconSize: [50,50],
-  iconUrl: require("./icons/Laboratory.png"),
-});
-
-const ResearchFacilityIcon = new Icon({
-  iconSize: [50,50],
-  iconUrl: require("./icons/ResearchFacility.png"),
-});
-
-const sponsorCompanyIcon = new Icon({
-  iconSize: [50,50],
-  iconUrl: require("./icons/SponsorCompany.png"),
-});
-
-//<---!ICONS--->
-
-//<---SETTING ICONS ACCORDING TO ROLES ---> 
-const setIconForRole = (role) => {
-  if (role === "Sponsor Company") 
-  {
-    return laboratoryIcon;
-  } 
-  else if (role === "Laboratory") 
-  {
-    return ResearchFacilityIcon;
-  } 
-  else if (role === "Research Facility") 
-  {
-    return sponsorCompanyIcon;
-  } 
-  
-};
-//<---!SETTING ICONS ACCORDING TO ROLES ---> 
+//<---!GLOBAL VARIABLES --->
 
 //<---DATA POINTS --->
 const markers = [
@@ -228,62 +167,63 @@ const markers = [
     role: "Research Facility"
   }
 ];
- // The points can be changed and the API can be implented this part.
-
+// The points can be changed and the API can be implented this part.
 //<--!DATA POINTS --->
 
-// <---!CLUSTER POINTS FUNCTIONALITY --->
-const createClusterCustomIcon = function (cluster) {
-  return new divIcon({
-    html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
-    className: "custom-marker-cluster",
-    iconSize: point(33, 33, true)
-  });
-};
-
-// <---!CLUSTER POINTS FUNCTIONALITY --->
-
-// <--- MAIN DESIGN PART --->
+// Main Design Part
 function App() {
+  const [selectedMarker, setSelectedMarker] = useState(null); // This stores the information of the clicked data point.
+  const [closedByMapClick, setClosedByMapClick] = useState(false); // This checks the pop up is closed by simply clicking the map. It prevents the error of small size screens showing the closed points. 
+
+  const handleMarkerClick = (marker) => {
+    setSelectedMarker(marker);
+    setClosedByMapClick(false);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (closedByMapClick && window.innerWidth >= 768) {
+        setSelectedMarker(null);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [closedByMapClick]);
+
   return (
     <MapContainer center={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom={DEFAULT_ZOOM}>
       <TileLayer
-        attribution='&copy; <a href="https://www.carto.com/attributions">CARTO</a>'//'Tiles &copy; Esri'
-        url={DEFULT_URL}
+        attribution='&copy; <a href="https://www.carto.com/attributions">CARTO</a>'
+        url={DEFAULT_URL}
       />
       <FullscreenControl />
       <LocateControl />
+      <SearchControl/>
+      <MapEventHandler setSelectedMarker={setSelectedMarker} setClosedByMapClick={setClosedByMapClick} />
       <MarkerClusterGroup
         chunkedLoading
         iconCreateFunction={createClusterCustomIcon}
       >
-        {/* Mapping through the markers */}
-        {
-          markers.map((marker, index) => (
-            <Marker key={index} position={marker.geocode} icon={setIconForRole(marker.role)}>
-              <Popup>
-              <img src={tastanlabImage} alt="Marker Icon" style={{ width: '300px', height: '150px' }} />
-
-                <h3>{marker.date}</h3>
-                <br></br>
-                <h2>{marker.title}</h2>
-                <p>{marker.details}</p>
-                <h2>Research Field / Topic:</h2>
-                <br></br>
-                <ul>
-                  {marker.researchFieldTopic.map((topic, idx) => (
-                    <Tag color="blue" key={idx}>{topic}</Tag>
-                  ))}
-                </ul>
-                <strong>Visitor Status: {marker.visitStatus}</strong>
-              </Popup>
-            </Marker>
-          ))
-        }
+        {markers.map((marker, index) => (
+          <Marker
+            key={index}
+            position={marker.geocode}
+            icon={setIconForRole(marker.role)}
+            eventHandlers={{
+              click: () => handleMarkerClick(marker),
+            }}
+          >
+            {selectedMarker === marker && (
+              <CustomPopup marker={selectedMarker} onClose={() => setSelectedMarker(null)} />
+            )}
+          </Marker>
+        ))}
       </MarkerClusterGroup>
     </MapContainer>
   );
 }
 
 export default App;
-

@@ -18,13 +18,14 @@
 
 /* height of the container */
 .leaflet-container {
-  height: 60vh;
-  width: 60%;
+  position: relative;
+  height: 40vh;
+  width: 33%;
 
 }
 
 .cluster-icon {
-  background-color: rgb(40, 25, 173);
+  background-color: rgb(40, 119, 251);
   height: 2em;
   width: 2em;
   color: #fff;
@@ -33,7 +34,7 @@
   justify-content: center;
   border-radius: 50%;
   font-size: 1.2rem;
-  box-shadow: 0 0 0px 5px rgb(79, 84, 221);
+  box-shadow: 0 0 0px 10px rgba(40, 117, 251, 0.572);
 }
  
 
@@ -54,7 +55,11 @@
   height: 100%;
 }
 
-
-
-
-
+.search-container {
+  position: absolute;
+  top: 10px; /* Adjust this value to set the top margin */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30%; /* Set this to half of the map container's width */
+  z-index: 1000; /* Ensure the search is above the map layers */
+}

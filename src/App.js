@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker} from "react-leaflet";
-import MarkerClusterGroup from "react-leaflet-cluster";
+import { MapContainer, TileLayer, LayersControl} from "react-leaflet";
 import { FullscreenControl } from "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/styles.css";
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css';
@@ -12,7 +11,9 @@ import LocateControl from './components/LocateControl';
 import SearchControl from './components/SearchControl';
 import MapEventHandler from './components/MapEventHandler';
 import CustomPopup from './components/CustomPopup'; 
-import { setIconForRole , createClusterCustomIcon} from './iconHelper';
+import { setIconForRole } from './iconHelper';
+import { Input } from 'antd';
+import { createOverlayControl } from './components/LayerControlUtils';
 
 
 //<---GLOBAL VARIABLES --->
@@ -27,7 +28,6 @@ const DEFAULT_ZOOM = 14
 //Adjusting the map URL 
 const DEFAULT_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"//"https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}" // There can be alternative map providers. See the document.
 
-//<---!GLOBAL VARIABLES --->
 
 //<---DATA POINTS --->
 const markers = [
@@ -167,8 +167,18 @@ const markers = [
     role: "Research Facility"
   }
 ];
+
+//This part can be devloped to automaticaly find the unique roles.
+const rolesList = ["Research Facility", "Laboratory", "Sponsor Company" ]
 // The points can be changed and the API can be implented this part.
-//<--!DATA POINTS --->
+
+
+//<---Search Feture Will Be Added when the data storage is decided--->
+//This search is for lab and researches
+const { Search } = Input;
+const onSearch = (value, _e, info) => console.log(info?.source, value);
+
+
 
 // Main Design Part
 function App() {
@@ -194,7 +204,9 @@ function App() {
   }, [closedByMapClick]);
 
   return (
+    
     <MapContainer center={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom={DEFAULT_ZOOM}>
+     
       <TileLayer
         attribution='&copy; <a href="https://www.carto.com/attributions">CARTO</a>'
         url={DEFAULT_URL}
@@ -202,26 +214,15 @@ function App() {
       <FullscreenControl />
       <LocateControl />
       <SearchControl/>
+      <Search className="search-container" placeholder="Please enter the research facility or lab name." onSearch={onSearch} enterButton />
+      <LayersControl position="bottomright" >
+      {rolesList.map((role) =>
+        createOverlayControl(role, markers, setIconForRole, handleMarkerClick, selectedMarker, setSelectedMarker, CustomPopup)
+      )}
+    </LayersControl>
+  
       <MapEventHandler setSelectedMarker={setSelectedMarker} setClosedByMapClick={setClosedByMapClick} />
-      <MarkerClusterGroup
-        chunkedLoading
-        iconCreateFunction={createClusterCustomIcon}
-      >
-        {markers.map((marker, index) => (
-          <Marker
-            key={index}
-            position={marker.geocode}
-            icon={setIconForRole(marker.role)}
-            eventHandlers={{
-              click: () => handleMarkerClick(marker),
-            }}
-          >
-            {selectedMarker === marker && (
-              <CustomPopup marker={selectedMarker} onClose={() => setSelectedMarker(null)} />
-            )}
-          </Marker>
-        ))}
-      </MarkerClusterGroup>
+     
     </MapContainer>
   );
 }

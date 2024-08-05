@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
 import './App.css';
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, LayersControl} from "react-leaflet";
@@ -12,8 +12,8 @@ import SearchControl from './components/SearchControl';
 import MapEventHandler from './components/MapEventHandler';
 import CustomPopup from './components/CustomPopup'; 
 import { setIconForRole } from './iconHelper';
-import { Input } from 'antd';
 import { createOverlayControl } from './components/LayerControlUtils';
+import SearchComponent from './components/SearchComponent';
 
 
 //<---GLOBAL VARIABLES --->
@@ -611,10 +611,6 @@ const rolesList = ["Research Facility", "Laboratory", "Sponsor Company" ]
 // The points can be changed and the API can be implented this part.
 
 
-//<---Search Feture Will Be Added when the data storage is decided--->
-//This search is for lab and researches
-const { Search } = Input;
-const onSearch = (value, _e, info) => console.log(info?.source, value);
 
 
 
@@ -622,7 +618,7 @@ const onSearch = (value, _e, info) => console.log(info?.source, value);
 function App() {
   const [selectedMarker, setSelectedMarker] = useState(null); // This stores the information of the clicked data point.
   const [closedByMapClick, setClosedByMapClick] = useState(false); // This checks the pop up is closed by simply clicking the map. It prevents the error of small size screens showing the closed points. 
-
+  
   const handleMarkerClick = (marker) => {
     setSelectedMarker(marker);
     setClosedByMapClick(false);
@@ -652,16 +648,14 @@ function App() {
       <FullscreenControl />
       <LocateControl />
       <SearchControl/>
-      <Search className="search-container" placeholder="Please enter the research facility or lab name." onSearch={onSearch} enterButton />
-      <LayersControl position="bottomright" >
-      {rolesList.map((role) =>
-        createOverlayControl(role, markers, setIconForRole, handleMarkerClick, selectedMarker, setSelectedMarker, CustomPopup)
-      )}
-    </LayersControl>
-  
+      <SearchComponent markers={markers} setSelectedMarker={setSelectedMarker} setClosedByMapClick={setClosedByMapClick} />
+        <LayersControl position="bottomright" >
+        {rolesList.map((role) =>
+          createOverlayControl(role, markers, setIconForRole, handleMarkerClick, selectedMarker, setSelectedMarker, CustomPopup)
+        )}
+        </LayersControl>
       <MapEventHandler setSelectedMarker={setSelectedMarker} setClosedByMapClick={setClosedByMapClick} />
-     
-    </MapContainer>
+    </MapContainer> 
   );
 }
 

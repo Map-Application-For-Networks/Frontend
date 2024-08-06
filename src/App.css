@@ -63,3 +63,11 @@
   width: 30%; /* Set this to half of the map container's width */
   z-index: 1000; /* Ensure the search is above the map layers */
 }
+
+.float_button {
+  z-index: 1000; /* Ensure the search is above the map layers */
+  position: absolute;
+  top: 10px; /* Adjust this value to set the top margin */
+  right: 5px;
+ 
+}

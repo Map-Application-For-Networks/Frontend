@@ -15,7 +15,7 @@ function LocateControl() {
     useEffect(() => {
       // This ensures the control is only added once
       const locator = L.control.locate({
-        position: 'topright',
+        position: 'topleft',
         flyTo: true,
         keepCurrentZoomLevel: true,
         showPopup: false,
@@ -25,6 +25,7 @@ function LocateControl() {
       });
   
       locator.addTo(map);
+      
   
       // Cleanup function to remove the control when the component unmounts
       return () => {

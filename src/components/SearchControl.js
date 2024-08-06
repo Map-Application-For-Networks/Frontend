@@ -12,7 +12,7 @@ function SearchControl() {
       const provider = new OpenStreetMapProvider();
       const searchControl = new GeoSearchControl({
         provider,
-        position: "topright",
+        position: "topleft",
         style: 'button',
         showMarker: false,
         showPopup: false,

@@ -2,7 +2,7 @@ import { useEffect, useState} from 'react';
 import './App.css';
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, LayersControl} from "react-leaflet";
-import { FullscreenControl } from "react-leaflet-fullscreen";
+import  "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/styles.css";
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css';
 import 'leaflet.locatecontrol';
@@ -14,6 +14,8 @@ import CustomPopup from './components/CustomPopup';
 import { setIconForRole } from './iconHelper';
 import { createOverlayControl } from './components/LayerControlUtils';
 import SearchComponent from './components/SearchComponent';
+import { PlusCircleOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 
 
 //<---GLOBAL VARIABLES --->
@@ -639,21 +641,24 @@ function App() {
 
   return (
     
-    <MapContainer center={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom={DEFAULT_ZOOM}>
+    <MapContainer center={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom={DEFAULT_ZOOM} fullscreenControl>
      
       <TileLayer
         attribution='&copy; <a href="https://www.carto.com/attributions">CARTO</a>'
         url={DEFAULT_URL}
       />
-      <FullscreenControl />
+      <div>
       <LocateControl />
       <SearchControl/>
+      </div>
+
       <SearchComponent markers={markers} setSelectedMarker={setSelectedMarker} setClosedByMapClick={setClosedByMapClick} />
         <LayersControl position="bottomright" >
         {rolesList.map((role) =>
           createOverlayControl(role, markers, setIconForRole, handleMarkerClick, selectedMarker, setSelectedMarker, CustomPopup)
         )}
         </LayersControl>
+        <Button type="primary" shape="circle" icon={<PlusCircleOutlined />} size={"large"} className="float_button" />
       <MapEventHandler setSelectedMarker={setSelectedMarker} setClosedByMapClick={setClosedByMapClick} />
     </MapContainer> 
   );

@@ -172,7 +172,7 @@ const markers = [
     geocode: [41.3615567, 19.7695770],
     details: "+355689016757 ksulaj@ubt.edu.al",
     title: "Prof Kapllan SULAJ Lab",
-    date: "?",
+    date: "09.02.2024",
     researchFieldTopic: ["CA21149", "CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -181,7 +181,7 @@ const markers = [
     geocode: [47.7972387, 13.0480985],
     details: `+4366280447257 nicole.meisner-kober@plus.ac.at`,
     title: "Prof Nicole MEISNER-KOBER Lab",
-    date: "?",
+    date: "11.02.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -191,7 +191,7 @@ const markers = [
     details: `+31 30 2534336 
     e.n.m.nolte@uu.nl`,
     title: "Dr Esther NOLTE-'T HOEN Lab",
-    date: "?",
+    date: "19.03.2024",
     researchFieldTopic: ["BM1202", "CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -201,7 +201,7 @@ const markers = [
     details: `+435725524501
     e.rohde@salk.at`,
     title: "Prof Eva ROHDE Lab",
-    date: "?",
+    date: "29.03.2024",
     researchFieldTopic: [ "CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -211,7 +211,7 @@ const markers = [
     details: `+38515535118
     luka.bockor@inantro.hr`,
     title: "Dr Johann FAR Lab",
-    date: "?",
+    date: "09.05.2024",
     researchFieldTopic: ["BM1202", "CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -221,7 +221,7 @@ const markers = [
     details: `+32493418445
     guysma9@gmail.com`,
     title: "Prof Guy SMAGGHER Lab",
-    date: "?",
+    date: "22.02.2024",
     researchFieldTopic: ["CA20110","FA1307","CA18111"," CA15223"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -231,7 +231,7 @@ const markers = [
     details: `+387 33 723 768
     llbilela@gmail.com`,
     title: "Prof Lada LUKIĆ BILELA Lab",
-    date: "?",
+    date: "29.07.2024",
     researchFieldTopic: ["CA20110","CA18238"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -241,7 +241,7 @@ const markers = [
     details: `+38733225727
     a.okic@ppf.unsa.ba`,
     title: "Dr Arnela OKIC Lab",
-    date: "?",
+    date: "26.06.2024",
     researchFieldTopic: ["CA20110","FA1407"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -251,7 +251,7 @@ const markers = [
     details: `+35929635411
     kkostov@abi.bg`,
     title: "Dr Kaloyan KOSTOV Lab",
-    date: "?",
+    date: "09.02.2024",
     researchFieldTopic: ["CA20110","CA18237"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -261,7 +261,7 @@ const markers = [
     details: `+38515535118
     luka.bockor@inantro.hr`,
     title: "Dr Luka BOCKOR Lab",
-    date: "?",
+    date: "10.05.2024",
     researchFieldTopic: ["CA20110","CA21165", "CA21113"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -271,7 +271,7 @@ const markers = [
     details: `+35722403124
     dfasoula@ari.moa.gov.cy`,
     title: "Dr Dionysia FASOULA Lab",
-    date: "?",
+    date: "08.04.2024",
     researchFieldTopic: ["CA20110","FA1306", "CA16212"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -281,7 +281,7 @@ const markers = [
     details: `+35722392600
     laphylac@cing.ac.cy`,
     title: "Prof Leonidas PHYLACTOU Lab",
-    date: "?",
+    date: "03.02.2024",
     researchFieldTopic: ["CA20110","CA17103", "CA15214"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -291,7 +291,7 @@ const markers = [
     details: `+420387772342
     mjanda04@prf.jcu.cz`,
     title: "Dr Martin JANDA Lab",
-    date: "?",
+    date: "27.05.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -301,7 +301,7 @@ const markers = [
     details: `+441142268345
     a.fazeli@sheffield.ac.uk`,
     title: "Prof Alireza FAZELI Lab",
-    date: "?",
+    date: "19.05.2024",
     researchFieldTopic: ["CA20110", "861","FA1201","FA0702","CA16119"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -311,7 +311,7 @@ const markers = [
     details: `+372 53855802
     ana.rebane@ut.ee`,
     title: "Prof Ana REBANE Lab",
-    date: "?",
+    date: "14.06.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -321,7 +321,7 @@ const markers = [
     details: `+33492386464
     stephanie.jaubert@inrae.fr`,
     title: "Dr Stephanie JAUBERT-POSSAMAI Lab",
-    date: "?",
+    date: "17.06.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -331,7 +331,7 @@ const markers = [
     details: `0033144322351
     lionel.navarro@ens.fr`,
     title: "Prof Lionel NAVARRO Lab",
-    date: "?",
+    date: "26.06.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -341,7 +341,7 @@ const markers = [
     details: `0049 69 6301 84158
     stefan.momma@kgu.de`,
     title: "Dr Stefan MOMMA Lab",
-    date: "?",
+    date: "21.05.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -351,7 +351,7 @@ const markers = [
     details: `+49-89-218074731
     a.weiberg@lmu.de`,
     title: "Dr Arne WEIBERG Lab",
-    date: "?",
+    date: "24.02.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -361,7 +361,7 @@ const markers = [
     details: `+30 2410231631
     nasosdal@elgo.gr`,
     title: "Dr Athanasios DALAKOURAS Lab",
-    date: "?",
+    date: "22.04.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -371,7 +371,7 @@ const markers = [
     details: `+302819394435
     kriton@imbb.forth.gr`,
     title: "Dr Kriton KALANTIDIS Lab",
-    date: "?",
+    date: "12.05.2024",
     researchFieldTopic: ["CA20110", "CA19125", "CA18111", "CA15223"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -381,7 +381,7 @@ const markers = [
     details: `+3612104416
     giricz.zoltan@med.semmelweis-univ.hu`,
     title: "Dr Yotam BAR ON Lab",
-    date: "?",
+    date: "02.04.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -391,7 +391,7 @@ const markers = [
     details: `+088943160
     neta.regev-rudzki@weizmann.ac.il`,
     title: "Dr Neta REGEV RUDZKI Lab",
-    date: "?",
+    date: "02.04.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -401,7 +401,7 @@ const markers = [
     details: `003909123865717
     riccardo.alessandro@unipa.it`,
     title: "Prof Riccardo ALESSANDRO Lab",
-    date: "?",
+    date: "11.05.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -411,7 +411,7 @@ const markers = [
     details: `+390116705969
     luisa.lanfranco@unito.it`,
     title: "Prof Luisa LANFRANCO Lab",
-    date: "?",
+    date: "17.04.2024",
     researchFieldTopic: ["CA20110", "CA22142"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -421,7 +421,7 @@ const markers = [
     details: `+3524666446188
     paul.wilmes@uni.lu`,
     title: "Dr Paul WILMES Lab",
-    date: "?",
+    date: "01.03.2024",
     researchFieldTopic: ["CA20110", "ES1103", "CA18131"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -431,7 +431,7 @@ const markers = [
     details: `+373 69154495
     victoriasacara@hotmail.com`,
     title: "Prof Victoria SACARA Lab",
-    date: "?",
+    date: "11.04.2024",
     researchFieldTopic: ["CA20110", "CA18139"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -441,7 +441,7 @@ const markers = [
     details: `+4792262994
     lene.karine.vestby@vetinst.no`,
     title: "Dr Lene Karine VESTBY Lab",
-    date: "?",
+    date: "15.05.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -461,7 +461,7 @@ const markers = [
     details: `48-77-4016010
     tadeusz.janas@uni.opole.pl`,
     title: "Prof Tadeusz JANAS Lab",
-    date: "?",
+    date: "03.02.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -471,7 +471,7 @@ const markers = [
     details: `+351 22 041 4859
     lcerqueira@fe.up.pt`,
     title: "Ms Laura CERQUEIRA Lab",
-    date: "?",
+    date: "14.05.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -481,7 +481,7 @@ const markers = [
     details: `00351936095222
     pmateratski@uevora.pt`,
     title: "Dr Patrick MATERATSKI Lab",
-    date: "?",
+    date: "17.07.2024",
     researchFieldTopic: ["CA20110", "CA21134"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -491,7 +491,7 @@ const markers = [
     details: `0040723760795
     iulia_iancu2005@yahoo.com`,
     title: "Dr Iulia Virginia IANCU Lab",
-    date: "?",
+    date: "13.07.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -501,7 +501,7 @@ const markers = [
     details: `+40731369106
     roscaadelina@gmail.com`,
     title: "Dr Adelina ROSCA Lab",
-    date: "?",
+    date: "01.02.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -511,7 +511,7 @@ const markers = [
     details: `+381638214222
     mbrkic@cpn.rs`,
     title: "Dr Marjana BRKIC Lab",
-    date: "?",
+    date: "14.07.2025",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -521,7 +521,7 @@ const markers = [
     details: `+381113976414
     dragana.nikolic@imgge.bg.ac.rs`,
     title: "Dr Dragana NIKOLIC Lab",
-    date: "?",
+    date: "10.02.2025",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -531,7 +531,7 @@ const markers = [
     details: `+38613203280
     jernej.jakse@bf.uni-lj.si`,
     title: "Dr Jernej JAKSE Lab",
-    date: "?",
+    date: "01.02.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -541,7 +541,7 @@ const markers = [
     details: `+38641720766
     veronika.kralj-iglic@fe.uni-lj.si`,
     title: "Prof Veronika KRALJ-IGLIC Lab",
-    date: "?",
+    date: "10.02.2025",
     researchFieldTopic: ["CA20110", "BM1202"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -551,7 +551,7 @@ const markers = [
     details: `0034617507167
     eruizmateos-ibis@us.es`,
     title: "Dr Ezequiel RUIZ-MATEOS Lab",
-    date: "?",
+    date: "10.12.2025",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -561,7 +561,7 @@ const markers = [
     details: `(+34) 918223789
     javier.sotillo@isciii.es`,
     title: "Dr Javier SOTILLO GALLEGO Lab",
-    date: "?",
+    date: "08.06.2025",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -571,7 +571,7 @@ const markers = [
     details: `+41 (0) 32 718 23 30
     daniel.croll@unine.ch`,
     title: "Prof Daniel CROLL Lab",
-    date: "?",
+    date: "12.12.2025",
     researchFieldTopic: ["CA20110", "FA1208", "CA19125", "CA16110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -581,7 +581,7 @@ const markers = [
     details: `+90 552 939 25 16
     elifkarlik@gmail.com`,
     title: "Dr Elif KARLIK Lab",
-    date: "?",
+    date: "17.07.2025",
     researchFieldTopic: ["CA20110", "CA21157", "CA21169"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -591,7 +591,7 @@ const markers = [
     details: `02164839883
     oznur.tastan@sabanciuniv.edu`,
     title: "Dr Oznur TASTAN Lab",
-    date: "?",
+    date: "13.06.2025",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
@@ -601,12 +601,570 @@ const markers = [
     details: `+447856192225
     cei.abreu@ed.ac.uk`,
     title: "Dr Cei ABREU-GOODGER Lab",
-    date: "?",
+    date: "01.02.2024",
     researchFieldTopic: ["CA20110"],
     visitStatus: "Pending",
     role: "Laboratory"
-  }
+  },
+   /*
+  *
+  *
+  * ********    EXTRAS   ********
+  * 
+  * 
+  */
+  {
+    geocode: [51.507351, -0.127758],
+    details: `+442071234567
+    tom.jones@kcl.ac.uk`,
+    title: "Tom Jones Research Group",
+    date: "12.03.2024",
+    researchFieldTopic: ["CA20350"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [52.520008, 13.404954],
+    details: `+493012345678
+    lisa.meyer@hu-berlin.de`,
+    title: "Lisa Meyer Lab",
+    date: "25.03.2024",
+    researchFieldTopic: ["CA20360"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [55.755825, 37.617298],
+    details: `+74951234567
+    ivan.petrov@msu.ru`,
+    title: "Ivan Petrov Research Center",
+    date: "07.04.2024",
+    researchFieldTopic: ["CA20370"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [56.9412083, -3.2053387],
+    details: `+17181234567
+    olivia.martinez@nyu.edu`,
+    title: "Olivia Martinez Lab",
+    date: "03.05.2024",
+    researchFieldTopic: ["CA20390"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [52.9412083, -3.2053387],
+    details: `+13125551234
+    emily.wilson@uchicago.edu`,
+    title: "Emily Wilson Research Center",
+    date: "16.05.2024",
+    researchFieldTopic: ["CA20400"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [48.856613, 2.352222],
+    details: `+33123456789
+    claire.martin@psl.fr`,
+    title: "Claire Martin Lab",
+    date: "11.06.2024",
+    researchFieldTopic: ["CA20420"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [46.7972387, 13.0480985],
+    details: `+14151234567
+    katie.jones@stanford.edu`,
+    title: "Katie Jones Lab",
+    date: "07.07.2024",
+    researchFieldTopic: ["CA20440"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [51.507351, -0.127758],
+    details: `+442071234567
+    james.brown@ucl.ac.uk`,
+    title: "James Brown Research Group",
+    date: "20.07.2024",
+    researchFieldTopic: ["CA20450"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [52.520008, 13.404954],
+    details: `+493012345678
+    daniel.schneider@fu-berlin.de`,
+    title: "Daniel Schneider Lab",
+    date: "02.08.2024",
+    researchFieldTopic: ["CA20460"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [55.755825, 37.617298],
+    details: `+74951234567
+    marina.koroleva@msu.ru`,
+    title: "Marina Koroleva Research Center",
+    date: "15.08.2024",
+    researchFieldTopic: ["CA20470"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [55.9412083, -2.2053387],
+    details: `+17181234567
+    mia.rodriguez@columbia.edu`,
+    title: "Mia Rodriguez Lab",
+    date: "10.09.2024",
+    researchFieldTopic: ["CA20490"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [44.8079406, 16.9761864],
+    details: `+13125551234
+    jackson.lee@uchicago.edu`,
+    title: "Jackson Lee Lab",
+    date: "23.09.2024",
+    researchFieldTopic: ["CA20500"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [47.0972387, 12.0480985],
+    details: `+14151234567
+    max.miller@berkeley.edu`,
+    title: "Max Miller Research Group",
+    date: "14.11.2024",
+    researchFieldTopic: ["CA20540"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [51.507351, -0.127758],
+    details: `+442071234567
+    sarah.walker@imperial.ac.uk`,
+    title: "Sarah Walker Lab",
+    date: "27.11.2024",
+    researchFieldTopic: ["CA20550"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [52.520008, 13.404954],
+    details: `+493012345678
+    matthias.fischer@hu-berlin.de`,
+    title: "Matthias Fischer Research Center",
+    date: "10.12.2024",
+    researchFieldTopic: ["CA20560"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [48.208174, 16.373819],
+    details: `+43123456789
+    anna.schmidt@univie.ac.at`,
+    title: "Anna Schmidt Lab",
+    date: "04.01.2025",
+    researchFieldTopic: ["CA20580"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [50.850346, 4.351721],
+    details: `+3221234567
+    mark.johnson@vub.be`,
+    title: "Mark Johnson Research Group",
+    date: "17.01.2025",
+    researchFieldTopic: ["CA20590"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [41.902782, 12.496366],
+    details: `+39061234567
+    giovanni.rossi@uniroma1.it`,
+    title: "Giovanni Rossi Research Center",
+    date: "12.02.2025",
+    researchFieldTopic: ["CA20610"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [48.135125, 11.581981],
+    details: `+49891234567
+    lena.miller@tum.de`,
+    title: "Lena Miller Lab",
+    date: "25.02.2025",
+    researchFieldTopic: ["CA20620"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [59.437007, 24.753530],
+    details: `+3721234567
+    olga.ivanova@ut.ee`,
+    title: "Olga Ivanova Lab",
+    date: "10.03.2025",
+    researchFieldTopic: ["CA20630"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [50.110924, 8.682127],
+    details: `+49691234567
+    klaus.mueller@uni-frankfurt.de`,
+    title: "Klaus Mueller Research Group",
+    date: "23.03.2025",
+    researchFieldTopic: ["CA20640"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [53.551086, 9.993682],
+    details: `+49401234567
+    elena.schneider@uni-hamburg.de`,
+    title: "Elena Schneider Lab",
+    date: "05.04.2025",
+    researchFieldTopic: ["CA20650"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [55.0412083, -3.0053387],
+    details: `+12151234567
+    jason.brown@upenn.edu`,
+    title: "Jason Brown Research Center",
+    date: "18.04.2025",
+    researchFieldTopic: ["CA20660"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [53.349805, -6.260310],
+    details: `+3531234567
+    aoife.kelly@ucd.ie`,
+    title: "Aoife Kelly Lab",
+    date: "01.05.2025",
+    researchFieldTopic: ["CA20670"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [60.169856, 24.938379],
+    details: `+35891234567
+    emilia.kuusisto@helsinki.fi`,
+    title: "Emilia Kuusisto Lab",
+    date: "27.05.2025",
+    researchFieldTopic: ["CA20690"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [55.676098, 12.568337],
+    details: `+4531234567
+    sofie.hansen@ku.dk`,
+    title: "Sofie Hansen Lab",
+    date: "22.06.2025",
+    researchFieldTopic: ["CA20710"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [60.472023, 8.468945],
+    details: `+4745123456
+    olav.nilsen@uib.no`,
+    title: "Olav Nilsen Lab",
+    date: "05.07.2025",
+    researchFieldTopic: ["CA20720"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [41.891930, 12.511330],
+    details: `+39061234567
+    isabella.ferrari@uniroma2.it`,
+    title: "Isabella Ferrari Research Group",
+    date: "18.07.2025",
+    researchFieldTopic: ["CA20730"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [48.775845, 9.182932],
+    details: `+49751234567
+    peter.schmidt@uni-tuebingen.de`,
+    title: "Peter Schmidt Lab",
+    date: "01.08.2025",
+    researchFieldTopic: ["CA20740"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [55.953251, -3.188267],
+    details: `+44123456789
+    lucy.brown@ed.ac.uk`,
+    title: "Lucy Brown Research Center",
+    date: "14.08.2025",
+    researchFieldTopic: ["CA20750"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [46.603354, 1.888334],
+    details: `+33456789012
+    louis.dupont@cnrs.fr`,
+    title: "Louis Dupont Lab",
+    date: "27.08.2025",
+    researchFieldTopic: ["CA20760"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [53.810638, -4.124180],
+    details: `+44123456789
+    sally.morgan@bangor.ac.uk`,
+    title: "Sally Morgan Research Group",
+    date: "09.09.2025",
+    researchFieldTopic: ["CA20770"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [48.208174, 16.373819],
+    details: `+43123456789
+    franziska.auer@univie.ac.at`,
+    title: "Franziska Auer Lab",
+    date: "22.09.2025",
+    researchFieldTopic: ["CA20780"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [55.755825, 37.617298],
+    details: `+74951234567
+    ivanova.svetlana@msu.ru`,
+    title: "Svetlana Ivanova Research Center",
+    date: "05.10.2025",
+    researchFieldTopic: ["CA20790"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  },
+  {
+    geocode: [50.110924, 8.682127],
+    details: `+49691234567
+    nina.schulz@uni-frankfurt.de`,
+    title: "Nina Schulz Lab",
+    date: "18.10.2025",
+    researchFieldTopic: ["CA20800"],
+    visitStatus: "Pending",
+    role: "Laboratory"
+  } ,
+  {
+    geocode: [48.208174, 16.373819],
+    details: `+43123456789
+    eva.huber@univie.ac.at`,
+    title: "Eva Huber Research Facility",
+    date: "10.01.2025",
+    researchFieldTopic: ["CA20810"],
+    visitStatus: "Pending",
+    role: "Research Facility"
+  },
+  {
+    geocode: [50.850346, 4.351721],
+    details: `+3221234567
+    arnaud.dupont@vub.be`,
+    title: "Arnaud Dupont Research Facility",
+    date: "23.01.2025",
+    researchFieldTopic: ["CA20820"],
+    visitStatus: "Pending",
+    role: "Research Facility"
+  },
+  {
+    geocode: [52.229675, 21.012230],
+    details: `+48221234567
+    jacek.kowalski@uw.edu.pl`,
+    title: "Jacek Kowalski Research Facility",
+    date: "05.02.2025",
+    researchFieldTopic: ["CA20830"],
+    visitStatus: "Pending",
+    role: "Research Facility"
+  },
+  {
+    geocode: [41.902782, 12.496366],
+    details: `+39061234567
+    giulia.martini@uniroma1.it`,
+    title: "Giulia Martini Research Facility",
+    date: "18.02.2025",
+    researchFieldTopic: ["CA20840"],
+    visitStatus: "Pending",
+    role: "Research Facility"
+  },
+  {
+    geocode: [48.135125, 11.581981],
+    details: `+49891234567
+    markus.schmidt@tum.de`,
+    title: "Markus Schmidt Research Facility",
+    date: "03.03.2025",
+    researchFieldTopic: ["CA20850"],
+    visitStatus: "Pending",
+    role: "Research Facility"
+  },
+  {
+    geocode: [59.437007, 24.753530],
+    details: `+3721234567
+    marta.peters@ut.ee`,
+    title: "Marta Peters Research Facility",
+    date: "16.03.2025",
+    researchFieldTopic: ["CA20860"],
+    visitStatus: "Pending",
+    role: "Research Facility"
+  },
+  {
+    geocode: [50.110924, 8.682127],
+    details: `+49691234567
+    johanna.fischer@uni-frankfurt.de`,
+    title: "Johanna Fischer Research Facility",
+    date: "29.03.2025",
+    researchFieldTopic: ["CA20870"],
+    visitStatus: "Pending",
+    role: "Research Facility"
+  },
+  {
+    geocode: [53.551086, 9.993682],
+    details: `+49401234567
+    hans.hansen@uni-hamburg.de`,
+    title: "Hans Hansen Research Facility",
+    date: "11.04.2025",
+    researchFieldTopic: ["CA20880"],
+    visitStatus: "Pending",
+    role: "Research Facility"
+  },
+  {
+    geocode: [53.349805, -6.260310],
+    details: `+3531234567
+    conor.byrne@ucd.ie`,
+    title: "Conor Byrne Research Facility",
+    date: "24.04.2025",
+    researchFieldTopic: ["CA20890"],
+    visitStatus: "Pending",
+    role: "Research Facility"
+  },
+  {
+    geocode: [48.856613, 2.352222],
+    details: `+33123456789
+    julien.leclerc@cnrs.fr`,
+    title: "Julien Leclerc Research Facility",
+    date: "07.05.2025",
+    researchFieldTopic: ["CA20900"],
+    visitStatus: "Pending",
+    role: "Research Facility"
+  },
+    {
+      geocode: [48.208174, 16.373819],
+      details: `+43123456789
+      sophia.martin@company.com`,
+      title: "Biogenix Molecular Biology Research",
+      date: "15.01.2025",
+      researchFieldTopic: ["CA20910"],
+      visitStatus: "Pending",
+      role: "Sponsor Company"
+    },
+    {
+      geocode: [50.850346, 4.351721],
+      details: `+3221234567
+      olivier.dupont@company.com`,
+      title: "GeneTech Genetics Research Facility",
+      date: "28.01.2025",
+      researchFieldTopic: ["CA20920"],
+      visitStatus: "Pending",
+      role: "Sponsor Company"
+    },
+    {
+      geocode: [52.229675, 21.012230],
+      details: `+48221234567
+      agata.nowak@company.com`,
+      title: "CelluLab Cellular Biology Lab",
+      date: "10.02.2025",
+      researchFieldTopic: ["CA20930"],
+      visitStatus: "Pending",
+      role: "Sponsor Company"
+    },
+    {
+      geocode: [41.902782, 12.496366],
+      details: `+39061234567
+      federico.bianchi@company.com`,
+      title: "BioFusion Biochemistry Research",
+      date: "23.02.2025",
+      researchFieldTopic: ["CA20940"],
+      visitStatus: "Pending",
+      role: "Sponsor Company"
+    },
+    {
+      geocode: [48.135125, 11.581981],
+      details: `+49891234567
+      annika.schmidt@company.com`,
+      title: "GenomeX Genomics Research Facility",
+      date: "08.03.2025",
+      researchFieldTopic: ["CA20950"],
+      visitStatus: "Pending",
+      role: "Sponsor Company"
+    },
+    {
+      geocode: [59.437007, 24.753530],
+      details: `+3721234567
+      emil.tamm@company.com`,
+      title: "MicroBio Solutions Microbiology Lab",
+      date: "21.03.2025",
+      researchFieldTopic: ["CA20960"],
+      visitStatus: "Pending",
+      role: "Sponsor Company"
+    },
+    {
+      geocode: [50.110924, 8.682127],
+      details: `+49691234567
+      lars.meyer@company.com`,
+      title: "ProTech Protein Research Facility",
+      date: "03.04.2025",
+      researchFieldTopic: ["CA20970"],
+      visitStatus: "Pending",
+      role: "Sponsor Company"
+    },
+    {
+      geocode: [53.551086, 9.993682],
+      details: `+49401234567
+      lisa.schulz@company.com`,
+      title: "SysBio Innovations Systems Biology Lab",
+      date: "17.04.2025",
+      researchFieldTopic: ["CA20980"],
+      visitStatus: "Pending",
+      role: "Sponsor Company"
+    },
+    {
+      geocode: [53.349805, -6.260310],
+      details: `+3531234567
+      patrick.doyle@company.com`,
+      title: "EvoGen Evolutionary Biology Research",
+      date: "01.05.2025",
+      researchFieldTopic: ["CA20990"],
+      visitStatus: "Pending",
+      role: "Sponsor Company"
+    },
+    {
+      geocode: [48.856613, 2.352222],
+      details: `+33123456789
+      chloe.dupuis@company.com`,
+      title: "StrucBio Structural Biology Facility",
+      date: "14.05.2025",
+      researchFieldTopic: ["CA21000"],
+      visitStatus: "Pending",
+      role: "Sponsor Company"
+    }
 ];
+
 
 //This part can be devloped to automaticaly find the unique roles.
 const rolesList = ["Research Facility", "Laboratory", "Sponsor Company" ]

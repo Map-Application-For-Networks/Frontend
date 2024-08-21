@@ -23,6 +23,7 @@
     "react-leaflet-fullscreen": "^4.1.1",
     "react-modal": "^3.16.1",
     "react-scripts": "5.0.1",
+    "react-search-autocomplete": "^8.5.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

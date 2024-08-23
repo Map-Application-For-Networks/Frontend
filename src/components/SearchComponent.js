@@ -2,7 +2,7 @@ import React from 'react';
 import { Autocomplete, TextField } from '@mui/material';
 import { useMap } from 'react-leaflet';
 
-const DEFAULT_ZOOM = 14;
+const DEFAULT_ZOOM = 20;
 
 function SearchComponent({ markers, setSelectedMarker, setClosedByMapClick }) {
   const map = useMap();
@@ -17,10 +17,15 @@ function SearchComponent({ markers, setSelectedMarker, setClosedByMapClick }) {
   const handleOnSelect = (event, value) => {
     if (value) {
       const selectedMarker = markers[value.id];
-      setSelectedMarker(selectedMarker);
-      setClosedByMapClick(false);
+      
       // Center the map on the selected marker
       map.setView(selectedMarker.geocode, DEFAULT_ZOOM);
+      map.eachLayer(layer => {
+        if (layer.getLatLng && layer.getLatLng().equals(selectedMarker.geocode)) {
+          layer.openPopup();
+        }
+      });
+      
     } else {
       console.log("No matching marker found");
     }

@@ -1,7 +1,8 @@
 import { Icon, divIcon, point } from "leaflet";
-import laboratoryIconUrl from "./icons/Laboratory.png";
-import researchFacilityIconUrl from "./icons/ResearchFacility.png";
-import sponsorCompanyIconUrl from "./icons/SponsorCompany.png";
+import laboratoryIconUrl from "../icons/Laboratory.png";
+import researchFacilityIconUrl from "../icons/ResearchFacility.png";
+import sponsorCompanyIconUrl from "../icons/SponsorCompany.png";
+
 
 //<---ICONS--->
 const laboratoryIcon = new Icon({

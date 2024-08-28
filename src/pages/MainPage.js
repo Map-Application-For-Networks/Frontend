@@ -11,9 +11,10 @@ import SearchControl from '../components/SearchControl';
 import { setIconForRole } from '../components/iconHelper';
 import { createOverlayControl } from '../components/LayerControlUtils';
 import SearchComponent from '../components/SearchComponent';
-import { PlusCircleOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Fab } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import {  processMarkers } from '../components/HelperFunctions';
+import { useNavigate } from 'react-router-dom';
 
 
 //<---GLOBAL VARIABLES --->
@@ -1173,6 +1174,12 @@ const rolesList = ["Research Facility", "Laboratory", "Sponsor Company" ]
 const processedMarkers = processMarkers(markers);
 
 const AddPage = () => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+      navigate('/blabla');
+    };
+  
   return (
     <MapContainer center={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom={DEFAULT_ZOOM} fullscreenControl>
      
@@ -1191,8 +1198,11 @@ const AddPage = () => {
           createOverlayControl(role, processedMarkers, setIconForRole )
         )}
         </LayersControl>
-        <Button type="primary" shape="circle" icon={<PlusCircleOutlined />} size={"large"} className="float_button" />
-      
+        <div className="float_button">
+            <Fab color="primary" aria-label="add"  onClick={handleClick} >
+                <AddIcon />
+            </Fab>
+        </div>
     </MapContainer> 
   );
 };

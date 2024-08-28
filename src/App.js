@@ -4,8 +4,6 @@ import MainPage from './pages/MainPage';
 import AddMarkerPage from './pages/AddMarkerPage';
 
 
-
-// Main Design Part
 function App() {
 
   return (

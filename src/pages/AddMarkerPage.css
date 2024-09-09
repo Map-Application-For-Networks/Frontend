@@ -2,7 +2,7 @@
 
 /* Set the background color for the entire page */
 html, body {
-  background-color: bisque;
+  background-color: rgb(254, 237, 217);
   margin: 0;
   padding: 0;
   height: 100%; /* Ensure the height is 100% to cover the viewport */
@@ -16,7 +16,7 @@ html, body {
   align-items: center; /* Center the content vertically */
   width: 100%;
   min-height: 100vh; /* Make sure it covers the entire viewport height */
-  background-color: bisque; /* Consistent background color */
+  background-color:  rgb(254, 237, 217);
 }
 
 /* Style the form container */
@@ -47,7 +47,13 @@ html, body {
   width: 50%;
 }
 
-/* Ensure all other elements have a transparent background */
-* {
-  background-color: transparent; /* Override any default backgrounds */
+.centered-link {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.centered-link a {
+  font-size: 18px; /* Increase font size */
+  text-align: center;
 }

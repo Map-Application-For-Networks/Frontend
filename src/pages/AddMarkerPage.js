@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
-import { TextField, Button, Divider, FormControl, InputLabel, MenuItem, Select, FormHelperText } from '@mui/material';
+import { TextField, Button, Divider, FormControl, InputLabel, MenuItem, Select, FormHelperText, Link } from '@mui/material';
 import './AddMarkerPage.css';
 import LocateControl from '../components/LocateControl';
 import SearchControl from '../components/SearchControl';
@@ -84,21 +84,21 @@ const AddPage = () => {
     // Email validation: must include @ and proper format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!institutionTitle) newErrors.institutionTitle = 'Institution title is required';
+    if (!institutionTitle) newErrors.institutionTitle = '*Institution title is required!';
     if (!email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = '*Email is required!ß';
     } else if (!emailRegex.test(email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = '*Please enter a valid email address!';
     }
     if (!phoneNumber) {
-      newErrors.phoneNumber = 'Phone number is required';
+      newErrors.phoneNumber = '*Phone number is required!';
     } else if (!phoneRegex.test(phoneNumber)) {
-      newErrors.phoneNumber = 'Phone number must include only + and digits';
+      newErrors.phoneNumber = '*Phone number must include only + and digits!';
     }
-    if (!details) newErrors.details = 'Details are required';
-    if (selectedTags.length === 0) newErrors.selectedTags = 'At least one research area must be selected';
-    if (!visitingStatus) newErrors.visitingStatus = 'Visiting status is required';
-    if (!location) newErrors.location = 'Location must be selected';
+    if (!details) newErrors.details = '*Details are required!';
+    if (selectedTags.length === 0) newErrors.selectedTags = '*At least one research area must be selected!';
+    if (!visitingStatus) newErrors.visitingStatus = '*Visiting status is required!';
+    if (!location) newErrors.location = '*Location must be selected!';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -210,10 +210,14 @@ const AddPage = () => {
           <LocationMarker setLocation={setLocation} />
         </MapContainer>
         {errors.location && <FormHelperText error>{errors.location}</FormHelperText>}
-
+        
         <div className="button-container">
           <Button variant="contained" onClick={handleClick}>Submit</Button>
           <Button variant="outlined" onClick={() => navigate('/')}>Cancel</Button>
+        </div>
+
+        <div className="centered-link">
+          <Link href="/" underline="hover">LOGIN</Link>
         </div>
       </div>
     </div>

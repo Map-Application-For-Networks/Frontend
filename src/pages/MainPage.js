@@ -1080,7 +1080,7 @@ const AddPage = () => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-      navigate('/blabla');
+      navigate('/addmarker');
     };
   
   return (

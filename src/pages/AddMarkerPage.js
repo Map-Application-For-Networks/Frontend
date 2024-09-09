@@ -4,23 +4,17 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
-import { TextField, Button, Divider } from '@mui/material';
+import { TextField, Button, Divider, FormControl, InputLabel, MenuItem, Select, FormHelperText } from '@mui/material';
 import './AddMarkerPage.css';
 import LocateControl from '../components/LocateControl';
 import SearchControl from '../components/SearchControl';
 import { useNavigate } from 'react-router-dom';
 import MultipleSelectChip from '../components/MultipleSelectChip';
-//<---GLOBAL VARIABLES --->
 
-//Adjusting the coordinates that are shown when the map initialized
-var DEFAULT_LATITUDE = 40.89
-var DEFAULT_LONGITUDE =  29.37
-
-//Adjusting the zoom when the map initialized
-const DEFAULT_ZOOM = 14
-
-//Adjusting the map URL 
-const DEFAULT_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"//"https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}" // There can be alternative map providers. See the document.
+const DEFAULT_LATITUDE = 40.89;
+const DEFAULT_LONGITUDE = 29.37;
+const DEFAULT_ZOOM = 14;
+const DEFAULT_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
 
 const defaultIcon = L.icon({
   iconUrl: markerIconPng,
@@ -70,48 +64,160 @@ const tags = ['Topic B', 'CA20440', 'Topic Z', 'Topic BD',
               'CA21000', 'Topic P', 'Topic AF', 'CA20990', 'CA20540', 'Topic V', 'CA20930', 'Topic AS', 'CA20690', 'Topic M']
 
 const AddPage = () => {
+  const [institutionTitle, setInstitutionTitle] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [details, setDetails] = useState('');
   const [location, setLocation] = useState(null);
-  const [selectedNames, setSelectedNames] = useState([]); 
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [visitingStatus, setVisitingStatus] = useState('');
+  
+  const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Phone number validation: + sign optional, digits only
+    const phoneRegex = /^\+?[0-9]*$/;
+    // Email validation: must include @ and proper format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!institutionTitle) newErrors.institutionTitle = 'Institution title is required';
+    if (!email) {
+      newErrors.email = 'Email is required';
+    } else if (!emailRegex.test(email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    if (!phoneNumber) {
+      newErrors.phoneNumber = 'Phone number is required';
+    } else if (!phoneRegex.test(phoneNumber)) {
+      newErrors.phoneNumber = 'Phone number must include only + and digits';
+    }
+    if (!details) newErrors.details = 'Details are required';
+    if (selectedTags.length === 0) newErrors.selectedTags = 'At least one research area must be selected';
+    if (!visitingStatus) newErrors.visitingStatus = 'Visiting status is required';
+    if (!location) newErrors.location = 'Location must be selected';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleClick = () => {
-    navigate('/');
+    if (validateForm()) {
+      const formData = {
+        institutionTitle,
+        email,
+        phoneNumber,
+        details,
+        location,
+        visitingStatus,
+        selectedTags,
+      };
+      console.log('Form Data Submitted:', formData);
+      // This part will be changed according to API behavior.
+      navigate('/ConfirmationPage');
+    }
+  };
+
+  const handleVisitingStatusChange = (event) => {
+    setVisitingStatus(event.target.value);
   };
 
   return (
     <div className="page-container">
       <div className="form-container">
         <Divider textAlign="left">Name of the Institue or Laboratory</Divider>
-          <TextField label="Institution Title" variant="outlined" fullWidth />
+        <TextField 
+          label="Institution Title" 
+          variant="outlined" 
+          fullWidth 
+          value={institutionTitle}
+          onChange={(e) => setInstitutionTitle(e.target.value)}
+          error={!!errors.institutionTitle}
+          helperText={errors.institutionTitle}
+        />
+
         <Divider textAlign="left">Contact Information</Divider>
-          <TextField label="Email" variant="outlined" type="email" fullWidth />
-          <TextField label="Phone Number" variant="outlined" type="tel" fullWidth />
-        <Divider textAlign="left">Details About the Laboratory </Divider>
-          <TextField label="Details" multiline maxRows={5} rows={5} variant="outlined" fullWidth />
-          <MultipleSelectChip tags={tags} selectedNames={selectedNames} setSelectedNames={setSelectedNames} />
-        <Divider textAlign="left">Location of the Institue or Laboratory</Divider>  
-          <MapContainer center={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom={DEFAULT_ZOOM} style={{ height: '400px', width: '100%' }}>
-            <TileLayer
+        <TextField 
+          label="Email" 
+          variant="outlined" 
+          type="email" 
+          fullWidth 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          error={!!errors.email}
+          helperText={errors.email}
+        />
+        <TextField 
+          label="Phone Number" 
+          variant="outlined" 
+          type="tel" 
+          fullWidth 
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          error={!!errors.phoneNumber}
+          helperText={errors.phoneNumber}
+        />
+
+        <Divider textAlign="left">Details About the Laboratory</Divider>
+        <TextField 
+          label="Details" 
+          multiline 
+          maxRows={5} 
+          rows={5} 
+          variant="outlined" 
+          fullWidth 
+          value={details}
+          onChange={(e) => setDetails(e.target.value)}
+          error={!!errors.details}
+          helperText={errors.details}
+        />
+
+        <MultipleSelectChip 
+          tags={tags} 
+          selectedTags={selectedTags} 
+          setSelectedTags={setSelectedTags} 
+        />
+        {errors.selectedTags && <FormHelperText error>{errors.selectedTags}</FormHelperText>}
+
+        <Divider textAlign="left">Visitor Status of the Facility</Divider>
+        <FormControl variant="outlined" fullWidth error={!!errors.visitingStatus}>
+          <InputLabel id="visiting-status-label">Visiting Status</InputLabel>
+          <Select
+            labelId="visiting-status-label"
+            value={visitingStatus}
+            onChange={handleVisitingStatusChange}
+            label="Visiting Status"
+          >
+            <MenuItem value="open">Open</MenuItem>
+            <MenuItem value="close">Close</MenuItem>
+          </Select>
+          {errors.visitingStatus && <FormHelperText error>{errors.visitingStatus}</FormHelperText>}
+        </FormControl>
+
+        <Divider textAlign="left">Location of the Institute or Laboratory</Divider>
+        <MapContainer center={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom={DEFAULT_ZOOM} style={{ height: '400px', width: '100%' }}>
+          <TileLayer
             attribution='&copy; <a href="https://www.carto.com/attributions">CARTO</a>'
             url={DEFAULT_URL}
           />
-            <div>
-              <LocateControl />
-              <SearchControl/>
-            </div>
-              <LocationMarker setLocation={setLocation} />
-          </MapContainer>
-
-          <div className="button-container">
-            <Button variant="contained">Submit</Button>
-            <Button variant="outlined" onClick={handleClick}>Cancel </Button>
+          <div>
+            <LocateControl />
+            <SearchControl/>
           </div>
+          <LocationMarker setLocation={setLocation} />
+        </MapContainer>
+        {errors.location && <FormHelperText error>{errors.location}</FormHelperText>}
 
+        <div className="button-container">
+          <Button variant="contained" onClick={handleClick}>Submit</Button>
+          <Button variant="outlined" onClick={() => navigate('/')}>Cancel</Button>
+        </div>
       </div>
     </div>
   );
 };
 
 export default AddPage;
-

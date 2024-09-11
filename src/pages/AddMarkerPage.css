@@ -1,22 +1,20 @@
-/* AddPage.css */
-
 /* Set the background color for the entire page */
 html, body {
-  background-color: rgb(254, 237, 217);
+  background-color: rgb(191, 218, 246);
   margin: 0;
   padding: 0;
-  height: 100%; /* Ensure the height is 100% to cover the viewport */
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  height: 100%;
+  overflow-x: hidden;
 }
 
 /* Ensure the page container covers the entire viewport */
 .page-container {
   display: flex;
   justify-content: center;
-  align-items: center; /* Center the content vertically */
+  align-items: center;
   width: 100%;
-  min-height: 100vh; /* Make sure it covers the entire viewport height */
-  background-color:  rgb(254, 237, 217);
+  min-height: 100vh;
+  background-color: rgb(191, 218, 246);
 }
 
 /* Style the form container */
@@ -24,13 +22,21 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 55%; /* Adjust the width for larger screens */
-  max-width: 600px; /* Limit the max width */
-  padding: 25px; /* Add padding for spacing */
-  background-color: aliceblue; /* Background color for the form itself */
-  border-radius: 8px; /* Rounded corners for a polished look */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-  box-sizing: border-box; /* Ensure padding is included in width/height */
+  width: 55%;
+  max-width: 600px;
+  padding: 25px;
+  background-color: aliceblue;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* Style the logo at the top of the form */
+.form-logo {
+  width: 150px;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px auto;
 }
 
 /* Style the buttons within the form */
@@ -54,6 +60,7 @@ html, body {
 }
 
 .centered-link a {
-  font-size: 18px; /* Increase font size */
+  font-size: 18px;
   text-align: center;
 }
+

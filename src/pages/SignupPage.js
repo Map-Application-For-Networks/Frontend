@@ -1,33 +1,19 @@
-import { Card, CardActions, CardContent, TextField } from "@mui/material";
-import Button from "@mui/material/Button";
-import { Typography } from "@mui/material";
-import React,{useState} from "react";
+import React, { useState } from 'react';
+import { TextField, Button, Link, Divider } from '@mui/material';
+import './SignupPage.css';
+import ExRNAIcon from '../icons/ExRNA_PATH_Logo-3.png'; 
+
 const SignupPage = () => {
-    
-    const [email, setEmail] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [name, setName] = useState('');
-    const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
 
-    const [errors, setErrors] = useState({});
-
-    const handleSignup = () => {
-        if (validate()) {
-            const formData = {
-              email,
-              phoneNumber,
-              name,
-              password
-            };
-            alert("Signup successful")
-          }
-    }
-const validate = () => {
+  const validateForm = () => {
     const newErrors = {};
 
-    // Phone number validation: + sign optional, digits only
     const phoneRegex = /^\+?[0-9]*$/;
-    // Email validation: must include @ and proper format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!name) newErrors.name = '*Name is required!';
@@ -41,103 +27,82 @@ const validate = () => {
     } else if (!phoneRegex.test(phoneNumber)) {
       newErrors.phoneNumber = '*Phone number must include only + and digits!';
     }
-    if (!password) {
-        newErrors.password = '*Password is required!';
-    }
+    if (!password) newErrors.password = '*Password is required!';
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-    return( <>
-        <Card sx={{
-            backgroundColor:"aliceblue",
-            borderRadius:"8px",
-            boxShadow:"0px 0px 10px rgba(0, 0, 0, 0.1)",
-            display: "flex",
-            flexDirection: "column",
-            padding: "20px"
-            }}>
-            <CardContent>
-            <div style={{paddingBottom: "15px"}}>
-                <Typography
-                sx={{
-                    fontSize: "27px",
-                    textAlign:"center",
-                    fontWeight:"bold",
-                }}>
-                    SIGN UP
-                </Typography>
-                </div>
-                <TextField
-                required
-                id = "name"
-                name = "name"
-                label = "Full Name"
-                fullWidth
-                variant="outlined"
-                sx={{margin:"10px"}}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                error={!!errors.name}
-                helperText={errors.name}
-                />
-                <TextField
-                required
-                id = "phoneNum"
-                name = "phoneNum"
-                label = "Phone Number"
-                fullWidth
-                variant="outlined"
-                sx={{margin:"10px"}}
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                error={!!errors.phoneNumber}
-                helperText={errors.phoneNumber}
-                />
 
-                <TextField
-                required
-                id = "email"
-                name = "email"
-                label = "Email"
-                type="email"
-                fullWidth
-                variant="outlined"
-                sx={{margin:"10px"}}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                error={!!errors.email}
-                helperText={errors.email}
-                />
+  const handleSignupClick = () => {
+    if (validateForm()) {
+      console.log('Signup successful');
+    }
+  };
 
-                <TextField
-                required
-                id = "password"
-                name = "password"
-                label = "Password"
-                type="password"
-                fullWidth
-                variant="outlined"
-                sx={{margin:"10px"}}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                error={!!errors.password}
-                helperText={errors.password}
-                />
-            </CardContent>
+  return (
+    <div className="page-container">
+      <div className="form-container">
+        <img src={ExRNAIcon} alt="ExRNA PATH Logo" className="form-logo" />
+        
+        <Divider textAlign="left">Create Your Account</Divider>
 
-            <CardActions
-            sx={{justifyContent:"center"}}>
-               <Button
-                variant="contained"
-                size="large"
-                onClick={handleSignup}> 
-                Sign up
-                </Button>
-            </CardActions>
+        <TextField
+          label="Full Name"
+          variant="outlined"
+          fullWidth
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          error={!!errors.name}
+          helperText={errors.name}
+        />
 
-        </Card>
-    </>
-    );
+        <TextField
+          label="Email"
+          variant="outlined"
+          type="email"
+          fullWidth
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          error={!!errors.email}
+          helperText={errors.email}
+        />
 
+        <TextField
+          label="Phone Number"
+          variant="outlined"
+          type="tel"
+          fullWidth
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          error={!!errors.phoneNumber}
+          helperText={errors.phoneNumber}
+        />
+
+        <TextField
+          label="Password"
+          variant="outlined"
+          type="password"
+          fullWidth
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          error={!!errors.password}
+          helperText={errors.password}
+        />
+
+        <div className="button-container">
+          <Button variant="contained" onClick={handleSignupClick}>
+            Sign Up
+          </Button>
+        </div>
+
+        <div className="centered-link">
+          <Link href="/login" underline="hover">
+            Already have an account? Log In
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 };
-export default SignupPage
+
+export default SignupPage;

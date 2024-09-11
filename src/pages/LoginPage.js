@@ -1,101 +1,84 @@
-import { Card, CardActions, CardContent, TextField, Typography } from "@mui/material";
-import Button from "@mui/material/Button";
-import React,{useState} from "react";
+import React, { useState } from 'react';
+import { TextField, Button, Link, Divider } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import './LoginPage.css';
+import ExRNAIcon from '../icons/ExRNA_PATH_Logo-3.png'; // Add the icon image (correct the path if needed)
+
 const LoginPage = () => {
-    
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    
-    const [errors, setErrors] = useState({});
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
-    const handleLogin = () => {
-        if (validate()) {
-            const formData = {
-              email,
-              password
-            };
-            alert("Login successful")
-          }
+  const validateForm = () => {
+    const newErrors = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email) {
+      newErrors.email = '*Email is required!';
+    } else if (!emailRegex.test(email)) {
+      newErrors.email = '*Please enter a valid email address!';
     }
-    const validate = () => {
-        const newErrors = {};
 
-        // Email validation: must include @ and proper format
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-        if (!email) {
-          newErrors.email = '*Email is required!';
-        } else if (!emailRegex.test(email)) {
-          newErrors.email = '*Please enter a valid email address!';
-        }
-        if (!password) {
-            newErrors.password = '*Password is required!';
-        }
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-      };
-    return( <>
-        <Card sx={{
-            backgroundColor:"aliceblue",
-            borderRadius:"8px",
-            boxShadow:"0px 0px 10px rgba(0, 0, 0, 0.1)",
-            display: "flex",
-            flexDirection: "column",
-            padding: "20px"
-            }}>
-            <CardContent>
-            <div style={{paddingBottom: "15px"}}>
-            <Typography
-                sx={{
-                    fontSize: "27px",
-                    textAlign:"center",
-                    fontWeight:"bold"
-                }}>
-                   LOG IN 
-                </Typography>
-                </div>
-                <TextField
-                required
-                id = "email"
-                name = "email"
-                label = "Email"
-                type="email"
-                fullWidth
-                variant="outlined"
-                sx={{margin:"10px"}}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                error={!!errors.email}
-                helperText={errors.email}
-                />
-                <TextField
-                required
-                id = "password"
-                name = "password"
-                label = "Password"
-                type="password"
-                fullWidth
-                variant="outlined"
-                sx={{margin:"10px"}}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                error={!!errors.password}
-                helperText={errors.password}
-                />
-            </CardContent>
-            <CardActions
-            sx={{justifyContent:"center"}}>
-               <Button
-                variant="contained"
-                onClick={handleLogin}
-                size="large"
-                > 
-                Login 
-                </Button>
-            </CardActions>
-        </Card>
-    </>
-    );
+    if (!password) {
+      newErrors.password = '*Password is required!';
+    }
 
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleLoginClick = () => {
+    if (validateForm()) {
+      console.log('Login successful');
+      navigate('/dashboard');
+    }
+  };
+
+  return (
+    <div className="page-container">
+      <div className="form-container">
+        {/* Add the logo at the top */}
+        <img src={ExRNAIcon} alt="ExRNA PATH Logo" className="form-logo" />
+
+        <Divider textAlign="left">Login to Your Account</Divider>
+
+        <TextField
+          label="Email"
+          variant="outlined"
+          type="email"
+          fullWidth
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          error={!!errors.email}
+          helperText={errors.email}
+        />
+
+        <TextField
+          label="Password"
+          variant="outlined"
+          type="password"
+          fullWidth
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          error={!!errors.password}
+          helperText={errors.password}
+        />
+
+        <div className="button-container">
+          <Button variant="contained" onClick={handleLoginClick}>
+            Login
+          </Button>
+        </div>
+
+        <div className="centered-link">
+          <Link href="/signup" underline="hover">
+            Don't have an account? Sign Up
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 };
-export default LoginPage
+
+export default LoginPage;

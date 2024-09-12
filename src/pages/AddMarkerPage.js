@@ -191,7 +191,7 @@ const AddPage = () => {
         </div>
 
         <div className="centered-link">
-          <Link href="/" underline="hover">I am the administirator!</Link>
+          <Link href="/login" underline="hover">I am the administirator!</Link>
         </div>
       </div>
     </div>

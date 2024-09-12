@@ -5,6 +5,7 @@ import AddMarkerPage from './pages/AddMarkerPage';
 import ConfimationPage from './pages/ConfirmationPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import AdminPanel from './pages/AdminPanel';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/confirmation" element ={<ConfimationPage />}> </Route>
         <Route path="/login" element={<LoginPage />}> </Route>
         <Route path="/signup" element={<SignupPage />}> </Route>
+        <Route path="/admin" element={<AdminPanel />}> </Route>
       </Routes>
     </BrowserRouter>
     

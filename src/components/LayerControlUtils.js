@@ -32,20 +32,58 @@ export function createOverlayControl(
                 icon={setIconForRole(marker.role)}
               >
                 <Popup>
-                  <div className="modal-content">
-                    <img src={tastanlabImage} alt="Marker Icon" />
-                    <h3>{marker.date}</h3>
-                    <h2>{marker.title}</h2>
-                    <p>{marker.details}</p>
-                    <h2>Research Field / Topic:</h2>
-                    <ul>
-                      {marker.researchFieldTopic.map((topic, idx) => (
-                        <Tag color="blue" key={idx}>{topic}</Tag>
-                      ))}
-                    </ul>
-                    <strong>Visitor Status: {marker.visitStatus}</strong>
-                  </div>
-                </Popup>
+                <div className="modal-content">
+                  {/* Image */}
+                  <img src={tastanlabImage} alt="Marker Icon" />
+
+                  {/* Date */}
+                  <h3>
+                    {(() => {
+                      const date = new Date(marker.date);
+                      const day = String(date.getDate()).padStart(2, '0');
+                      const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+                      const year = date.getFullYear();
+                      return `${day}/${month}/${year}`;
+                    })()}
+                  </h3>
+                  <br></br>
+                  {/* Title */}
+                  <h2>{marker.title}</h2>
+
+                  {/* Details */}
+                  <p>{marker.details}</p>
+                  <br></br>
+                  {/* Research Fields / Topics */}
+                  <h2>Research Fields / Topics:</h2>
+                  <ul>
+                    {marker.researchFieldTopic.map((topic, idx) => (
+                      <Tag color="blue" key={idx}>{topic}</Tag>
+                    ))}
+                  </ul>
+
+                  {/* Visitor Status with Colored Tag */}
+                  <br></br>
+                  <h3>
+                    Visitor Status: 
+                    <Tag 
+                      color={marker.visitStatus === 'Open' ? 'green' : 'red'} 
+                      style={{ marginLeft: '10px' }}
+                    >
+                      {marker.visitStatus}
+                    </Tag>
+                  </h3>
+
+                  {/* Divider */}
+                  <br></br>
+                  <hr />
+
+                  {/* Contact Information */}
+                  <br></br>
+                  <h2>Contact Information</h2>
+                  <p><strong>Email:</strong> <a href={`mailto:${marker.email}`}>{marker.email}</a></p>
+                  <p><strong>Phone:</strong> <a href={`tel:${marker.phone}`}>{marker.phone}</a></p>
+                </div>
+              </Popup>
               </Marker>
             ))}
         </MarkerClusterGroup>

@@ -5,8 +5,8 @@ html, body {
   padding: 0;
   height: 100%;
   overflow-x: hidden;
+  overflow-y: auto; /* Prevent vertical scrolling issues */
 }
-
 /* Ensure the page container covers the entire viewport */
 .page-container {
   display: flex;
@@ -14,10 +14,12 @@ html, body {
   align-items: center;
   width: 100%;
   min-height: 100vh;
+  padding: 20px 0; /* Add padding to avoid cutting at the top and bottom */
   background-color: rgb(191, 218, 246);
+  box-sizing: border-box;
+  overflow-y: auto; /* Allow scrolling only if the content exceeds the screen */
 }
 
-/* Style the form container */
 .form-container {
   display: flex;
   flex-direction: column;
@@ -29,7 +31,24 @@ html, body {
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
+  max-height: 80vh; /* Ensure it doesn’t exceed the viewport height */
+  overflow-y: auto; /* Allow scrolling inside the form if content exceeds height */
 }
+
+@media (max-width: 768px) {
+  .form-container {
+    width: 85%; /* Adjust width for medium screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    width: 95%; /* Make the form full-width on small screens */
+    padding: 15px; /* Reduce padding for small screens */
+    
+  }
+}
+
 
 /* Style the logo at the top of the form */
 .form-logo {

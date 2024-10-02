@@ -1,0 +1,73 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #root {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+    font-family: sans-serif;
+    color: #333;
+    background-color: rgb(191, 218, 246);
+  }
+  
+  /* height of the container */
+  .leaflet-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  
+  }
+  
+  .cluster-icon {
+    background-color: rgb(40, 119, 251);
+    height: 2em;
+    width: 2em;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0px 10px rgba(40, 117, 251, 0.572);
+  }
+   
+  
+  /* Cluster Design */
+  .custom-marker-cluster {
+    background-color: rgba(255, 165, 0, 0.6);
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 33px;
+  }
+  
+  .cluster-icon {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .search-container {
+    position: absolute;
+    top: 10px; /* Adjust this value to set the top margin */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%; /* Set this to half of the map container's width */
+    z-index: 1000; /* Ensure the search is above the map layers */
+  }
+  
+  .float_button {
+    z-index: 1000; /* Ensure the search is above the map layers */
+    position: absolute;
+    top: 10px; /* Adjust this value to set the top margin */
+    right: 5px;
+   
+  }

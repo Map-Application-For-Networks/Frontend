@@ -1,4 +1,4 @@
-import '../App.css';
+import './MainPage.css';
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, LayersControl} from "react-leaflet";
 import  "react-leaflet-fullscreen";
@@ -16,6 +16,7 @@ import AddIcon from '@mui/icons-material/Add';
 import {  processMarkers } from '../components/HelperFunctions';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import axios from 'axios'; // Import axios
 
 
 //<---GLOBAL VARIABLES --->
@@ -47,32 +48,25 @@ const AddPage = () => {
       navigate('/addmarker');
     };
 
-      // Fetch roles from API
-  useEffect(() => {
-    const fetchRoles = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/api/roles');
-        const data = await response.json();
-        const roles = data.map(role => role.roleName); 
-        setRolesList(roles);
-      } catch (error) {
-        console.error('Error fetching roles:', error);
-      }
-    };
-    fetchRoles();
-  }, []);
-
     useEffect(() => {
-      const fetchMarkers = async () => {
-        try {
-          const response = await fetch('http://localhost:3001/api/verified-markers');
-          const data = await response.json();
-          setMarkers(data);
-        } catch (error) {
+      axios.get('http://localhost:3001/api/roles')
+        .then(response => {
+          const roles = response.data.map(role => role.roleName);
+          setRolesList(roles);
+        })
+        .catch(error => {
+          console.error('Error fetching roles:', error);
+        });
+    }, []);
+    
+    useEffect(() => {
+      axios.get('http://localhost:3001/api/verified-markers')
+        .then(response => {
+          setMarkers(response.data);
+        })
+        .catch(error => {
           console.error('Error fetching markers:', error);
-        }
-      };
-      fetchMarkers();
+        });
     }, []);
 
     

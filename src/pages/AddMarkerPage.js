@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
-import { TextField, Button, Divider, FormControl, InputLabel, MenuItem, Select, FormHelperText, Link } from '@mui/material';
+import { TextField, Button, Divider, FormControl, InputLabel, MenuItem, Select, FormHelperText, Link, Container } from '@mui/material';
 import './AddMarkerPage.css';
 import LocateControl from '../components/LocateControl';
 import SearchControl from '../components/SearchControl';
 import { useNavigate } from 'react-router-dom';
 import MultipleSelectChip from '../components/MultipleSelectChip';
 import ExRNAIcon from '../icons/ExRNA_PATH_Logo-3.png'; // Import the image (correct the path if needed)
+import axios from 'axios';
 
 const DEFAULT_LATITUDE = 40.89;
 const DEFAULT_LONGITUDE = 29.37;
@@ -41,7 +42,6 @@ const LocationMarker = ({ setLocation }) => {
   );
 };
 
-const tags = ['Topic B', 'CA20440', 'Topic Z', 'Topic BD', 'CA20490', 'Topic U', 'Topic AO', 'Topic AI'];
 
 const AddPage = () => {
   const [institutionTitle, setInstitutionTitle] = useState('');
@@ -52,6 +52,8 @@ const AddPage = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [visitingStatus, setVisitingStatus] = useState('');
   const [errors, setErrors] = useState({});
+  const [tags, setTags] = useState([]); 
+  const [rolesList, setRolesList] = useState([]); 
   const navigate = useNavigate();
 
   const validateForm = () => {
@@ -75,6 +77,27 @@ const AddPage = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/api/tags')
+      .then(response => {
+        const fetchedTags = response.data.map(tag => tag.tagName);
+        setTags(fetchedTags);
+      })
+      .catch(error => console.error('Error fetching tags:', error));
+  }, []);
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/api/roles') // Adjust this URL as needed
+      .then(response => {
+        const roles = response.data.map(role => ({
+          label: role.roleName, // Assuming 'roleName' is the property you want to display
+          value: role.id // Assuming 'id' is the unique identifier for the roles
+        }));
+        setRolesList(roles);
+      })
+      .catch(error => console.error('Error fetching roles:', error));
+  }, []);
 
   const handleClick = () => {
     if (validateForm()) {
@@ -172,6 +195,7 @@ const AddPage = () => {
         </FormControl>
 
         <Divider textAlign="left">Location of the Institute or Laboratory</Divider>
+        <Container>
         <MapContainer center={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom={DEFAULT_ZOOM} style={{ height: '400px', width: '100%' }}>
           <TileLayer
             attribution='&copy; <a href="https://www.carto.com/attributions">CARTO</a>'
@@ -183,6 +207,7 @@ const AddPage = () => {
           </div>
           <LocationMarker setLocation={setLocation} />
         </MapContainer>
+        </Container>
         {errors.location && <FormHelperText error>{errors.location}</FormHelperText>}
         
         <div className="button-container">

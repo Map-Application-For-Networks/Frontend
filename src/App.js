@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter , Routes, Route} from 'react-router-dom';
 import MainPage from './pages/MainPage';
-import AddMarkerPage from './pages/AddMarkerPage';
+import AddMarkerPage from './pages/AddMarkerPage/AddMarkerPage';
 import ConfimationPage from './pages/ConfirmationPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';

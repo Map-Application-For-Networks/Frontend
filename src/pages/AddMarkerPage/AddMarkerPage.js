@@ -6,11 +6,11 @@ import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
 import { TextField, Button, Divider, FormControl, InputLabel, MenuItem, Select, FormHelperText, Link, Container } from '@mui/material';
 import './AddMarkerPage.css';
-import LocateControl from '../components/LocateControl';
-import SearchControl from '../components/SearchControl';
+import LocateControl from '../../components/LocateControl';
+import SearchControl from '../../components/SearchControl';
 import { useNavigate } from 'react-router-dom';
-import MultipleSelectChip from '../components/MultipleSelectChip';
-import ExRNAIcon from '../icons/ExRNA_PATH_Logo-3.png'; // Import the image (correct the path if needed)
+import MultipleSelectChip from '../../components/MultipleSelectChip';
+import ExRNAIcon from '../../icons/ExRNA_PATH_Logo-3.png'; // Import the image (correct the path if needed)
 import axios from 'axios';
 
 const DEFAULT_LATITUDE = 40.89;

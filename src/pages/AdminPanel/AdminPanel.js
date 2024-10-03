@@ -10,7 +10,7 @@ import RoomIcon from '@mui/icons-material/Room';
 import SettingsIcon from '@mui/icons-material/Settings';
 import TagIcon from '@mui/icons-material/Tag';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import ExRNAIcon from '../icons/ExRNA_PATH_Logo-3.png'; 
+import ExRNAIcon from '../../icons/ExRNA_PATH_Logo-3.png'; 
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonAddDisabledIcon from '@mui/icons-material/PersonAddDisabled';

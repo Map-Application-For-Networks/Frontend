@@ -6,14 +6,14 @@ import "react-leaflet-fullscreen/styles.css";
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css';
 import 'leaflet.locatecontrol';
 import 'leaflet-geosearch/dist/geosearch.css';
-import LocateControl from '../components/LocateControl';
-import SearchControl from '../components/SearchControl';
-import { setIconForRole } from '../components/iconHelper';
-import { createOverlayControl } from '../components/LayerControlUtils';
-import SearchComponent from '../components/SearchComponent';
+import LocateControl from '../../components/LocateControl';
+import SearchControl from '../../components/SearchControl';
+import { setIconForRole } from '../../components/iconHelper';
+import { createOverlayControl } from '../../components/LayerControlUtils';
+import SearchComponent from '../../components/SearchComponent';
 import { Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import {  processMarkers } from '../components/HelperFunctions';
+import {  processMarkers } from '../../components/HelperFunctions';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios'; // Import axios
@@ -30,13 +30,6 @@ const DEFAULT_ZOOM = 14
 
 //Adjusting the map URL 
 const DEFAULT_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"//"https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}" // There can be alternative map providers. See the document.
-
-
-
-
-//This part can be devloped to automaticaly find the unique roles.
-// The points can be changed and the API can be implented this part.
-
 
 
 

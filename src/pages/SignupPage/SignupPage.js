@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Link, Divider } from '@mui/material';
 import './SignupPage.css';
-import ExRNAIcon from '../icons/ExRNA_PATH_Logo-3.png'; 
+import ExRNAIcon from '../../icons/ExRNA_PATH_Logo-3.png'; 
 
 const SignupPage = () => {
   const [name, setName] = useState('');

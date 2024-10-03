@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Link, Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
-import ExRNAIcon from '../icons/ExRNA_PATH_Logo-3.png'; // Add the icon image (correct the path if needed)
+import ExRNAIcon from '../../icons/ExRNA_PATH_Logo-3.png'; // Add the icon image (correct the path if needed)
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');

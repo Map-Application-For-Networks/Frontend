@@ -17,7 +17,7 @@ const MenuProps = {
 function getStyles(tag, selectedTags, theme) {
   return {
     fontWeight:
-      selectedTags.indexOf(tag) === -1
+      selectedTags.indexOf(tag.value) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
@@ -46,17 +46,18 @@ export default function MultipleSelectChip({ tags, selectedTags, setSelectedTags
           input={<OutlinedInput label="Research Areas" />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
+              {/* Map selectedTags to find corresponding labels */}
+              {selected.map((selectedValue) => (
+                <Chip key={selectedValue} label={tags.find(tag => tag.value === selectedValue)?.label} />
               ))}
             </Box>
           )}
           MenuProps={MenuProps}
         >
           {tags.map((tag) => (
-            <MenuItem key={tag} value={tag} style={getStyles(tag, selectedTags, theme)}>
-              <Checkbox checked={selectedTags.indexOf(tag) > -1} />
-              <ListItemText primary={tag} />
+            <MenuItem key={tag.value} value={tag.value} style={getStyles(tag, selectedTags, theme)}>
+              <Checkbox checked={selectedTags.indexOf(tag.value) > -1} />
+              <ListItemText primary={tag.label} />
             </MenuItem>
           ))}
         </Select>
@@ -64,7 +65,3 @@ export default function MultipleSelectChip({ tags, selectedTags, setSelectedTags
     </div>
   );
 }
-
-  
-
-

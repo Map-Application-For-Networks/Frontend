@@ -11,7 +11,9 @@ import SearchControl from '../../components/SearchControl';
 import { useNavigate } from 'react-router-dom';
 import MultipleSelectChip from '../../components/MultipleSelectChip';
 import ExRNAIcon from '../../icons/ExRNA_PATH_Logo-3.png'; // Import the image (correct the path if needed)
+import { fetchRoles, fetchTags, validateForm } from './Helper';
 import axios from 'axios';
+
 
 const DEFAULT_LATITUDE = 40.89;
 const DEFAULT_LONGITUDE = 29.37;
@@ -50,73 +52,78 @@ const AddPage = () => {
   const [details, setDetails] = useState('');
   const [location, setLocation] = useState(null);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [role, setRole] = useState('');
   const [visitingStatus, setVisitingStatus] = useState('');
   const [errors, setErrors] = useState({});
   const [tags, setTags] = useState([]); 
   const [rolesList, setRolesList] = useState([]); 
   const navigate = useNavigate();
 
-  const validateForm = () => {
-    const newErrors = {};
+ // Fetching tags and roles
+ useEffect(() => {
+  fetchTags(setTags);
+  fetchRoles(setRolesList);
+}, []);
 
-    const phoneRegex = /^\+?[0-9]*$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const handleClick = () => {
+  // Step 1: Validate the form inputs
+  const newErrors = validateForm({
+    institutionTitle, 
+    email, 
+    phoneNumber, 
+    details, 
+    selectedTags, 
+    visitingStatus, 
+    location, 
+    role
+  });
 
-    if (!institutionTitle) newErrors.institutionTitle = '*Institution title is required!';
-    if (!email) newErrors.email = '*Email is required!';
-    else if (!emailRegex.test(email)) newErrors.email = '*Please enter a valid email address!';
+  // Step 2: If no validation errors, prepare data and submit it
+  if (Object.keys(newErrors).length === 0) {
     
-    if (!phoneNumber) newErrors.phoneNumber = '*Phone number is required!';
-    else if (!phoneRegex.test(phoneNumber)) newErrors.phoneNumber = '*Phone number must include only + and digits!';
+    const geocode = [location.lat, location.lng];
     
-    if (!details) newErrors.details = '*Details are required!';
-    if (selectedTags.length === 0) newErrors.selectedTags = '*At least one research area must be selected!';
-    if (!visitingStatus) newErrors.visitingStatus = '*Visiting status is required!';
-    if (!location) newErrors.location = '*Location must be selected!';
+    
+    const formDataForAPI = {
+      title: institutionTitle,       // API expects 'title' for institution title
+      email, 
+      phone: phoneNumber,            // API expects 'phone' for phone number
+      details,
+      geocode: geocode,             // API expects 'geocode' for location
+      visitStatus: visitingStatus,   // API expects 'visitStatus' for visiting status
+      researchFieldTopic: selectedTags,  // API expects 'researchFieldTopic' for selectedTags
+      role
+    };
 
+    console.log(formDataForAPI)
+
+    // Step 3: Send the data to the API
+    axios.post('http://localhost:3001/api/addmarker', formDataForAPI)
+      .then(response => {
+        // Successfully submitted the marker
+        console.log('Marker added successfully:', response.data);
+        // Navigate to confirmation page
+        navigate('/confirmation');
+      })
+      .catch(error => {
+        // Handle any errors during the API call
+        console.error('Error adding marker:', error);
+        console.log(location)
+      });
+  } else {
+    // If there are validation errors, set them to display on the form
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  }
+};
 
-  useEffect(() => {
-    axios.get('http://localhost:3001/api/tags')
-      .then(response => {
-        const fetchedTags = response.data.map(tag => tag.tagName);
-        setTags(fetchedTags);
-      })
-      .catch(error => console.error('Error fetching tags:', error));
-  }, []);
 
-  useEffect(() => {
-    axios.get('http://localhost:3001/api/roles') // Adjust this URL as needed
-      .then(response => {
-        const roles = response.data.map(role => ({
-          label: role.roleName, // Assuming 'roleName' is the property you want to display
-          value: role.id // Assuming 'id' is the unique identifier for the roles
-        }));
-        setRolesList(roles);
-      })
-      .catch(error => console.error('Error fetching roles:', error));
-  }, []);
-
-  const handleClick = () => {
-    if (validateForm()) {
-      const formData = {
-        institutionTitle,
-        email,
-        phoneNumber,
-        details,
-        location,
-        visitingStatus,
-        selectedTags,
-      };
-      console.log('Form Data Submitted:', formData);
-      navigate('/ConfirmationPage');
-    }
-  };
 
   const handleVisitingStatusChange = (event) => {
     setVisitingStatus(event.target.value);
+  };
+
+  const handleRoleChange = (event) => {
+    setRole(event.target.value);
   };
 
   return (
@@ -179,6 +186,24 @@ const AddPage = () => {
         />
         {errors.selectedTags && <FormHelperText error>{errors.selectedTags}</FormHelperText>}
 
+        <FormControl variant="outlined" fullWidth error={!!errors.role}>
+          <InputLabel id="role-label">Role of the Facility</InputLabel>
+          <Select
+            labelId="role-label"
+            value={role}
+            onChange={handleRoleChange }
+            label="Role of Facility"
+          >
+            {/* Dynamically rendering the rolesList */}
+            {rolesList.map((roleItem) => (
+              <MenuItem key={roleItem.value} value={roleItem.value}>
+                {roleItem.label}
+              </MenuItem>
+            ))}
+          </Select>
+          {errors.role && <FormHelperText error>{errors.role}</FormHelperText>}
+        </FormControl>
+
         <Divider textAlign="left">Visitor Status of the Facility</Divider>
         <FormControl variant="outlined" fullWidth error={!!errors.visitingStatus}>
           <InputLabel id="visiting-status-label">Visiting Status</InputLabel>
@@ -188,8 +213,8 @@ const AddPage = () => {
             onChange={handleVisitingStatusChange}
             label="Visiting Status"
           >
-            <MenuItem value="open">Open</MenuItem>
-            <MenuItem value="close">Close</MenuItem>
+            <MenuItem value="Open">Open</MenuItem>
+            <MenuItem value="Closed">Close</MenuItem>
           </Select>
           {errors.visitingStatus && <FormHelperText error>{errors.visitingStatus}</FormHelperText>}
         </FormControl>

@@ -103,7 +103,8 @@ const handleClick = () => {
         // Successfully submitted the marker
         console.log('Marker added successfully:', response.data);
         // Navigate to confirmation page
-        navigate('/confirmation');
+        console.log(response.data._id);
+        navigate('/confirmation', { state: { referenceNumber: response.data._id }});
       })
       .catch(error => {
         // Handle any errors during the API call

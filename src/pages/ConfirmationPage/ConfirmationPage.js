@@ -1,10 +1,12 @@
 import React from 'react';
 import { Box, Typography, Button, Card, CardContent, Container } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-const ConfirmationPage = ({ referenceNumber }) => {
+const ConfirmationPage = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const referenceNumber = state?.referenceNumber;
 
   const handleBackToHome = () => {
     navigate('/'); // Navigate to the homepage or any other desired route
@@ -35,7 +37,7 @@ const ConfirmationPage = ({ referenceNumber }) => {
           </Typography>
 
           <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
-            Your reference number is: <Typography component="span" color="primary">{referenceNumber}</Typography>
+            Your reference number is #<Typography component="span" color="primary">{referenceNumber}</Typography>.
           </Typography>
 
           <Button

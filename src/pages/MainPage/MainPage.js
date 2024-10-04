@@ -36,7 +36,8 @@ const DEFAULT_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.
 const AddPage = () => {
     const navigate = useNavigate();
     const [markers, setMarkers] = useState([]);
-    const [rolesList, setRolesList] = useState([]); // State to hold the roles
+    const [rolesList, setRolesList] = useState([]); 
+    const [tagsList, setTagsList] = useState([]);
     const handleClick = () => {
       navigate('/addmarker');
     };
@@ -44,7 +45,10 @@ const AddPage = () => {
     useEffect(() => {
       axios.get('http://localhost:3001/api/roles')
         .then(response => {
-          const roles = response.data.map(role => role.roleName);
+          const roles = response.data.map(role => ({
+            id: role._id,
+            name: role.roleName
+          }));
           setRolesList(roles);
         })
         .catch(error => {
@@ -53,14 +57,47 @@ const AddPage = () => {
     }, []);
     
     useEffect(() => {
-      axios.get('http://localhost:3001/api/verified-markers')
+      axios.get('http://localhost:3001/api/tags') // Assuming you have a similar API endpoint for tags
         .then(response => {
-          setMarkers(response.data);
+          const tags = response.data.map(tag => ({
+            id: tag._id,
+            name: tag.tagName
+          }));
+          setTagsList(tags); // Assume you have a state setter for tagsList
         })
         .catch(error => {
-          console.error('Error fetching markers:', error);
+          console.error('Error fetching tags:', error);
         });
     }, []);
+    
+    useEffect(() => {
+      Promise.all([
+        axios.get('http://localhost:3001/api/verified-markers'),
+        axios.get('http://localhost:3001/api/roles'),
+        axios.get('http://localhost:3001/api/tags')
+      ]).then(([markersResponse, rolesResponse, tagsResponse]) => {
+        const roles = rolesResponse.data.reduce((acc, role) => {
+          acc[role._id] = role.roleName;
+          return acc;
+        }, {});
+    
+        const tags = tagsResponse.data.reduce((acc, tag) => {
+          acc[tag._id] = tag.tagName;
+          return acc;
+        }, {});
+    
+        const updatedMarkers = markersResponse.data.map(marker => ({
+          ...marker,
+          role: roles[marker.role] || marker.role, // Fallback to ID if no matching name
+          researchFieldTopic: marker.researchFieldTopic.map(tagId => tags[tagId] || tagId) // Replace tag IDs with names
+        }));
+    
+        setMarkers(updatedMarkers);
+      }).catch(error => {
+        console.error('Error fetching data:', error);
+      });
+    }, []); // Only run once on component mount
+
 
     
     //Markers with offset
@@ -81,7 +118,7 @@ const AddPage = () => {
       <SearchComponent markers={processedMarkers}  />
         <LayersControl position="bottomright" >
         {rolesList.map((role) =>
-          createOverlayControl(role, processedMarkers, setIconForRole )
+          createOverlayControl(role.name, processedMarkers, setIconForRole )
         )}
         </LayersControl>
         <div className="float_button">

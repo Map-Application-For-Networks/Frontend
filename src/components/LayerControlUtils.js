@@ -10,7 +10,7 @@ export function createOverlayControl(
   markers,
   setIconForRole
 ) {
-  const visitStatuses = ['Open', 'Pending', 'Closed'];
+  const visitStatuses = ['Open', 'Closed'];
 
   return visitStatuses.map((status) => (
     <LayersControl.Overlay

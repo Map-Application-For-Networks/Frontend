@@ -1,171 +1,98 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { createTheme } from '@mui/material/styles';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Typography, Pagination } from '@mui/material';
+import { demoTheme } from './Constants'; // Ensure this export exists in your constants file
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-import RoomIcon from '@mui/icons-material/Room';
-import SettingsIcon from '@mui/icons-material/Settings';
-import TagIcon from '@mui/icons-material/Tag';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import ExRNAIcon from '../../icons/ExRNA_PATH_Logo-3.png'; 
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import PersonAddDisabledIcon from '@mui/icons-material/PersonAddDisabled';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import DeleteIcon from '@mui/icons-material/Delete';
-
-const NAVIGATION = [
-  {
-    kind: 'header',
-    title: 'Main Menu',
-  },
-  {
-    segment: 'dashboard',
-    title: 'Dashboard',
-    icon: <DashboardIcon />,
-  },
-  {
-    segment: 'markers',
-    title: 'Markers',
-    icon: <RoomIcon />,
-    children: [
-        {
-          segment: 'approve_marker',
-          title: 'Approve/Disapprove Marker',
-          icon: <CheckCircleIcon/>,
-        },
-        {
-          segment: 'delete_marker',
-          title: 'Delete Marker',
-          icon: <DeleteIcon />,
-        },
-      ],
-  },
-  {
-    segment: 'users',
-    title: 'Users',
-    icon: <AccountBoxIcon />,
-    children: [
-      {
-        segment: 'add_user',
-        title: 'Add User',
-        icon: <PersonAddIcon/>,
-      },
-      {
-        segment: 'delete_user',
-        title: 'Delete User',
-        icon: <PersonAddDisabledIcon />,
-      },
-    ],
-  },
-  {
-    kind: 'divider',
-  },
-  {
-    kind: 'header',
-    title: 'Settings',
-  },
-  {
-    segment: 'add_marker_settings',
-    title: 'Add Marker Settings',
-    icon: <SettingsIcon />,
-    children: [
-      {
-        segment: 'tag_settings',
-        title: 'Tag Settings',
-        icon: <TagIcon />,
-      },
-      {
-        segment: 'role_settings',
-        title: 'Role Settings',
-        icon: <AssignmentIcon />,
-      },
-    ],
-  },
-
-];
-
-const demoTheme = createTheme({
-  cssVariables: {
-    colorSchemeSelector: 'data-toolpad-color-scheme',
-  },
-  colorSchemes: { light: true, dark: true },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 600,
-      lg: 1200,
-      xl: 1536,
-    },
-  },
-});
-
-function DemoPageContent({ pathname }) {
-  return (
-    <Box
-      sx={{
-        py: 4,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-      }}
-    >
-      <Typography>Dashboard content for {pathname}</Typography>
-    </Box>
-  );
-}
-
-DemoPageContent.propTypes = {
-  pathname: PropTypes.string.isRequired,
-};
+import ExRNAIcon from '../../icons/ExRNA_PATH_Logo-3.png';
+import MarkerCard from '../../components/MarkerCard'; // Ensure this path is correct
+import { NAVIGATION } from './Constants'; // Ensure this path is correct
 
 function DashboardLayoutBasic(props) {
-  const { window } = props;
-
   const [pathname, setPathname] = React.useState('/dashboard');
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const markersPerPage = 3; // You can adjust this number based on your preference
 
-  const router = React.useMemo(() => {
-    return {
-      pathname,
-      searchParams: new URLSearchParams(),
-      navigate: (path) => setPathname(String(path)),
-    };
-  }, [pathname]);
+  const router = React.useMemo(() => ({
+    pathname,
+    searchParams: new URLSearchParams(),
+    navigate: (path) => setPathname(String(path)),
+  }), [pathname]);
+  const [markers, setMarkers] = useState([]);
 
-  // Remove this const when copying and pasting into your project.
-  const demoWindow = window !== undefined ? window() : undefined;
+  useEffect(() => {
+    Promise.all([
+      axios.get('http://localhost:3001/api/verified-markers'),
+      axios.get('http://localhost:3001/api/roles'),
+      axios.get('http://localhost:3001/api/tags')
+    ]).then(([markersResponse, rolesResponse, tagsResponse]) => {
+      const rolesMap = rolesResponse.data.reduce((acc, role) => {
+        acc[role._id] = role.roleName; // Ensure the backend sends 'roleName'
+        return acc;
+      }, {});
+
+      const tagsMap = tagsResponse.data.reduce((acc, tag) => {
+        acc[tag._id] = tag.tagName; // Ensure the backend sends 'tagName'
+        return acc;
+      }, {});
+
+      const enhancedMarkers = markersResponse.data.map(marker => ({
+        ...marker,
+        role: rolesMap[marker.role] || marker.role,
+        researchFieldTopic: marker.researchFieldTopic.map(tagId => tagsMap[tagId] || tagId)
+      }));
+
+      setMarkers(enhancedMarkers);
+    }).catch(error => {
+      console.error('Error fetching data:', error);
+    });
+  }, []);
+
+  const indexOfLastMarker = currentPage * markersPerPage;
+  const indexOfFirstMarker = indexOfLastMarker - markersPerPage;
+  const currentMarkers = markers.slice(indexOfFirstMarker, indexOfLastMarker);
+
+  const handleChangePage = (event, newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const renderContent = () => {
+    if (pathname === '/markers/approve_marker') {
+      return (
+        <>
+          {currentMarkers.map(marker => (
+            <MarkerCard key={marker._id} marker={marker} />
+          ))}
+          <Pagination
+            count={Math.ceil(markers.length / markersPerPage)}
+            page={currentPage}
+            onChange={handleChangePage}
+            color="primary"
+            sx={{ marginTop: 2, display: 'flex', justifyContent: 'center' }}
+          />
+        </>
+      );
+    } else {
+      return <Typography>Dashboard content for {pathname}</Typography>;
+    }
+  };
 
   return (
-    // preview-start
     <AppProvider
-     branding={{
-        logo: <img src={ExRNAIcon} alt="ExRNA Logo" style={{ height: '40px' }} />, // Custom logo
-        title: 'Admin Dashboard', // Custom title
+      branding={{
+        logo: <img src={ExRNAIcon} alt="ExRNA Logo" style={{ height: '40px' }} />,
+        title: 'Admin Dashboard',
       }}
       navigation={NAVIGATION}
       router={router}
       theme={demoTheme}
-      window={demoWindow}
     >
       <DashboardLayout>
-        <DemoPageContent pathname={pathname} />
+        {renderContent()}
       </DashboardLayout>
     </AppProvider>
-    // preview-end
   );
 }
-
-DashboardLayoutBasic.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
-  window: PropTypes.func,
-};
 
 export default DashboardLayoutBasic;

@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
-const MarkerCard = ({ marker }) => {
+const MarkerCardForVerification = ({ marker }) => {
   const { title, details, geocode, email, phone, visitStatus, verified, date, createdAt, updatedAt, researchFieldTopic, role } = marker;
 
   const formatDate = (dateString) => {
@@ -94,7 +94,7 @@ const MarkerCard = ({ marker }) => {
   );
 };
 
-export default MarkerCard;
+export default MarkerCardForVerification;
 
 
 

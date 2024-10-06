@@ -1,39 +1,51 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Typography, Pagination, Box, CircularProgress } from '@mui/material';
 import axios from 'axios';
-import { Typography, Pagination } from '@mui/material';
-import { demoTheme } from './Constants'; // Ensure this export exists in your constants file
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import ExRNAIcon from '../../icons/ExRNA_PATH_Logo-3.png';
-import MarkerCard from '../../components/MarkerCard'; // Ensure this path is correct
-import { NAVIGATION } from './Constants'; // Ensure this path is correct
+import MarkerCardForVerification from '../../components/MarkerCardForVerification';
+import MarkerCardForDeletion from '../../components/MarkerCardForDeletion';
+import DashboardHome from '../../components/DashboardHome';
+import { NAVIGATION, demoTheme } from './Constants';
 
-function DashboardLayoutBasic(props) {
-  const [pathname, setPathname] = React.useState('/dashboard');
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const markersPerPage = 3; // You can adjust this number based on your preference
+function DashboardLayoutBasic() {
 
-  const router = React.useMemo(() => ({
+  const [pathname, setPathname] = useState('/dashboard');
+  const [currentPage, setCurrentPage] = useState({
+    '/markers/approve_marker': 1,
+    '/markers/delete_marker': 1
+  });
+  const markersPerPage = 3;
+  const [markers, setMarkers] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const router = useMemo(() => ({
     pathname,
     searchParams: new URLSearchParams(),
     navigate: (path) => setPathname(String(path)),
   }), [pathname]);
-  const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
+    const apiEndpoints = {
+      '/markers/approve_marker': 'http://localhost:3001/api/refuted-markers',
+      '/markers/delete_marker': 'http://localhost:3001/api/verified-markers'
+    };
+    const endpoint = apiEndpoints[pathname];
+
+    setLoading(true); // Set loading to true at the start of the data fetch
     Promise.all([
-      axios.get('http://localhost:3001/api/verified-markers'),
+      axios.get(endpoint),
       axios.get('http://localhost:3001/api/roles'),
       axios.get('http://localhost:3001/api/tags')
     ]).then(([markersResponse, rolesResponse, tagsResponse]) => {
       const rolesMap = rolesResponse.data.reduce((acc, role) => {
-        acc[role._id] = role.roleName; // Ensure the backend sends 'roleName'
+        acc[role._id] = role.roleName;
         return acc;
       }, {});
 
       const tagsMap = tagsResponse.data.reduce((acc, tag) => {
-        acc[tag._id] = tag.tagName; // Ensure the backend sends 'tagName'
+        acc[tag._id] = tag.tagName;
         return acc;
       }, {});
 
@@ -46,34 +58,47 @@ function DashboardLayoutBasic(props) {
       setMarkers(enhancedMarkers);
     }).catch(error => {
       console.error('Error fetching data:', error);
+    }).finally(() => {
+      setLoading(false); // Set loading to false once data is fetched or an error occurs
     });
-  }, []);
-
-  const indexOfLastMarker = currentPage * markersPerPage;
-  const indexOfFirstMarker = indexOfLastMarker - markersPerPage;
-  const currentMarkers = markers.slice(indexOfFirstMarker, indexOfLastMarker);
+  }, [pathname]); // Ensuring dependency on pathname
 
   const handleChangePage = (event, newPage) => {
-    setCurrentPage(newPage);
+    setCurrentPage(prev => ({ ...prev, [pathname]: newPage }));
   };
 
   const renderContent = () => {
-    if (pathname === '/markers/approve_marker') {
+    if (loading) {
+      return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 400 }}>
+        <CircularProgress />
+      </Box>;
+    }
+
+    const page = currentPage[pathname] || 1;
+    const indexOfLastMarker = page * markersPerPage;
+    const indexOfFirstMarker = indexOfLastMarker - markersPerPage;
+    const currentMarkers = markers.slice(indexOfFirstMarker, indexOfLastMarker);
+
+    if (pathname === '/markers/approve_marker' || pathname === '/markers/delete_marker') {
+      const MarkerCardComponent = pathname === '/markers/approve_marker' ? MarkerCardForVerification : MarkerCardForDeletion;
       return (
-        <>
+        <Box sx={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto', padding: 2 }}>
           {currentMarkers.map(marker => (
-            <MarkerCard key={marker._id} marker={marker} />
+            <MarkerCardComponent key={marker._id} marker={marker} />
           ))}
           <Pagination
             count={Math.ceil(markers.length / markersPerPage)}
-            page={currentPage}
+            page={page}
             onChange={handleChangePage}
             color="primary"
             sx={{ marginTop: 2, display: 'flex', justifyContent: 'center' }}
           />
-        </>
+        </Box>
       );
-    } else {
+    } else if (pathname === '/dashboard') {
+      return (<DashboardHome></DashboardHome>);
+    } 
+    else {
       return <Typography>Dashboard content for {pathname}</Typography>;
     }
   };

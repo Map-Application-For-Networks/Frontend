@@ -6,10 +6,10 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import DeleteIcon from '@mui/icons-material/Delete';
-import BlockIcon from '@mui/icons-material/Block';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
-const MarkerCard = ({ marker }) => {
+const MarkerCardForVerification = ({ marker }) => {
   const { title, details, geocode, email, phone, visitStatus, verified, date, createdAt, updatedAt, researchFieldTopic, role } = marker;
 
   const formatDate = (dateString) => {
@@ -26,7 +26,7 @@ const MarkerCard = ({ marker }) => {
     <Card sx={{ minWidth: 275, margin: 2, boxShadow: 3 }}>
       <CardContent>
         <Typography variant="h5" component="div" gutterBottom>
-          {title} {verified ? <VerifiedIcon color="primary" /> : <BlockIcon color="error" />}
+          {title} {verified ? <VerifiedIcon color="primary" /> : <NewReleasesIcon color="error" />}
         </Typography>
         
         <Box sx={{ backgroundColor: '#f3f6f9', borderRadius: 1, padding: 2, marginY: 1 }}>
@@ -71,21 +71,18 @@ const MarkerCard = ({ marker }) => {
           </Grid>
         </Grid>
 
-        <Typography variant="body2" sx={{ mt: 2 }}>
+        <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
           Research Fields:
         </Typography>
         {researchFieldTopic.map(topic => (
-          <Chip key={topic} label={topic} variant="outlined" sx={{ mt: 1, mr: 1 }} />
+          <Chip key={topic} label={topic} variant="outlined" sx={{ mt: 1, mr: 1, bgcolor: 'primary.main' }} />
         ))}
 
-        <Typography variant="body2" sx={{ mt: 2, mb: 1 }}>
+        <Typography variant="body2" sx={{ mt: 2, mb: 1 , fontWeight: 'bold' }}>
           Visit Status:
         </Typography>
         <Chip label={visitStatus} color={getStatusColor(visitStatus)} sx={{ mb: 2 }} />
         <br></br>
-        <Button variant="contained" color="success" startIcon={<VerifiedIcon />} sx={{ marginRight: 1, mt: 1 }}>
-          Verify
-        </Button>
         <Button variant="contained" color="error" startIcon={<DeleteIcon />} sx={{ mt: 1 }}>
           Delete
         </Button>
@@ -94,7 +91,4 @@ const MarkerCard = ({ marker }) => {
   );
 };
 
-export default MarkerCard;
-
-
-
+export default MarkerCardForVerification;

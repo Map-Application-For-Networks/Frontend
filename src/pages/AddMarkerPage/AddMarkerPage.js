@@ -133,7 +133,7 @@ const handleClick = () => {
         {/* Adding the logo at the top */}
         <img src={ExRNAIcon} alt="ExRNA PATH Logo" className="form-logo" />
 
-        <Divider textAlign="left">Name of the Institute or Laboratory</Divider>
+        <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Name of the Institute or Laboratory</Divider>
         <TextField 
           label="Institution Title" 
           variant="outlined" 
@@ -144,7 +144,7 @@ const handleClick = () => {
           helperText={errors.institutionTitle}
         />
 
-        <Divider textAlign="left">Contact Information</Divider>
+        <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Contact Information</Divider>
         <TextField 
           label="Email" 
           variant="outlined" 
@@ -166,7 +166,7 @@ const handleClick = () => {
           helperText={errors.phoneNumber}
         />
 
-        <Divider textAlign="left">Details About the Laboratory</Divider>
+        <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Details About the Laboratory</Divider>
         <TextField 
           label="Details" 
           multiline 
@@ -205,7 +205,7 @@ const handleClick = () => {
           {errors.role && <FormHelperText error>{errors.role}</FormHelperText>}
         </FormControl>
 
-        <Divider textAlign="left">Visitor Status of the Facility</Divider>
+        <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Visitor Status of the Facility</Divider>
         <FormControl variant="outlined" fullWidth error={!!errors.visitingStatus}>
           <InputLabel id="visiting-status-label">Visiting Status</InputLabel>
           <Select
@@ -220,7 +220,7 @@ const handleClick = () => {
           {errors.visitingStatus && <FormHelperText error>{errors.visitingStatus}</FormHelperText>}
         </FormControl>
 
-        <Divider textAlign="left">Location of the Institute or Laboratory</Divider>
+        <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Location of the Institute or Laboratory</Divider>
         <Container>
         <MapContainer center={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom={DEFAULT_ZOOM} style={{ height: '400px', width: '100%' }}>
           <TileLayer

@@ -10,12 +10,10 @@ export function createOverlayControl(
   markers,
   setIconForRole
 ) {
-  const visitStatuses = ['Open', 'Closed'];
-
-  return visitStatuses.map((status) => (
+  return (
     <LayersControl.Overlay
-      key={`${role}-${status}`}
-      name={`${role} (${status})`}
+      key={role}
+      name={role}
       checked={true}
     >
       <LayerGroup>
@@ -24,7 +22,7 @@ export function createOverlayControl(
           iconCreateFunction={(cluster) => createClusterCustomIcon(cluster)}
         >
           {markers
-            .filter(marker => marker.role === role && marker.visitStatus === status)
+            .filter(marker => marker.role === role)
             .map((marker, index) => (
               <Marker
                 key={index}
@@ -53,26 +51,27 @@ export function createOverlayControl(
                   {/* Details */}
                   <p>{marker.details}</p>
                   <br></br>
+                  <hr></hr>
+                  <br></br>
                   {/* Research Fields / Topics */}
-                  <h2>Research Fields / Topics:</h2>
+                  <h2>Area(s) of Expertise: </h2>
                   <ul>
                     {marker.researchFieldTopic.map((topic, idx) => (
                       <Tag color="blue" key={idx}>{topic}</Tag>
                     ))}
                   </ul>
-
-                  {/* Visitor Status with Colored Tag */}
-                  <br></br>
-                  <h3>
-                    Visitor Status: 
-                    <Tag 
-                      color={marker.visitStatus === 'Open' ? 'green' : 'red'} 
-                      style={{ marginLeft: '10px' }}
-                    >
-                      {marker.visitStatus}
-                    </Tag>
-                  </h3>
-
+                  <h2>Technologies:</h2>
+                  <ul>
+                    {marker.researchFieldTopic.map((topic, idx) => (
+                      <Tag color="orange" key={idx}>{topic}</Tag>
+                    ))}
+                  </ul>
+                  <h2>Model Organism:</h2>
+                  <ul>
+                    {marker.researchFieldTopic.map((topic, idx) => (
+                      <Tag color="purple" key={idx}>{topic}</Tag>
+                    ))}
+                  </ul>
                   {/* Divider */}
                   <br></br>
                   <hr />
@@ -81,7 +80,9 @@ export function createOverlayControl(
                   <br></br>
                   <h2>Contact Information</h2>
                   <p><strong>Email:</strong> <a href={`mailto:${marker.email}`}>{marker.email}</a></p>
-                  <p><strong>Phone:</strong> <a href={`tel:${marker.phone}`}>{marker.phone}</a></p>
+                  {marker.phone && (
+                    <p><strong>Phone:</strong> <a href={`tel:${marker.phone}`}>{marker.phone}</a></p>
+                  )}
                 </div>
               </Popup>
               </Marker>
@@ -89,7 +90,5 @@ export function createOverlayControl(
         </MarkerClusterGroup>
       </LayerGroup>
     </LayersControl.Overlay>
-  ));
+  );
 }
-
-

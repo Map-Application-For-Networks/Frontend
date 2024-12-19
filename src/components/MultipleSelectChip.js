@@ -23,7 +23,7 @@ function getStyles(tag, selectedTags, theme) {
   };
 }
 
-export default function MultipleSelectChip({ tags, selectedTags, setSelectedTags }) {
+export default function MultipleSelectChip({ label, tags, selectedTags, setSelectedTags }) {
   const theme = useTheme();
 
   const handleChange = (event) => {
@@ -38,12 +38,12 @@ export default function MultipleSelectChip({ tags, selectedTags, setSelectedTags
   return (
     <div>
       <FormControl fullWidth>
-        <InputLabel>Research Areas</InputLabel>
+        <InputLabel>{label}</InputLabel>
         <Select
           multiple
           value={selectedTags} // Now using the parent-controlled value
           onChange={handleChange} // Update the parent state
-          input={<OutlinedInput label="Research Areas" />}
+          input={<OutlinedInput label={label} />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {/* Map selectedTags to find corresponding labels */}

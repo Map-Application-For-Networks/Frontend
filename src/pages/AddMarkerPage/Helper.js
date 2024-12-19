@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Form validation function
-export const validateForm = ({ institutionTitle, email, phoneNumber, details, selectedTags, visitingStatus, location, role }) => {
+export const validateForm = ({ institutionTitle, email, phoneNumber, details, visitingStatus, location, role, selectedAreasOfExpertise, selectedTechnologies, selectedModelOrganisms}) => {
   const newErrors = {};
   const phoneRegex = /^\+?[0-9]*$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -10,15 +10,21 @@ export const validateForm = ({ institutionTitle, email, phoneNumber, details, se
   if (!email) newErrors.email = '*Email is required!';
   else if (!emailRegex.test(email)) newErrors.email = '*Please enter a valid email address!';
   
-  if (!phoneNumber) newErrors.phoneNumber = '*Phone number is required!';
-  else if (!phoneRegex.test(phoneNumber)) newErrors.phoneNumber = '*Phone number must include only + and digits!';
+  //if (!phoneNumber) newErrors.phoneNumber = '*Phone number is required!';
+  if (!phoneRegex.test(phoneNumber)) newErrors.phoneNumber = '*Phone number must include only + and digits!';
   
   if (!details) newErrors.details = '*Details are required!';
-  if (selectedTags.length === 0) newErrors.selectedTags = '*At least one research area must be selected!';
+  if (details.length > 500) newErrors.details = '*Details must include at most 500 characters!';
+
+
+  if (selectedTechnologies.length === 0) newErrors.selectedTechnologies = '*At least one technology must be selected!';
+  if (selectedModelOrganisms.length === 0) newErrors.selectedModelOrganisms = '*At least one model organism must be selected!';
+  if (selectedAreasOfExpertise.length === 0) newErrors.selectedAreasOfExpertise = '*At least one area must be selected!';
+
   if (!visitingStatus) newErrors.visitingStatus = '*Visiting status is required!';
   if (!location) newErrors.location = '*Location must be selected!';
   if (!role) newErrors.role = '*Role must be selected!';
-
+  
   return newErrors;
 };
 

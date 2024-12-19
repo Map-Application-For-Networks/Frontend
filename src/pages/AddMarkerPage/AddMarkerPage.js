@@ -51,19 +51,27 @@ const AddPage = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [details, setDetails] = useState('');
   const [location, setLocation] = useState(null);
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedAreasOfExpertise, setSelectedAreasOfExpertise] = useState([]);
+  const [selectedTechnologies, setSelectedTechnologies] = useState([]);
+  const [selectedModelOrganisms, setSelectedModelOrganisms] = useState([]);
   const [role, setRole] = useState('');
   const [visitingStatus, setVisitingStatus] = useState('');
   const [errors, setErrors] = useState({});
-  const [tags, setTags] = useState([]); 
+  const [areaTags, setAreaTags] = useState([]); 
+  const [technologyTags, setTechnologTags] = useState([]); 
+  const [organismTags, setOrganismTags] = useState([]); 
   const [rolesList, setRolesList] = useState([]); 
   const navigate = useNavigate();
 
- // Fetching tags and roles
- useEffect(() => {
-  fetchTags(setTags);
+
+useEffect(() => {
+  fetchTags(setAreaTags);
+  fetchTags(setTechnologTags);
+  fetchTags(setOrganismTags);
   fetchRoles(setRolesList);
 }, []);
+
+
 
 const handleClick = () => {
   // Step 1: Validate the form inputs
@@ -72,11 +80,16 @@ const handleClick = () => {
     email, 
     phoneNumber, 
     details, 
-    selectedTags, 
     visitingStatus, 
     location, 
-    role
+    role,
+    selectedAreasOfExpertise,
+    selectedTechnologies,
+    selectedModelOrganisms
+
   });
+
+  console.log(newErrors); // Debugging validation errors
 
   // Step 2: If no validation errors, prepare data and submit it
   if (Object.keys(newErrors).length === 0) {
@@ -91,7 +104,10 @@ const handleClick = () => {
       details,
       geocode: geocode,             // API expects 'geocode' for location
       visitStatus: visitingStatus,   // API expects 'visitStatus' for visiting status
-      researchFieldTopic: selectedTags,  // API expects 'researchFieldTopic' for selectedTags
+      //researchFieldTopic: selectedTags,  // API expects 'researchFieldTopic' for selectedTags
+      areasOfExpertise: selectedAreasOfExpertise,
+      technologies: selectedTechnologies,
+      modelOrganisms: selectedModelOrganisms,
       role
     };
 
@@ -156,7 +172,7 @@ const handleClick = () => {
           helperText={errors.email}
         />
         <TextField 
-          label="Phone Number" 
+          label="Phone Number (Optional)" 
           variant="outlined" 
           type="tel" 
           fullWidth 
@@ -168,7 +184,7 @@ const handleClick = () => {
 
         <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Details About the Laboratory</Divider>
         <TextField 
-          label="Details" 
+          label="Details (Max. 500 characters)" 
           multiline 
           maxRows={5} 
           rows={5} 
@@ -176,19 +192,12 @@ const handleClick = () => {
           fullWidth 
           value={details}
           onChange={(e) => setDetails(e.target.value)}
-          error={!!errors.details}
-          helperText={errors.details}
+          error={!!errors.details || details.length > 500}
+          helperText={errors.details || `${details.length}/500`} // Show character count
         />
-
-        <MultipleSelectChip 
-          tags={tags} 
-          selectedTags={selectedTags} 
-          setSelectedTags={setSelectedTags} 
-        />
-        {errors.selectedTags && <FormHelperText error>{errors.selectedTags}</FormHelperText>}
-
-        <FormControl variant="outlined" fullWidth error={!!errors.role}>
-          <InputLabel id="role-label">Role of the Facility</InputLabel>
+       
+       <FormControl  fullWidth error={!!errors.role}>
+          <InputLabel id="role-label">Role of Facility</InputLabel>
           <Select
             labelId="role-label"
             value={role}
@@ -203,6 +212,37 @@ const handleClick = () => {
             ))}
           </Select>
           {errors.role && <FormHelperText error>{errors.role}</FormHelperText>}
+        </FormControl>
+
+        <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Details About Research</Divider>
+        <FormControl fullWidth error={!!errors.selectedAreasOfExpertise} >
+          <MultipleSelectChip
+            label="Area(s) of Expertise" 
+            tags={areaTags} 
+            selectedTags={selectedAreasOfExpertise} 
+            setSelectedTags={setSelectedAreasOfExpertise} 
+          />
+          {errors.selectedAreasOfExpertise && <FormHelperText error>{errors.selectedAreasOfExpertise}</FormHelperText>}
+        </FormControl>
+
+        <FormControl fullWidth error={!!errors.selectedTechnologies} >
+          <MultipleSelectChip 
+            label="Technology(s)"
+            tags={technologyTags} 
+            selectedTags={selectedTechnologies} 
+            setSelectedTags={setSelectedTechnologies} 
+          />
+          {errors.selectedTechnologies && <FormHelperText error>{errors.selectedTechnologies}</FormHelperText>}
+        </FormControl>
+
+        <FormControl fullWidth error={!!errors.selectedModelOrganisms} >
+          <MultipleSelectChip 
+            label="Model Organism"
+            tags={organismTags} 
+            selectedTags={selectedModelOrganisms} 
+            setSelectedTags={setSelectedModelOrganisms} 
+          />
+          {errors.selectedModelOrganisms && <FormHelperText error>{errors.selectedModelOrganisms}</FormHelperText>}
         </FormControl>
 
         <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Visitor Status of the Facility</Divider>

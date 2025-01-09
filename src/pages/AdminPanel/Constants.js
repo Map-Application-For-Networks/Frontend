@@ -1,4 +1,4 @@
-import {PersonAddDisabled, PersonAdd, AccountBox, Assignment, Tag, Room, Settings, Dashboard, CheckCircle, Delete} from '@mui/icons-material';
+import {PersonAddDisabled, PersonAdd, AccountBox, Assignment, Tag, Room, Settings, Dashboard, CheckCircle, Delete, Logout } from '@mui/icons-material';
 import { createTheme } from '@mui/material/styles';
 
 export const NAVIGATION = [
@@ -69,7 +69,12 @@ export const NAVIGATION = [
         },
       ],
     },
-  
+    {
+      segment: 'logout',
+      title: 'Logout',
+      icon: <Logout />, // You can use another icon for logout, e.g., <ExitToApp />
+   
+    },
   ];
 
 

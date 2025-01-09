@@ -6,6 +6,7 @@ import ConfimationPage from './pages/ConfirmationPage/ConfirmationPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
 import AdminPanel from './pages/AdminPanel/AdminPanel';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
 
@@ -17,7 +18,10 @@ function App() {
         <Route path="/confirmation" element ={<ConfimationPage />}> </Route>
         <Route path="/login" element={<LoginPage />}> </Route>
         <Route path="/signup" element={<SignupPage />}> </Route>
-        <Route path="/admin" element={<AdminPanel />}> </Route>
+        <Route path="/admin" element={
+            <ProtectedRoute>
+                <AdminPanel />
+              </ProtectedRoute> }> </Route>
       </Routes>
     </BrowserRouter>
     

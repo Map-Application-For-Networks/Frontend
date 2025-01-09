@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Typography, Pagination, Box, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { AppProvider } from '@toolpad/core/AppProvider';
@@ -8,70 +8,135 @@ import MarkerCardForVerification from '../../components/MarkerCardForVerificatio
 import MarkerCardForDeletion from '../../components/MarkerCardForDeletion';
 import DashboardHome from '../../components/DashboardHome';
 import { NAVIGATION, demoTheme } from './Constants';
+import { useNavigate } from 'react-router-dom';
 
 function DashboardLayoutBasic() {
-
+  const handleMarkerUpdate = (id, verified) => {
+    setMarkers((prevMarkers) =>
+      prevMarkers.map((marker) =>
+        marker._id === id ? { ...marker, verified } : marker
+      )
+    );
+  };
+  
   const [pathname, setPathname] = useState('/dashboard');
   const [currentPage, setCurrentPage] = useState({
     '/markers/approve_marker': 1,
-    '/markers/delete_marker': 1
+    '/markers/delete_marker': 1,
   });
   const markersPerPage = 3;
   const [markers, setMarkers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = useCallback(() => {
+    localStorage.removeItem('token'); // Clear the token
+    navigate('/login'); // Redirect to login page
+  }, [navigate]);
 
   const router = useMemo(() => ({
     pathname,
     searchParams: new URLSearchParams(),
-    navigate: (path) => setPathname(String(path)),
-  }), [pathname]);
+    navigate: (path) => {
+      if (path === '/logout') {
+        handleLogout();
+      } else {
+        setPathname(String(path));
+      }
+    },
+  }), [pathname, handleLogout]);
 
+  const token = localStorage.getItem('token'); // Retrieve token from localStorage
+
+  // Prevent back/forward navigation
+  useEffect(() => {
+    window.history.replaceState(null, '', window.location.href);
+
+    const blockBackNavigation = () => {
+      window.history.pushState(null, '', window.location.href);
+    };
+
+    blockBackNavigation();
+    window.addEventListener('popstate', blockBackNavigation);
+
+    return () => {
+      window.removeEventListener('popstate', blockBackNavigation);
+    };
+  }, []);
+
+  // Token validation on mount
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    axios
+      .get('http://localhost:3001/api/validate-token', {
+        headers: { Authorization: `Bearer ${token}` }, // Fixed here
+      })
+      .catch(() => {
+        navigate('/login');
+      });
+  }, [token, navigate]);
+
+  // Fetch data (roles, tags, and markers) based on pathname
   useEffect(() => {
     const apiEndpoints = {
       '/markers/approve_marker': 'http://localhost:3001/api/refuted-markers',
-      '/markers/delete_marker': 'http://localhost:3001/api/verified-markers'
+      '/markers/delete_marker': 'http://localhost:3001/api/verified-markers',
     };
     const endpoint = apiEndpoints[pathname];
 
-    setLoading(true); // Set loading to true at the start of the data fetch
-    Promise.all([
-      axios.get(endpoint),
-      axios.get('http://localhost:3001/api/roles'),
-      axios.get('http://localhost:3001/api/tags')
-    ]).then(([markersResponse, rolesResponse, tagsResponse]) => {
-      const rolesMap = rolesResponse.data.reduce((acc, role) => {
-        acc[role._id] = role.roleName;
-        return acc;
-      }, {});
+    const fetchMarkersData = async () => {
+      setLoading(true);
+      try {
+        const [markersResponse, rolesResponse, tagsResponse] = await Promise.all([
+          axios.get(endpoint, { headers: { Authorization: `Bearer ${token}` } }), // Fixed here
+          axios.get('http://localhost:3001/api/roles'),
+          axios.get('http://localhost:3001/api/tags'),
+        ]);
 
-      const tagsMap = tagsResponse.data.reduce((acc, tag) => {
-        acc[tag._id] = tag.tagName;
-        return acc;
-      }, {});
+        const rolesMap = rolesResponse.data.reduce((acc, role) => {
+          acc[role._id] = role.roleName;
+          return acc;
+        }, {});
 
-      const enhancedMarkers = markersResponse.data.map(marker => ({
-        ...marker,
-        role: rolesMap[marker.role] || marker.role,
-        researchFieldTopic: marker.researchFieldTopic.map(tagId => tagsMap[tagId] || tagId)
-      }));
+        const tagsMap = tagsResponse.data.reduce((acc, tag) => {
+          acc[tag._id] = tag.tagName;
+          return acc;
+        }, {});
 
-      setMarkers(enhancedMarkers);
-    }).catch(error => {
-      console.error('Error fetching data:', error);
-    }).finally(() => {
-      setLoading(false); // Set loading to false once data is fetched or an error occurs
-    });
-  }, [pathname]); // Ensuring dependency on pathname
+        const enhancedMarkers = markersResponse.data.map((marker) => ({
+          ...marker,
+          role: rolesMap[marker.role] || marker.role,
+          researchFieldTopic: marker.researchFieldTopic?.map((tagId) => tagsMap[tagId] || tagId) || [],
+        }));
+
+        setMarkers(enhancedMarkers);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (pathname === '/markers/approve_marker' || pathname === '/markers/delete_marker') {
+      fetchMarkersData();
+    }
+  }, [pathname, token]);
 
   const handleChangePage = (event, newPage) => {
-    setCurrentPage(prev => ({ ...prev, [pathname]: newPage }));
+    setCurrentPage((prev) => ({ ...prev, [pathname]: newPage }));
   };
 
   const renderContent = () => {
     if (loading) {
-      return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 400 }}>
-        <CircularProgress />
-      </Box>;
+      return (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 400 }}>
+          <CircularProgress />
+        </Box>
+      );
     }
 
     const page = currentPage[pathname] || 1;
@@ -80,11 +145,12 @@ function DashboardLayoutBasic() {
     const currentMarkers = markers.slice(indexOfFirstMarker, indexOfLastMarker);
 
     if (pathname === '/markers/approve_marker' || pathname === '/markers/delete_marker') {
-      const MarkerCardComponent = pathname === '/markers/approve_marker' ? MarkerCardForVerification : MarkerCardForDeletion;
+      const MarkerCardComponent =
+        pathname === '/markers/approve_marker' ? MarkerCardForVerification : MarkerCardForDeletion;
       return (
         <Box sx={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto', padding: 2 }}>
-          {currentMarkers.map(marker => (
-            <MarkerCardComponent key={marker._id} marker={marker} />
+          {currentMarkers.map((marker) => (
+            <MarkerCardComponent key={marker._id} marker={marker} onMarkerUpdate={handleMarkerUpdate} />
           ))}
           <Pagination
             count={Math.ceil(markers.length / markersPerPage)}
@@ -95,12 +161,11 @@ function DashboardLayoutBasic() {
           />
         </Box>
       );
-    } else if (pathname === '/dashboard') {
-      return (<DashboardHome></DashboardHome>);
-    } 
-    else {
-      return <Typography>Dashboard content for {pathname}</Typography>;
     }
+    if (pathname === '/dashboard') {
+      return <DashboardHome />;
+    }
+    return <Typography>Dashboard content for {pathname}</Typography>;
   };
 
   return (
@@ -113,9 +178,7 @@ function DashboardLayoutBasic() {
       router={router}
       theme={demoTheme}
     >
-      <DashboardLayout>
-        {renderContent()}
-      </DashboardLayout>
+      <DashboardLayout>{renderContent()}</DashboardLayout>
     </AppProvider>
   );
 }

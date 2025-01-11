@@ -91,10 +91,13 @@ function DashboardLayoutBasic() {
     const fetchMarkersData = async () => {
       setLoading(true);
       try {
-        const [markersResponse, rolesResponse, tagsResponse] = await Promise.all([
+        const [markersResponse, rolesResponse, techTagsResponse, modelTagsResponse,expertiseTagsResponse] = await Promise.all([
           axios.get(endpoint, { headers: { Authorization: `Bearer ${token}` } }), // Fixed here
           axios.get('http://localhost:3001/api/roles'),
-          axios.get('http://localhost:3001/api/tags'),
+          //axios.get('http://localhost:3001/api/tags'),
+          axios.get('http://localhost:3001/api/techtags'),
+          axios.get('http://localhost:3001/api/modeltags'),
+          axios.get('http://localhost:3001/api/expertisetags')
         ]);
 
         const rolesMap = rolesResponse.data.reduce((acc, role) => {
@@ -102,15 +105,34 @@ function DashboardLayoutBasic() {
           return acc;
         }, {});
 
-        const tagsMap = tagsResponse.data.reduce((acc, tag) => {
+        const techTags_list = techTagsResponse.data.reduce((acc, tag) => {
           acc[tag._id] = tag.tagName;
           return acc;
         }, {});
 
+        const modelTags_list = modelTagsResponse.data.reduce((acc, tag) => {
+          acc[tag._id] = tag.tagName;
+          return acc;
+        }, {});
+
+        const expertiseTags_list = expertiseTagsResponse.data.reduce((acc, tag) => {
+          acc[tag._id] = tag.tagName;
+          return acc;
+        }, {});
+
+
         const enhancedMarkers = markersResponse.data.map((marker) => ({
           ...marker,
           role: rolesMap[marker.role] || marker.role,
-          researchFieldTopic: marker.researchFieldTopic?.map((tagId) => tagsMap[tagId] || tagId) || [],
+          techTags: Array.isArray(marker.techTags)
+            ? marker.techTags.map(tagId => techTags_list[tagId] || tagId)
+            : [], // Default to an empty array
+          modelTags: Array.isArray(marker.modelTags)
+            ? marker.modelTags.map(tagId => modelTags_list[tagId] || tagId)
+            : [], // Default to an empty array
+          expertiseAreaTags: Array.isArray(marker.expertiseAreaTags)
+            ? marker.expertiseAreaTags.map(tagId => expertiseTags_list[tagId] || tagId)
+            : [] // Default to an empty array
         }));
 
         setMarkers(enhancedMarkers);

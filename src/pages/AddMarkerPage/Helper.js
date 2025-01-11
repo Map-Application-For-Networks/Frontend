@@ -29,16 +29,42 @@ export const validateForm = ({ institutionTitle, email, phoneNumber, details, vi
 };
 
 // Fetch tags from API
-export const fetchTags = async (setTags) => {
+export const fetchTechTags = async (setTags) => {
   try {
-    const response = await axios.get('http://localhost:3001/api/tags');
+    const response = await axios.get('http://localhost:3001/api/techtags');
     const fetchedTags = response.data.map(tag => ({
       label: tag.tagName,
       value: tag._id
     }));
     setTags(fetchedTags);
   } catch (error) {
-    console.error('Error fetching tags:', error);
+    console.error('Error fetching tech tags:', error);
+  }
+};
+
+export const fetchModelTags = async (setTags) => {
+  try {
+    const response = await axios.get('http://localhost:3001/api/modeltags');
+    const fetchedTags = response.data.map(tag => ({
+      label: tag.tagName,
+      value: tag._id
+    }));
+    setTags(fetchedTags);
+  } catch (error) {
+    console.error('Error fetching tech tags:', error);
+  }
+};
+
+export const fetchExpertiseAreaTags = async (setTags) => {
+  try {
+    const response = await axios.get('http://localhost:3001/api/expertisetags');
+    const fetchedTags = response.data.map(tag => ({
+      label: tag.tagName,
+      value: tag._id
+    }));
+    setTags(fetchedTags);
+  } catch (error) {
+    console.error('Error fetching tech tags:', error);
   }
 };
 

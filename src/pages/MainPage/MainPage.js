@@ -38,6 +38,9 @@ const AddPage = () => {
     const [markers, setMarkers] = useState([]);
     const [rolesList, setRolesList] = useState([]); 
     const [tagsList, setTagsList] = useState([]);
+    const [techTagsList, setTechTagsList] = useState([]);
+    const [modelTagsList, setModelTagsList] = useState([]);
+    const [expertiseTagList, setExpertiseTagList] = useState([]);
     const handleClick = () => {
       navigate('/addmarker');
     };
@@ -56,32 +59,73 @@ const AddPage = () => {
         });
     }, []);
     
+    
     useEffect(() => {
-      axios.get('http://localhost:3001/api/tags') // Assuming you have a similar API endpoint for tags
+      axios.get('http://localhost:3001/api/techtags') // Assuming you have a similar API endpoint for tags
         .then(response => {
           const tags = response.data.map(tag => ({
             id: tag._id,
             name: tag.tagName
           }));
-          setTagsList(tags); // Assume you have a state setter for tagsList
+          setTechTagsList(tags); // Assume you have a state setter for tagsList
         })
         .catch(error => {
           console.error('Error fetching tags:', error);
         });
     }, []);
-    
+
+    useEffect(() => {
+      axios.get('http://localhost:3001/api/modeltags') // Assuming you have a similar API endpoint for tags
+        .then(response => {
+          const tags = response.data.map(tag => ({
+            id: tag._id,
+            name: tag.tagName
+          }));
+          setModelTagsList(tags); // Assume you have a state setter for tagsList
+        })
+        .catch(error => {
+          console.error('Error fetching tags:', error);
+        });
+    }, []);
+
+    useEffect(() => {
+      axios.get('http://localhost:3001/api/expertisetags') // Assuming you have a similar API endpoint for tags
+        .then(response => {
+          const tags = response.data.map(tag => ({
+            id: tag._id,
+            name: tag.tagName
+          }));
+          setExpertiseTagList(tags); // Assume you have a state setter for tagsList
+        })
+        .catch(error => {
+          console.error('Error fetching tags:', error);
+        });
+    }, []);
+
     useEffect(() => {
       Promise.all([
         axios.get('http://localhost:3001/api/verified-markers'),
         axios.get('http://localhost:3001/api/roles'),
-        axios.get('http://localhost:3001/api/tags')
-      ]).then(([markersResponse, rolesResponse, tagsResponse]) => {
+        axios.get('http://localhost:3001/api/techtags'),
+        axios.get('http://localhost:3001/api/modeltags'),
+        axios.get('http://localhost:3001/api/expertisetags')
+      ]).then(([markersResponse, rolesResponse, techTagsResponse, modelTagsResponse, expertiseTagsResponse]) => {
         const roles = rolesResponse.data.reduce((acc, role) => {
           acc[role._id] = role.roleName;
           return acc;
         }, {});
     
-        const tags = tagsResponse.data.reduce((acc, tag) => {
+        const techTags_list = techTagsResponse.data.reduce((acc, tag) => {
+          acc[tag._id] = tag.tagName;
+          return acc;
+        }, {});
+
+        const modelTags_list = modelTagsResponse.data.reduce((acc, tag) => {
+          acc[tag._id] = tag.tagName;
+          return acc;
+        }, {});
+
+        const expertiseTags_list = expertiseTagsResponse.data.reduce((acc, tag) => {
           acc[tag._id] = tag.tagName;
           return acc;
         }, {});
@@ -89,8 +133,17 @@ const AddPage = () => {
         const updatedMarkers = markersResponse.data.map(marker => ({
           ...marker,
           role: roles[marker.role] || marker.role, // Fallback to ID if no matching name
-          researchFieldTopic: marker.researchFieldTopic.map(tagId => tags[tagId] || tagId) // Replace tag IDs with names
+          techTags: Array.isArray(marker.techTags)
+            ? marker.techTags.map(tagId => techTags_list[tagId] || tagId)
+            : [], // Default to an empty array
+          modelTags: Array.isArray(marker.modelTags)
+            ? marker.modelTags.map(tagId => modelTags_list[tagId] || tagId)
+            : [], // Default to an empty array
+            expertiseAreaTags: Array.isArray(marker.expertiseAreaTags)
+            ? marker.expertiseAreaTags.map(tagId => expertiseTags_list[tagId] || tagId)
+            : [] // Default to an empty array
         }));
+        
     
         setMarkers(updatedMarkers);
       }).catch(error => {

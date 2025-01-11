@@ -11,7 +11,7 @@ import SearchControl from '../../components/SearchControl';
 import { useNavigate } from 'react-router-dom';
 import MultipleSelectChip from '../../components/MultipleSelectChip';
 import ExRNAIcon from '../../icons/ExRNA_PATH_Logo-3.png'; // Import the image (correct the path if needed)
-import { fetchRoles, fetchTags, validateForm } from './Helper';
+import { fetchExpertiseAreaTags, fetchModelTags, fetchRoles, fetchTechTags, validateForm } from './Helper';
 import axios from 'axios';
 
 
@@ -65,9 +65,9 @@ const AddPage = () => {
 
 
 useEffect(() => {
-  fetchTags(setAreaTags);
-  fetchTags(setTechnologTags);
-  fetchTags(setOrganismTags);
+  fetchExpertiseAreaTags(setAreaTags);
+  fetchTechTags(setTechnologTags);
+  fetchModelTags(setOrganismTags);
   fetchRoles(setRolesList);
 }, []);
 
@@ -105,9 +105,9 @@ const handleClick = () => {
       geocode: geocode,             // API expects 'geocode' for location
       visitStatus: visitingStatus,   // API expects 'visitStatus' for visiting status
       //researchFieldTopic: selectedTags,  // API expects 'researchFieldTopic' for selectedTags
-      areasOfExpertise: selectedAreasOfExpertise,
-      technologies: selectedTechnologies,
-      modelOrganisms: selectedModelOrganisms,
+      expertiseAreaTags: selectedAreasOfExpertise,
+      techTags: selectedTechnologies,
+      modelTags: selectedModelOrganisms,
       role
     };
 

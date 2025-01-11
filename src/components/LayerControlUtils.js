@@ -56,19 +56,19 @@ export function createOverlayControl(
                   {/* Research Fields / Topics */}
                   <h2>Area(s) of Expertise: </h2>
                   <ul>
-                    {marker.researchFieldTopic.map((topic, idx) => (
+                    {marker.expertiseAreaTags.map((topic, idx) => (
                       <Tag color="blue" key={idx}>{topic}</Tag>
                     ))}
                   </ul>
                   <h2>Technologies:</h2>
                   <ul>
-                    {marker.researchFieldTopic.map((topic, idx) => (
+                    {marker.techTags.map((topic, idx) => (
                       <Tag color="orange" key={idx}>{topic}</Tag>
                     ))}
                   </ul>
                   <h2>Model Organism:</h2>
                   <ul>
-                    {marker.researchFieldTopic.map((topic, idx) => (
+                    {marker.modelTags.map((topic, idx) => (
                       <Tag color="purple" key={idx}>{topic}</Tag>
                     ))}
                   </ul>

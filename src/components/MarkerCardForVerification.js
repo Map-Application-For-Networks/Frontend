@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardContent, Typography, Grid, IconButton, Button, Box, Chip } from '@mui/material';
+import { Card, CardContent, Typography, Grid, IconButton, Button, Box } from '@mui/material';
+import { Tag } from 'antd';
 import RoomIcon from '@mui/icons-material/Room';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -11,7 +12,7 @@ import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import axios from 'axios';
 
 const MarkerCardForVerification = ({ marker, onMarkerUpdate }) => {
-  const { _id, title, details, geocode, email, phone, visitStatus, verified, date, createdAt, updatedAt, researchFieldTopic, role } = marker;
+  const { _id, title, details, geocode, email, phone, visitStatus, verified, date, createdAt, updatedAt, techTags, modelTags, expertiseAreaTags, role } = marker;
 
   const token = localStorage.getItem('token'); // Retrieve token
 
@@ -85,7 +86,7 @@ const MarkerCardForVerification = ({ marker, onMarkerUpdate }) => {
             <IconButton color="primary">
               <PhoneIcon />
             </IconButton>
-            {phone}
+            {phone && phone.trim() !== '' ? phone : 'No phone number is provided.'}
           </Grid>
           <Grid item>
             <IconButton color="primary">
@@ -101,15 +102,29 @@ const MarkerCardForVerification = ({ marker, onMarkerUpdate }) => {
           </Grid>
         </Grid>
         <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
-          Research Fields:
+          Technologies:
         </Typography>
-        {researchFieldTopic.map((topic) => (
-          <Chip key={topic} label={topic} variant="outlined" sx={{ mt: 1, mr: 1 }} />
+        {techTags.map((tag, index) => (
+          <Tag key={index} color="orange">{tag}</Tag>
+        ))}
+        <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+          Model Organisms:
+        </Typography>
+        {modelTags.map((tag, index) => (
+          <Tag key={index} color="purple">{tag}</Tag>
+        ))}
+        <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+          Area(s) of Expertise:
+        </Typography>
+        {expertiseAreaTags.map((tag, index) => (
+          <Tag key={index} color="blue">{tag}</Tag>
         ))}
         <Typography variant="body2" sx={{ mt: 2, mb: 1, fontWeight: 'bold' }}>
           Visit Status:
         </Typography>
-        <Chip label={visitStatus} color={getStatusColor(visitStatus)} />
+        <Box sx={{ mt: 1, mb: 2 }}>
+          <Tag color={getStatusColor(visitStatus)}>{visitStatus}</Tag>
+        </Box>
         <Box sx={{ mt: 2 }}>
           <Button variant="contained" color="success" startIcon={<VerifiedIcon />} sx={{ mr: 1 }} onClick={handleApprove}>
             Approve

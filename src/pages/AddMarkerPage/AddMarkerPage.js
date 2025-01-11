@@ -89,7 +89,7 @@ const handleClick = () => {
 
   });
 
-  console.log(newErrors); // Debugging validation errors
+  //console.log(newErrors); // Debugging validation errors
 
   // Step 2: If no validation errors, prepare data and submit it
   if (Object.keys(newErrors).length === 0) {

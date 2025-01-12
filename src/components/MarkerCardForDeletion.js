@@ -8,9 +8,12 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
+import axios from 'axios';
 
-const MarkerCardForVerification = ({ marker }) => {
-  const { title, details, geocode, email, phone, visitStatus, verified, date, createdAt, updatedAt, researchFieldTopic, role } = marker;
+const MarkerCardForDeletion = ({ marker, onMarkerUpdate }) => {
+  const { _id ,title, details, geocode, email, phone, visitStatus, verified, date, createdAt, updatedAt, techTags, modelTags, expertiseAreaTags, role } = marker;
+
+  const token = localStorage.getItem('token'); // Retrieve token
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -20,6 +23,20 @@ const MarkerCardForVerification = ({ marker }) => {
   // Function to determine the color of the visit status chip
   const getStatusColor = (status) => {
     return status.toLowerCase() === 'open' ? 'success' : 'error';
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(
+        `http://localhost:3001/api/marker/${_id}/delete`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      onMarkerUpdate(_id, 0); // Notify parent
+    } catch (error) {
+      console.error('Error disapproving marker:', error);
+    }
   };
 
   return (
@@ -72,10 +89,24 @@ const MarkerCardForVerification = ({ marker }) => {
         </Grid>
 
         <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
-          Research Fields:
+          Technologies:
         </Typography>
-        {researchFieldTopic.map(topic => (
-          <Chip key={topic} label={topic} variant="outlined" sx={{ mt: 1, mr: 1, bgcolor: 'primary.main' }} />
+        {techTags.map(tag => (
+          <Chip key={tag} label={tag} variant="outlined" sx={{ mt: 1, mr: 1, bgcolor: 'primary.main' }} />
+        ))}
+
+        <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+          Model Organisms:
+        </Typography>
+        {modelTags.map(tag => (
+          <Chip key={tag} label={tag} variant="outlined" sx={{ mt: 1, mr: 1, bgcolor: 'secondary.main' }} />
+        ))}
+
+        <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+          Area(s) of Expertise:
+        </Typography>
+        {expertiseAreaTags.map(tag => (
+          <Chip key={tag} label={tag} variant="outlined" sx={{ mt: 1, mr: 1, bgcolor: 'success.main' }} />
         ))}
 
         <Typography variant="body2" sx={{ mt: 2, mb: 1 , fontWeight: 'bold' }}>
@@ -83,7 +114,7 @@ const MarkerCardForVerification = ({ marker }) => {
         </Typography>
         <Chip label={visitStatus} color={getStatusColor(visitStatus)} sx={{ mb: 2 }} />
         <br></br>
-        <Button variant="contained" color="error" startIcon={<DeleteIcon />} sx={{ mt: 1 }}>
+        <Button variant="contained" color="error" startIcon={<DeleteIcon />} sx={{ mt: 1 }} onClick={handleDelete}>
           Delete
         </Button>
       </CardContent>
@@ -91,4 +122,4 @@ const MarkerCardForVerification = ({ marker }) => {
   );
 };
 
-export default MarkerCardForVerification;
+export default MarkerCardForDeletion;

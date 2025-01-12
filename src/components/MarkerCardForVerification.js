@@ -42,9 +42,8 @@ const MarkerCardForVerification = ({ marker, onMarkerUpdate }) => {
 
   const handleDisapprove = async () => {
     try {
-      await axios.patch(
-        `http://localhost:3001/api/marker/${_id}/verify`,
-        { verified: 0 },
+      await axios.delete(
+        `http://localhost:3001/api/marker/${_id}/delete`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

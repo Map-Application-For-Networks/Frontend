@@ -11,44 +11,38 @@ import { NAVIGATION, demoTheme } from './Constants';
 import { useNavigate } from 'react-router-dom';
 
 function DashboardLayoutBasic() {
-  const handleMarkerUpdate = (id, verified) => {
-    setMarkers((prevMarkers) =>
-      prevMarkers.map((marker) =>
-        marker._id === id ? { ...marker, verified } : marker
-      )
-    );
-  };
-  
   const [pathname, setPathname] = useState('/dashboard');
   const [currentPage, setCurrentPage] = useState({
     '/markers/approve_marker': 1,
     '/markers/delete_marker': 1,
   });
-  const markersPerPage = 3;
   const [markers, setMarkers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const markersPerPage = 3;
   const navigate = useNavigate();
+
+  const token = localStorage.getItem('token'); // Retrieve token from localStorage
 
   const handleLogout = useCallback(() => {
     localStorage.removeItem('token'); // Clear the token
     navigate('/login'); // Redirect to login page
   }, [navigate]);
 
-  const router = useMemo(() => ({
-    pathname,
-    searchParams: new URLSearchParams(),
-    navigate: (path) => {
-      if (path === '/logout') {
-        handleLogout();
-      } else {
-        setPathname(String(path));
-      }
-    },
-  }), [pathname, handleLogout]);
+  const router = useMemo(
+    () => ({
+      pathname,
+      searchParams: new URLSearchParams(),
+      navigate: (path) => {
+        if (path === '/logout') {
+          handleLogout();
+        } else {
+          setPathname(String(path));
+        }
+      },
+    }),
+    [pathname, handleLogout]
+  );
 
-  const token = localStorage.getItem('token'); // Retrieve token from localStorage
-
-  // Prevent back/forward navigation
   useEffect(() => {
     window.history.replaceState(null, '', window.location.href);
 
@@ -64,7 +58,6 @@ function DashboardLayoutBasic() {
     };
   }, []);
 
-  // Token validation on mount
   useEffect(() => {
     if (!token) {
       navigate('/login');
@@ -73,80 +66,88 @@ function DashboardLayoutBasic() {
 
     axios
       .get('http://localhost:3001/api/validate-token', {
-        headers: { Authorization: `Bearer ${token}` }, // Fixed here
+        headers: { Authorization: `Bearer ${token}` },
       })
       .catch(() => {
         navigate('/login');
       });
   }, [token, navigate]);
 
-  // Fetch data (roles, tags, and markers) based on pathname
-  useEffect(() => {
+  const fetchMarkersData = useCallback(async () => {
     const apiEndpoints = {
       '/markers/approve_marker': 'http://localhost:3001/api/refuted-markers',
       '/markers/delete_marker': 'http://localhost:3001/api/verified-markers',
     };
+
     const endpoint = apiEndpoints[pathname];
+    if (!endpoint) {
+      return;
+    }
 
-    const fetchMarkersData = async () => {
-      setLoading(true);
-      try {
-        const [markersResponse, rolesResponse, techTagsResponse, modelTagsResponse,expertiseTagsResponse] = await Promise.all([
-          axios.get(endpoint, { headers: { Authorization: `Bearer ${token}` } }), // Fixed here
-          axios.get('http://localhost:3001/api/roles'),
-          //axios.get('http://localhost:3001/api/tags'),
-          axios.get('http://localhost:3001/api/techtags'),
-          axios.get('http://localhost:3001/api/modeltags'),
-          axios.get('http://localhost:3001/api/expertisetags')
-        ]);
+    setLoading(true);
 
-        const rolesMap = rolesResponse.data.reduce((acc, role) => {
-          acc[role._id] = role.roleName;
-          return acc;
-        }, {});
+    try {
+      const [markersResponse, rolesResponse, techTagsResponse, modelTagsResponse, expertiseTagsResponse] = await Promise.all([
+        axios.get(endpoint, { headers: { Authorization: `Bearer ${token}` } }),
+        axios.get('http://localhost:3001/api/roles'),
+        axios.get('http://localhost:3001/api/techtags'),
+        axios.get('http://localhost:3001/api/modeltags'),
+        axios.get('http://localhost:3001/api/expertisetags'),
+      ]);
 
-        const techTags_list = techTagsResponse.data.reduce((acc, tag) => {
-          acc[tag._id] = tag.tagName;
-          return acc;
-        }, {});
+      const rolesMap = rolesResponse.data.reduce((acc, role) => {
+        acc[role._id] = role.roleName;
+        return acc;
+      }, {});
 
-        const modelTags_list = modelTagsResponse.data.reduce((acc, tag) => {
-          acc[tag._id] = tag.tagName;
-          return acc;
-        }, {});
+      const techTagsMap = techTagsResponse.data.reduce((acc, tag) => {
+        acc[tag._id] = tag.tagName;
+        return acc;
+      }, {});
 
-        const expertiseTags_list = expertiseTagsResponse.data.reduce((acc, tag) => {
-          acc[tag._id] = tag.tagName;
-          return acc;
-        }, {});
+      const modelTagsMap = modelTagsResponse.data.reduce((acc, tag) => {
+        acc[tag._id] = tag.tagName;
+        return acc;
+      }, {});
 
+      const expertiseTagsMap = expertiseTagsResponse.data.reduce((acc, tag) => {
+        acc[tag._id] = tag.tagName;
+        return acc;
+      }, {});
 
-        const enhancedMarkers = markersResponse.data.map((marker) => ({
-          ...marker,
-          role: rolesMap[marker.role] || marker.role,
-          techTags: Array.isArray(marker.techTags)
-            ? marker.techTags.map(tagId => techTags_list[tagId] || tagId)
-            : [], // Default to an empty array
-          modelTags: Array.isArray(marker.modelTags)
-            ? marker.modelTags.map(tagId => modelTags_list[tagId] || tagId)
-            : [], // Default to an empty array
-          expertiseAreaTags: Array.isArray(marker.expertiseAreaTags)
-            ? marker.expertiseAreaTags.map(tagId => expertiseTags_list[tagId] || tagId)
-            : [] // Default to an empty array
-        }));
+      const enhancedMarkers = markersResponse.data.map((marker) => ({
+        ...marker,
+        role: rolesMap[marker.role] || marker.role,
+        techTags: Array.isArray(marker.techTags)
+          ? marker.techTags.map((tagId) => techTagsMap[tagId] || tagId)
+          : [],
+        modelTags: Array.isArray(marker.modelTags)
+          ? marker.modelTags.map((tagId) => modelTagsMap[tagId] || tagId)
+          : [],
+        expertiseAreaTags: Array.isArray(marker.expertiseAreaTags)
+          ? marker.expertiseAreaTags.map((tagId) => expertiseTagsMap[tagId] || tagId)
+          : [],
+      }));
 
-        setMarkers(enhancedMarkers);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (pathname === '/markers/approve_marker' || pathname === '/markers/delete_marker') {
-      fetchMarkersData();
+      setMarkers(enhancedMarkers);
+    } catch (error) {
+      setMarkers([]); // Reset to empty state on error
+    } finally {
+      setLoading(false);
     }
   }, [pathname, token]);
+
+  useEffect(() => {
+    if (pathname === '/markers/approve_marker' || pathname === '/markers/delete_marker') {
+      setMarkers([]); // Clear stale markers
+      fetchMarkersData();
+    }
+  }, [pathname, fetchMarkersData]);
+
+  const handleMarkerUpdate = async (id, verified) => {
+      fetchMarkersData(); // Re-fetch the markers to ensure the state is up to date
+      
+  };
 
   const handleChangePage = (event, newPage) => {
     setCurrentPage((prev) => ({ ...prev, [pathname]: newPage }));
@@ -161,12 +162,33 @@ function DashboardLayoutBasic() {
       );
     }
 
-    const page = currentPage[pathname] || 1;
-    const indexOfLastMarker = page * markersPerPage;
-    const indexOfFirstMarker = indexOfLastMarker - markersPerPage;
-    const currentMarkers = markers.slice(indexOfFirstMarker, indexOfLastMarker);
 
-    if (pathname === '/markers/approve_marker' || pathname === '/markers/delete_marker') {
+    if ((pathname === '/markers/approve_marker' || pathname === '/markers/delete_marker') && markers.length === 0) {
+      // Show "No markers found" message only for marker-related routes
+      return (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 400 }}>
+          <Typography variant="h6">No markers found for this category.</Typography>
+        </Box>
+      );
+    }
+
+    if (pathname === '/markers/approve_marker' || pathname === '/markers/delete_marker' ) {
+
+      const page = currentPage[pathname] || 1;
+      const indexOfLastMarker = page * markersPerPage;
+      const indexOfFirstMarker = indexOfLastMarker - markersPerPage;
+      const currentMarkers = markers.slice(indexOfFirstMarker, indexOfLastMarker);
+
+      if (currentMarkers.length === 0 && page > 1) {
+        // If the page is empty, decrement the page and re-render
+        setCurrentPage((prev) => ({
+          ...prev,
+          [pathname]: page - 1,
+        }));
+        return null; // Temporarily render nothing until the next re-render
+      }
+    
+
       const MarkerCardComponent =
         pathname === '/markers/approve_marker' ? MarkerCardForVerification : MarkerCardForDeletion;
       return (
@@ -184,9 +206,11 @@ function DashboardLayoutBasic() {
         </Box>
       );
     }
+
     if (pathname === '/dashboard') {
       return <DashboardHome />;
     }
+
     return <Typography>Dashboard content for {pathname}</Typography>;
   };
 

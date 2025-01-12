@@ -46,7 +46,7 @@ const AddPage = () => {
     };
 
     useEffect(() => {
-      axios.get('http://https://backend-delta-seven-47.vercel.app/api/roles')
+      axios.get('https://backend-delta-seven-47.vercel.app/api/roles')
         .then(response => {
           const roles = response.data.map(role => ({
             id: role._id,

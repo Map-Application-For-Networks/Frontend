@@ -46,7 +46,7 @@ const AddPage = () => {
     };
 
     useEffect(() => {
-      axios.get('http://localhost:3001/api/roles')
+      axios.get('http://https://backend-delta-seven-47.vercel.app/api/roles')
         .then(response => {
           const roles = response.data.map(role => ({
             id: role._id,
@@ -61,7 +61,7 @@ const AddPage = () => {
     
     
     useEffect(() => {
-      axios.get('http://localhost:3001/api/techtags') // Assuming you have a similar API endpoint for tags
+      axios.get('http://backend-delta-seven-47.vercel.app/api/techtags') // Assuming you have a similar API endpoint for tags
         .then(response => {
           const tags = response.data.map(tag => ({
             id: tag._id,
@@ -75,7 +75,7 @@ const AddPage = () => {
     }, []);
 
     useEffect(() => {
-      axios.get('http://localhost:3001/api/modeltags') // Assuming you have a similar API endpoint for tags
+      axios.get('http://backend-delta-seven-47.vercel.app/api/modeltags') // Assuming you have a similar API endpoint for tags
         .then(response => {
           const tags = response.data.map(tag => ({
             id: tag._id,
@@ -89,7 +89,7 @@ const AddPage = () => {
     }, []);
 
     useEffect(() => {
-      axios.get('http://localhost:3001/api/expertisetags') // Assuming you have a similar API endpoint for tags
+      axios.get('http://backend-delta-seven-47.vercel.app/api/expertisetags') // Assuming you have a similar API endpoint for tags
         .then(response => {
           const tags = response.data.map(tag => ({
             id: tag._id,
@@ -104,11 +104,11 @@ const AddPage = () => {
 
     useEffect(() => {
       Promise.all([
-        axios.get('http://localhost:3001/api/verified-markers'),
-        axios.get('http://localhost:3001/api/roles'),
-        axios.get('http://localhost:3001/api/techtags'),
-        axios.get('http://localhost:3001/api/modeltags'),
-        axios.get('http://localhost:3001/api/expertisetags')
+        axios.get('http://backend-delta-seven-47.vercel.app/api/verified-markers'),
+        axios.get('http://backend-delta-seven-47.vercel.app/api/roles'),
+        axios.get('http://backend-delta-seven-47.vercel.app/api/techtags'),
+        axios.get('http://backend-delta-seven-47.vercel.app/api/modeltags'),
+        axios.get('http://backend-delta-seven-47.vercel.app/api/expertisetags')
       ]).then(([markersResponse, rolesResponse, techTagsResponse, modelTagsResponse, expertiseTagsResponse]) => {
         const roles = rolesResponse.data.reduce((acc, role) => {
           acc[role._id] = role.roleName;

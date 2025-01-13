@@ -28,7 +28,7 @@ const MarkerCardForDeletion = ({ marker, onMarkerUpdate }) => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:3001/api/marker/${_id}/delete`,
+        `https://backend-delta-seven-47.vercel.app/api/marker/${_id}/delete`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

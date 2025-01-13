@@ -31,7 +31,7 @@ export const validateForm = ({ institutionTitle, email, phoneNumber, details, vi
 // Fetch tags from API
 export const fetchTechTags = async (setTags) => {
   try {
-    const response = await axios.get('http://localhost:3001/api/techtags');
+    const response = await axios.get('https://backend-delta-seven-47.vercel.app/api/techtags');
     const fetchedTags = response.data.map(tag => ({
       label: tag.tagName,
       value: tag._id
@@ -44,7 +44,7 @@ export const fetchTechTags = async (setTags) => {
 
 export const fetchModelTags = async (setTags) => {
   try {
-    const response = await axios.get('http://localhost:3001/api/modeltags');
+    const response = await axios.get('https://backend-delta-seven-47.vercel.app/api/modeltags');
     const fetchedTags = response.data.map(tag => ({
       label: tag.tagName,
       value: tag._id
@@ -57,7 +57,7 @@ export const fetchModelTags = async (setTags) => {
 
 export const fetchExpertiseAreaTags = async (setTags) => {
   try {
-    const response = await axios.get('http://localhost:3001/api/expertisetags');
+    const response = await axios.get('https://backend-delta-seven-47.vercel.app/api/expertisetags');
     const fetchedTags = response.data.map(tag => ({
       label: tag.tagName,
       value: tag._id
@@ -71,7 +71,7 @@ export const fetchExpertiseAreaTags = async (setTags) => {
 // Fetch roles from API
 export const fetchRoles = async (setRolesList) => {
   try {
-    const response = await axios.get('http://localhost:3001/api/roles');
+    const response = await axios.get('https://backend-delta-seven-47.vercel.app/api/roles');
     const roles = response.data.map(role => ({
       label: role.roleName,
       value: role._id

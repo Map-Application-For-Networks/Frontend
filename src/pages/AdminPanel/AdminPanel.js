@@ -65,7 +65,7 @@ function DashboardLayoutBasic() {
     }
 
     axios
-      .get('http://localhost:3001/api/validate-token', {
+      .get('https://backend-delta-seven-47.vercel.app/api/validate-token', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .catch(() => {
@@ -75,8 +75,8 @@ function DashboardLayoutBasic() {
 
   const fetchMarkersData = useCallback(async () => {
     const apiEndpoints = {
-      '/markers/approve_marker': 'http://localhost:3001/api/refuted-markers',
-      '/markers/delete_marker': 'http://localhost:3001/api/verified-markers',
+      '/markers/approve_marker': 'https://backend-delta-seven-47.vercel.app/api/refuted-markers',
+      '/markers/delete_marker': 'https://backend-delta-seven-47.vercel.app/api/verified-markers',
     };
 
     const endpoint = apiEndpoints[pathname];
@@ -89,10 +89,10 @@ function DashboardLayoutBasic() {
     try {
       const [markersResponse, rolesResponse, techTagsResponse, modelTagsResponse, expertiseTagsResponse] = await Promise.all([
         axios.get(endpoint, { headers: { Authorization: `Bearer ${token}` } }),
-        axios.get('http://localhost:3001/api/roles'),
-        axios.get('http://localhost:3001/api/techtags'),
-        axios.get('http://localhost:3001/api/modeltags'),
-        axios.get('http://localhost:3001/api/expertisetags'),
+        axios.get('https://backend-delta-seven-47.vercel.app/api/roles'),
+        axios.get('https://backend-delta-seven-47.vercel.app/api/techtags'),
+        axios.get('https://backend-delta-seven-47.vercel.app/api/modeltags'),
+        axios.get('https://backend-delta-seven-47.vercel.app/api/expertisetags'),
       ]);
 
       const rolesMap = rolesResponse.data.reduce((acc, role) => {

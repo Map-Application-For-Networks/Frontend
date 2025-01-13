@@ -28,7 +28,7 @@ const MarkerCardForVerification = ({ marker, onMarkerUpdate }) => {
   const handleApprove = async () => {
     try {
       await axios.patch(
-        `http://localhost:3001/api/marker/${_id}/verify`,
+        `https://backend-delta-seven-47.vercel.app/api/marker/${_id}/verify`,
         { verified: 1 },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -43,7 +43,7 @@ const MarkerCardForVerification = ({ marker, onMarkerUpdate }) => {
   const handleDisapprove = async () => {
     try {
       await axios.delete(
-        `http://localhost:3001/api/marker/${_id}/delete`,
+        `https://backend-delta-seven-47.vercel.app/api/marker/${_id}/delete`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

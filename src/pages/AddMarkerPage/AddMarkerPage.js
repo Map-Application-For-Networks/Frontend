@@ -114,7 +114,7 @@ const handleClick = () => {
     console.log(formDataForAPI)
 
     // Step 3: Send the data to the API
-    axios.post('http://localhost:3001/api/addmarker', formDataForAPI)
+    axios.post('https://backend-delta-seven-47.vercel.app/api/addmarker', formDataForAPI)
       .then(response => {
         // Successfully submitted the marker
         console.log('Marker added successfully:', response.data);

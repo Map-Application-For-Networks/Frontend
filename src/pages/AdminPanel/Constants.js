@@ -1,4 +1,4 @@
-import {PersonAddDisabled, PersonAdd, AccountBox, Assignment, Tag, Room, Settings, Dashboard, CheckCircle, Delete, Logout } from '@mui/icons-material';
+import { Tag, Room, Dashboard, CheckCircle, Delete, Logout, Biotech, Science, Coronavirus, AddCircle, RemoveCircle } from '@mui/icons-material';
 import { createTheme } from '@mui/material/styles';
 
 export const NAVIGATION = [
@@ -28,23 +28,7 @@ export const NAVIGATION = [
           },
         ],
     },
-    {
-      segment: 'users',
-      title: 'Users',
-      icon: <AccountBox />,
-      children: [
-        {
-          segment: 'add_user',
-          title: 'Add User',
-          icon: <PersonAdd/>,
-        },
-        {
-          segment: 'delete_user',
-          title: 'Delete User',
-          icon: <PersonAddDisabled />,
-        },
-      ],
-    },
+   
     {
       kind: 'divider',
     },
@@ -53,19 +37,66 @@ export const NAVIGATION = [
       title: 'Settings',
     },
     {
-      segment: 'add_marker_settings',
-      title: 'Add Marker Settings',
-      icon: <Settings />,
+      segment: 'tags',
+      title: 'Tags',
+      icon: <Tag />,
       children: [
         {
-          segment: 'tag_settings',
-          title: 'Tag Settings',
-          icon: <Tag />,
+          segment: 'expertise_tags',
+          title: 'Area(s) of Expertise Tags',
+          icon: <Science/>,
+          children:
+          [
+            {
+              segment: 'add_expertise_tags',
+              title: 'Add Tags',
+              icon: <AddCircle/>
+            },
+            {
+              segment: 'delete_expertise_tags',
+              title: 'Delete Tags',
+              icon: <RemoveCircle/>
+            },
+
+          ]
         },
         {
-          segment: 'role_settings',
-          title: 'Role Settings',
-          icon: <Assignment />,
+          segment: 'tech_tags',
+          title: 'Technology(s) Tags',
+          icon: <Biotech/>,
+          children:
+          [
+            {
+              segment: 'add_tech_tags',
+              title: 'Add Tags',
+              icon: <AddCircle/>
+            },
+            {
+              segment: 'delete_tech_tags',
+              title: 'Delete Tags',
+              icon: <RemoveCircle/>
+            },
+
+          ]
+        },
+        {
+          segment: 'model_organism_tags',
+          title: 'Model Organism Tags',
+          icon: <Coronavirus />,
+          children:
+          [
+            {
+              segment: 'add_model_organism_tags',
+              title: 'Add Tags',
+              icon: <AddCircle/>
+            },
+            {
+              segment: 'delete_model_organism_tags',
+              title: 'Delete Tags',
+              icon: <RemoveCircle/>
+            },
+
+          ]
         },
       ],
     },

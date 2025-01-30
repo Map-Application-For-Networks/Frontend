@@ -9,6 +9,9 @@ import MarkerCardForDeletion from '../../components/MarkerCardForDeletion';
 import DashboardHome from '../../components/DashboardHome';
 import { NAVIGATION, demoTheme } from './Constants';
 import { useNavigate } from 'react-router-dom';
+import AddTag from '../../components/AddTag';
+import DeleteTag from '../../components/DeleteTag';
+
 
 function DashboardLayoutBasic() {
   const [pathname, setPathname] = useState('/dashboard');
@@ -65,7 +68,7 @@ function DashboardLayoutBasic() {
     }
 
     axios
-      .get('https://backend-delta-seven-47.vercel.app/api/validate-token', {
+      .get('http://localhost:3001/api/validate-token', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .catch(() => {
@@ -162,6 +165,40 @@ function DashboardLayoutBasic() {
       );
     }
 
+    if (pathname.includes('/tags/') && pathname.includes('/add_')) {
+      var tagType = pathname.split('/')[2]; // Extracts 'expertise_tags', 'tech_tags', etc.
+      if (tagType.includes("expertise"))
+        {
+          tagType = "addexpertisetags"
+        }
+        else if (tagType.includes("tech"))
+        {
+          tagType = "addtechtags"
+        }
+        else if (tagType.includes("model"))
+          {
+            tagType = "addmodeltags"
+          }
+      return <AddTag tagType={tagType} />;
+    }
+    
+    if (pathname.includes('/tags/') && pathname.includes('/delete_')) {
+      var tagType = pathname.split('/')[2]; // Extracts 'expertise_tags', 'tech_tags', etc.
+      if (tagType.includes("expertise"))
+        {
+          tagType = "addexpertisetags"
+        }
+        else if (tagType.includes("tech"))
+        {
+          tagType = "addtechtags"
+        }
+        else if (tagType.includes("model"))
+          {
+            tagType = "addmodeltags"
+          }
+      return <DeleteTag tagType={tagType} />;
+    }
+    
 
     if ((pathname === '/markers/approve_marker' || pathname === '/markers/delete_marker') && markers.length === 0) {
       // Show "No markers found" message only for marker-related routes

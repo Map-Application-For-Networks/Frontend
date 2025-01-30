@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardContent, Typography, Grid, IconButton, Button, Box, Chip } from '@mui/material';
+import { Card, CardContent, Typography, Grid, IconButton, Button, Box} from '@mui/material';
+import { Tag } from 'antd';
 import RoomIcon from '@mui/icons-material/Room';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -91,29 +92,30 @@ const MarkerCardForDeletion = ({ marker, onMarkerUpdate }) => {
         <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
           Technologies:
         </Typography>
-        {techTags.map(tag => (
-          <Chip key={tag} label={tag} variant="outlined" sx={{ mt: 1, mr: 1, bgcolor: 'primary.main' }} />
+        {techTags.map((tag, index) => (
+          <Tag key={index} color="orange">{tag}</Tag>
         ))}
 
         <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
           Model Organisms:
         </Typography>
-        {modelTags.map(tag => (
-          <Chip key={tag} label={tag} variant="outlined" sx={{ mt: 1, mr: 1, bgcolor: 'secondary.main' }} />
+        {modelTags.map((tag, index) => (
+          <Tag key={index} color="purple">{tag}</Tag>
         ))}
 
         <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
           Area(s) of Expertise:
         </Typography>
-        {expertiseAreaTags.map(tag => (
-          <Chip key={tag} label={tag} variant="outlined" sx={{ mt: 1, mr: 1, bgcolor: 'success.main' }} />
+        {expertiseAreaTags.map((tag, index) => (
+          <Tag key={index} color="blue">{tag}</Tag>
         ))}
 
         <Typography variant="body2" sx={{ mt: 2, mb: 1 , fontWeight: 'bold' }}>
           Visit Status:
         </Typography>
-        <Chip label={visitStatus} color={getStatusColor(visitStatus)} sx={{ mb: 2 }} />
-        <br></br>
+        <Box sx={{ mt: 1, mb: 2 }}>
+          <Tag color={getStatusColor(visitStatus)}>{visitStatus}</Tag>
+        </Box>
         <Button variant="contained" color="error" startIcon={<DeleteIcon />} sx={{ mt: 1 }} onClick={handleDelete}>
           Delete
         </Button>

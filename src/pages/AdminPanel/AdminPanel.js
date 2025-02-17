@@ -68,7 +68,7 @@ function DashboardLayoutBasic() {
     }
 
     axios
-      .get('http://localhost:3001/api/validate-token', {
+      .get('https://backend-delta-seven-47.vercel.app/api/validate-token', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .catch(() => {

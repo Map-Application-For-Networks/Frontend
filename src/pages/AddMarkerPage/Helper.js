@@ -21,7 +21,6 @@ export const validateForm = ({ institutionTitle, email, phoneNumber, details, vi
   if (selectedModelOrganisms.length === 0) newErrors.selectedModelOrganisms = '*At least one model organism must be selected!';
   if (selectedAreasOfExpertise.length === 0) newErrors.selectedAreasOfExpertise = '*At least one area must be selected!';
 
-  if (!visitingStatus) newErrors.visitingStatus = '*Visiting status is required!';
   if (!location) newErrors.location = '*Location must be selected!';
   if (!role) newErrors.role = '*Role must be selected!';
   

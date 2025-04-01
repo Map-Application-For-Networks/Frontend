@@ -13,6 +13,10 @@ import MultipleSelectChip from '../../components/MultipleSelectChip';
 import ExRNAIcon from '../../icons/ExRNA_PATH_Logo-3.png'; // Import the image (correct the path if needed)
 import { fetchExpertiseAreaTags, fetchModelTags, fetchRoles, fetchTechTags, validateForm } from './Helper';
 import axios from 'axios';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import TagIcon from '@mui/icons-material/Tag';
+import SendIcon from '@mui/icons-material/Send';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
 const DEFAULT_LATITUDE = 40.89;
@@ -55,7 +59,6 @@ const AddPage = () => {
   const [selectedTechnologies, setSelectedTechnologies] = useState([]);
   const [selectedModelOrganisms, setSelectedModelOrganisms] = useState([]);
   const [role, setRole] = useState('');
-  const [visitingStatus, setVisitingStatus] = useState('');
   const [errors, setErrors] = useState({});
   const [areaTags, setAreaTags] = useState([]); 
   const [technologyTags, setTechnologTags] = useState([]); 
@@ -79,8 +82,7 @@ const handleClick = () => {
     institutionTitle, 
     email, 
     phoneNumber, 
-    details, 
-    visitingStatus, 
+    details,  
     location, 
     role,
     selectedAreasOfExpertise,
@@ -103,7 +105,6 @@ const handleClick = () => {
       phone: phoneNumber,            // API expects 'phone' for phone number
       details,
       geocode: geocode,             // API expects 'geocode' for location
-      visitStatus: visitingStatus,   // API expects 'visitStatus' for visiting status
       //researchFieldTopic: selectedTags,  // API expects 'researchFieldTopic' for selectedTags
       expertiseAreaTags: selectedAreasOfExpertise,
       techTags: selectedTechnologies,
@@ -111,7 +112,7 @@ const handleClick = () => {
       role
     };
 
-    console.log(formDataForAPI)
+    //console.log(formDataForAPI)
 
     // Step 3: Send the data to the API
     axios.post('https://backend-delta-seven-47.vercel.app/api/addmarker', formDataForAPI)
@@ -133,11 +134,6 @@ const handleClick = () => {
   }
 };
 
-
-
-  const handleVisitingStatusChange = (event) => {
-    setVisitingStatus(event.target.value);
-  };
 
   const handleRoleChange = (event) => {
     setRole(event.target.value);
@@ -245,21 +241,6 @@ const handleClick = () => {
           {errors.selectedModelOrganisms && <FormHelperText error>{errors.selectedModelOrganisms}</FormHelperText>}
         </FormControl>
 
-        <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Visitor Status of the Facility</Divider>
-        <FormControl variant="outlined" fullWidth error={!!errors.visitingStatus}>
-          <InputLabel id="visiting-status-label">Visiting Status</InputLabel>
-          <Select
-            labelId="visiting-status-label"
-            value={visitingStatus}
-            onChange={handleVisitingStatusChange}
-            label="Visiting Status"
-          >
-            <MenuItem value="Open">Open</MenuItem>
-            <MenuItem value="Closed">Close</MenuItem>
-          </Select>
-          {errors.visitingStatus && <FormHelperText error>{errors.visitingStatus}</FormHelperText>}
-        </FormControl>
-
         <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Location of the Institute or Laboratory</Divider>
         <Container>
         <MapContainer center={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom={DEFAULT_ZOOM} style={{ height: '400px', width: '100%' }}>
@@ -277,13 +258,38 @@ const handleClick = () => {
         {errors.location && <FormHelperText error>{errors.location}</FormHelperText>}
         
         <div className="button-container">
-          <Button variant="contained" onClick={handleClick}>Submit</Button>
-          <Button variant="outlined" onClick={() => navigate('/')}>Cancel</Button>
+          <Button startIcon={<SendIcon/>} variant="contained"  color="success" onClick={handleClick}>Submit</Button>
+          <Button startIcon={<CancelIcon/>} variant="outlined" color="error" onClick={() => navigate('/')}>Cancel</Button>
         </div>
 
-        <div className="centered-link">
-          <Link href="/login" underline="hover">I am the administirator!</Link>
-        </div>
+       <Divider variant="middle" sx={{ my: 3, borderStyle: 'dashed', opacity: 1 }} />
+
+        {/* Admin Login (semantic navigation) */}
+        
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            startIcon={<AdminPanelSettingsIcon />}
+            onClick={() => navigate('/login')}
+            sx={{ fontSize: '0.75rem', px: 3, py: 1.5 }}
+          >
+            Admin Login
+          </Button>
+        
+
+        {/* Suggest Tags (semantic navigation) */}
+
+          <Button
+            fullWidth
+            variant="outlined"
+            color="info"
+            startIcon={<TagIcon />}
+            sx={{ fontSize: '0.75rem', px: 3, py: 1.5 }}
+          >
+            Suggest Tags
+          </Button>
+        
       </div>
     </div>
   );

@@ -1,13 +1,13 @@
 import { Icon, divIcon, point } from "leaflet";
-import laboratoryIconUrl from "../icons/Laboratory.png";
+import researchGroupIconUrl from "../icons/Laboratory.png";
 import researchFacilityIconUrl from "../icons/ResearchFacility.png";
-import sponsorCompanyIconUrl from "../icons/SponsorCompany.png";
+import companyIconUrl from "../icons/SponsorCompany.png";
 
 
 //<---ICONS--->
-const laboratoryIcon = new Icon({
+const researchGroupIcon = new Icon({
     iconSize: [50, 50],
-    iconUrl: laboratoryIconUrl,
+    iconUrl: researchGroupIconUrl,
   });
   
   const researchFacilityIcon = new Icon({
@@ -15,19 +15,19 @@ const laboratoryIcon = new Icon({
     iconUrl: researchFacilityIconUrl,
   });
   
-  const sponsorCompanyIcon = new Icon({
+  const companyIcon = new Icon({
     iconSize: [50, 50],
-    iconUrl: sponsorCompanyIconUrl,
+    iconUrl: companyIconUrl,
   });
   //<---!ICONS--->
 
   //<---SETTING ICONS ACCORDING TO ROLES ---> 
   export const setIconForRole = (role) => {
     switch (role) {
-      case "Sponsor Company":
-        return sponsorCompanyIcon;
-      case "Laboratory":
-        return laboratoryIcon;
+      case "Company":
+        return companyIcon;
+      case "Research Group":
+        return researchGroupIcon;
       case "Research Facility":
         return researchFacilityIcon;
       default:

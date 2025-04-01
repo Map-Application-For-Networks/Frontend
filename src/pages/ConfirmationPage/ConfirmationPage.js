@@ -33,7 +33,7 @@ const ConfirmationPage = () => {
           </Typography>
 
           <Typography variant="body1" sx={{ mb: 2 }}>
-            It will be checked by the authority and added to the map shortly.
+            It will be checked by the authority and added to the map shortly. Please save your reference number.
           </Typography>
 
           <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
@@ -44,7 +44,7 @@ const ConfirmationPage = () => {
             variant="contained"
             color="primary"
             onClick={handleBackToHome}
-            sx={{ mt: 4, px: 4, borderRadius: '20px' }} // Rounded button for a modern look
+            sx={{ mt: 4, px: 4 }} 
           >
             Back to Home
           </Button>

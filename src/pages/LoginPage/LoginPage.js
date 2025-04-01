@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { TextField, Button, Link, Divider } from '@mui/material';
+import { TextField, Button, Divider } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 import ExRNAIcon from '../../icons/ExRNA_PATH_Logo-3.png'; // Add the icon image (correct the path if needed)
@@ -61,7 +63,7 @@ const LoginPage = () => {
         {/* Add the logo at the top */}
         <img src={ExRNAIcon} alt="ExRNA PATH Logo" className="form-logo" />
 
-        <Divider textAlign="left">Login to Your Account</Divider>
+        <Divider textAlign="left">Login to Admin Panel</Divider>
 
         <TextField
           label="Email"
@@ -86,16 +88,14 @@ const LoginPage = () => {
         />
 
         <div className="button-container">
-          <Button variant="contained" onClick={handleLoginClick}>
+           <Button startIcon={< LoginIcon />} variant="contained" onClick={handleLoginClick}>
             Login
+          </Button>
+          <Button startIcon={< ArrowBackIcon />} color="info"  variant="outlined" onClick={() => navigate('/addmarker')}>
+            Back 
           </Button>
         </div>
 
-        <div className="centered-link">
-          <Link href="/signup" underline="hover">
-            Don't have an account? Sign Up
-          </Link>
-        </div>
       </div>
     </div>
   );

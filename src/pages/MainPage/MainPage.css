@@ -57,17 +57,63 @@
   
   .search-container {
     position: absolute;
-    top: 10px; /* Adjust this value to set the top margin */
+    top: 12px; /* Adjust this value to set the top margin */
     left: 50%;
     transform: translateX(-50%);
     width: 30%; /* Set this to half of the map container's width */
     z-index: 1000; /* Ensure the search is above the map layers */
+   
   }
   
   .float_button {
-    z-index: 1000; /* Ensure the search is above the map layers */
+    z-index: 1000;
     position: absolute;
-    top: 10px; /* Adjust this value to set the top margin */
-    right: 5px;
-   
+    top: 12px;
+    right: 8px;
+    overflow: hidden;
+    background-color: #1976d2; /* Material-UI blue */
+    color: white;
+    width: 81px; /* Icon size */
+    height: 81px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* <<< ARTIK SOLA */
+    padding-left: 23px; /* <<< biraz içerden başlasın */
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    cursor: pointer;
   }
+  
+  .float_button:hover {
+    width: 180px; /* expand width on hover */
+    border-radius: 28px; /* make it a rounded rectangle */
+  }
+  
+  .float_button_text {
+    color: white;
+    margin-left: 8px;
+    opacity: 0;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  
+  .float_button:hover .float_button_text {
+    opacity: 1;
+  }
+  
+
+  .version-label {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #555;
+    pointer-events: none;
+    z-index: 1000;
+  }
+  

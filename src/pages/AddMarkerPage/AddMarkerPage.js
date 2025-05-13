@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
-import { TextField, Button, Divider, FormControl, InputLabel, MenuItem, Select, FormHelperText, Link, Container } from '@mui/material';
+import { TextField, Button, Divider, FormControl, InputLabel, MenuItem, Select, FormHelperText, Container,CircularProgress, Typography  } from '@mui/material';
 import './AddMarkerPage.css';
 import LocateControl from '../../components/LocateControl';
 import SearchControl from '../../components/SearchControl';
@@ -64,6 +64,7 @@ const AddPage = () => {
   const [technologyTags, setTechnologTags] = useState([]); 
   const [organismTags, setOrganismTags] = useState([]); 
   const [rolesList, setRolesList] = useState([]); 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
 
@@ -95,7 +96,7 @@ const handleClick = () => {
 
   // Step 2: If no validation errors, prepare data and submit it
   if (Object.keys(newErrors).length === 0) {
-    
+    setLoading(true);
     const geocode = [location.lat, location.lng];
     
     
@@ -127,6 +128,9 @@ const handleClick = () => {
         // Handle any errors during the API call
         console.error('Error adding marker:', error);
         console.log(location)
+      })
+      .finally(() => {
+        setLoading(false);
       });
   } else {
     // If there are validation errors, set them to display on the form
@@ -140,6 +144,18 @@ const handleClick = () => {
   };
 
   return (
+    <div style={{ width: '100%', height: '100vh', position: 'relative' }}>
+      {loading ? (
+        <div style={{
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          justifyContent: 'center', height: '100%'
+        }}>
+          <CircularProgress />
+          <Typography variant="h6" style={{ marginTop: '10px' }}>
+            Marker is uploading to the system, please wait...
+          </Typography>
+        </div>
+      ) : (
     <div className="page-container">
       <div className="form-container">
         {/* Adding the logo at the top */}
@@ -291,9 +307,9 @@ const handleClick = () => {
           </Button>
         
       </div>
-    </div>
+    </div>)}
+  </div> 
   );
 };
 
 export default AddPage;
-

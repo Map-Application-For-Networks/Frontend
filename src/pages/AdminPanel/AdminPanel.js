@@ -161,44 +161,25 @@ function DashboardLayoutBasic() {
       return (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 400 }}>
           <CircularProgress />
-        </Box>
-      );
+        </Box>); 
     }
 
-    if (pathname.includes('/tags/') && pathname.includes('/add_')) {
-      var tagType = pathname.split('/')[2]; // Extracts 'expertise_tags', 'tech_tags', etc.
-      if (tagType.includes("expertise"))
-        {
-          tagType = "addexpertisetags"
-        }
-        else if (tagType.includes("tech"))
-        {
-          tagType = "addtechtags"
-        }
-        else if (tagType.includes("model"))
-          {
-            tagType = "addmodeltags"
-          }
-      return <AddTag tagType={tagType} />;
-    }
+    if (pathname.includes('/tags/')) {
+      let pathTag = pathname.split('/')[2]; // expertise_tags, tech_tags, vs.
+      let action = pathname.includes('/add_') ? 'add' : pathname.includes('/delete_') ? 'delete' : null;
+      if (!action) return null;
     
-    if (pathname.includes('/tags/') && pathname.includes('/delete_')) {
-      var tagType = pathname.split('/')[2]; // Extracts 'expertise_tags', 'tech_tags', etc.
-      if (tagType.includes("expertise"))
-        {
-          tagType = "addexpertisetags"
-        }
-        else if (tagType.includes("tech"))
-        {
-          tagType = "addtechtags"
-        }
-        else if (tagType.includes("model"))
-          {
-            tagType = "addmodeltags"
-          }
-      return <DeleteTag tagType={tagType} />;
-    }
+      let tagType = "";
+      if (pathTag.includes("expertise")) {
+        tagType = "addexpertisetags";
+      } else if (pathTag.includes("tech")) {
+        tagType = "addtechtags";
+      } else if (pathTag.includes("model")) {
+        tagType = "addmodeltags";
+      }
     
+      return action === 'add' ? <AddTag tagType={tagType} /> : <DeleteTag tagType={tagType} />;
+    }
 
     if ((pathname === '/markers/approve_marker' || pathname === '/markers/delete_marker') && markers.length === 0) {
       // Show "No markers found" message only for marker-related routes

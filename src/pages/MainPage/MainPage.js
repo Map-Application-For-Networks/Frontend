@@ -11,12 +11,14 @@ import SearchControl from '../../components/SearchControl';
 import { setIconForRole } from '../../components/iconHelper';
 import { createOverlayControl } from '../../components/LayerControlUtils';
 import SearchComponent from '../../components/SearchComponent';
-import { Fab, CircularProgress, Typography } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { processMarkers } from '../../components/HelperFunctions';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { MAIN_VERSION } from '../../components/Version';
+
 
 const DEFAULT_LATITUDE = 40.89;
 const DEFAULT_LONGITUDE = 29.37;
@@ -27,9 +29,6 @@ const AddPage = () => {
   const navigate = useNavigate();
   const [markers, setMarkers] = useState([]);
   const [rolesList, setRolesList] = useState([]);
-  const [techTagsList, setTechTagsList] = useState([]);
-  const [modelTagsList, setModelTagsList] = useState([]);
-  const [expertiseTagList, setExpertiseTagList] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const handleClick = () => {
@@ -75,9 +74,6 @@ const AddPage = () => {
 
         setMarkers(updatedMarkers);
         setRolesList(Object.values(roles));
-        setTechTagsList(Object.values(techTags_list));
-        setModelTagsList(Object.values(modelTags_list));
-        setExpertiseTagList(Object.values(expertiseTags_list));
         setLoading(false);
       })
       .catch(error => {
@@ -116,11 +112,12 @@ const AddPage = () => {
               createOverlayControl(role, processedMarkers, setIconForRole)
             )}
           </LayersControl>
-          <div className="float_button">
-            <Fab color="primary" aria-label="add" onClick={handleClick}>
-              <AddIcon />
-            </Fab>
+          <div className="float_button" onClick={handleClick}>
+          <AddIcon style={{ fontSize: 32 }} /> 
+            <span className="float_button_text">Add Marker</span>
           </div>
+
+          <div className="version-label">Network App v{MAIN_VERSION}</div>
         </MapContainer>
       )}
     </div>

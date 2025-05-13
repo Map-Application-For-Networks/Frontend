@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Divider } from '@mui/material';
+import { TextField, Button, Divider, Alert, AlertTitle } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +11,8 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const navigate = useNavigate();
 
   const validateForm = () => {
@@ -35,7 +37,7 @@ const LoginPage = () => {
     if (validateForm()) {
       try {
         const response = await axios.post('https://backend-delta-seven-47.vercel.app/api/login', {
-          username: email, // Replace 'username' if backend expects 'email'
+          username: email, 
           password: password,
         });
   
@@ -47,11 +49,9 @@ const LoginPage = () => {
       } catch (error) {
         if (error.response) {
           // Handle server errors
-          alert(error.response.data.message || 'Login failed. Please try again.');
+          setErrorMessage(error.response.data.message || 'Login failed. Please try again.');
         } else {
-          // Handle network or other errors
-          console.error('Error:', error.message);
-          alert('An error occurred while logging in. Please try again.');
+          setErrorMessage('An error occurred while logging in. Please try again.');
         }
       }
     }
@@ -64,6 +64,14 @@ const LoginPage = () => {
         <img src={ExRNAIcon} alt="ExRNA PATH Logo" className="form-logo" />
 
         <Divider textAlign="left">Login to Admin Panel</Divider>
+        {errorMessage && (
+            <Alert severity="error" variant="filled" sx={{ mt: 2, mb: 2 }}>
+              <AlertTitle>Error</AlertTitle>
+              {errorMessage}
+            </Alert>
+          )}
+
+
 
         <TextField
           label="Email"
@@ -95,7 +103,6 @@ const LoginPage = () => {
             Back 
           </Button>
         </div>
-
       </div>
     </div>
   );

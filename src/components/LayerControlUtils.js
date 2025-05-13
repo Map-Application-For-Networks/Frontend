@@ -2,7 +2,6 @@ import { Marker, LayerGroup, LayersControl, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { createClusterCustomIcon } from './iconHelper';
 import { Tag } from 'antd';
-import tastanlabImage from '../icons/tastanlab.png'; // This is for demo purposes. You need to import all images or take it from the backend.
 import ExRNAIcon from '../icons/ExRNA_PATH_Logo-3.png'; 
 import './Popup.css'; // You can change the design patterns from this file.
 

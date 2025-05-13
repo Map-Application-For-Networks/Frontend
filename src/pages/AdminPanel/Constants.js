@@ -1,5 +1,6 @@
 import { Tag, Room, Dashboard, CheckCircle, Delete, Logout, Biotech, Science, Coronavirus, AddCircle, RemoveCircle } from '@mui/icons-material';
 import { createTheme } from '@mui/material/styles';
+import { ADMIN_DASHBORD_VERSION } from '../../components/Version'; 
 
 export const NAVIGATION = [
     {
@@ -106,6 +107,15 @@ export const NAVIGATION = [
       icon: <Logout />, // You can use another icon for logout, e.g., <ExitToApp />
    
     },
+    {
+      kind: 'header',
+      title: `Admin Dashboard · V ${ADMIN_DASHBORD_VERSION}`,
+      style: {
+        color: '#999',
+        fontSize: '0.75rem',
+        pointerEvents: 'none',
+      },
+    }
   ];
 
 

@@ -12,7 +12,13 @@ import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import axios from 'axios';
 
 const MarkerCardForDeletion = ({ marker, onMarkerUpdate }) => {
-  const { _id ,title, details, geocode, email, phone, visitStatus, verified, date, createdAt, updatedAt, techTags, modelTags, expertiseAreaTags, role } = marker;
+  const { _id ,title, details, geocode, email, phone, verified, date, createdAt, updatedAt,  organismTags,
+    drivenProcessTags,
+    classTags,
+    carrierTags,
+    applicationAreaTags,
+    researchExpertiseTags,
+    technicalExpertiseTags, role } = marker;
 
   const token = localStorage.getItem('token'); // Retrieve token
 
@@ -41,13 +47,13 @@ const MarkerCardForDeletion = ({ marker, onMarkerUpdate }) => {
   };
 
   return (
-    <Card sx={{ minWidth: 275, margin: 2, boxShadow: 3 }}>
+    <Card sx={{ width: '100%', maxWidth: 1000, minWidth: 275, margin: '16px auto', boxShadow: 3, borderRadius: 2 }}>
       <CardContent>
         <Typography variant="h5" component="div" gutterBottom>
           {title} {verified ? <VerifiedIcon color="primary" /> : <NewReleasesIcon color="error" />}
         </Typography>
         
-        <Box sx={{ backgroundColor: '#f3f6f9', borderRadius: 1, padding: 2, marginY: 1 }}>
+        <Box sx={{ backgroundColor: '#f3f6f9', borderRadius: 2, padding: 2, marginY: 1 }}>
           <Typography variant="subtitle1" color="text.secondary" gutterBottom>
             Details
           </Typography>
@@ -89,36 +95,60 @@ const MarkerCardForDeletion = ({ marker, onMarkerUpdate }) => {
           </Grid>
         </Grid>
 
-        <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
-          Technologies:
-        </Typography>
-        {techTags.map((tag, index) => (
-          <Tag key={index} color="orange">{tag}</Tag>
-        ))}
+       <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+                 Organisms:
+               </Typography>
+               {organismTags?.map((tag, index) => (
+                 <Tag key={`organism-${index}`} color="blue">{tag}</Tag>
+               ))}
+       
+               <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+                 exRNA-Driven Process:
+               </Typography>
+               {drivenProcessTags?.map((tag, index) => (
+                 <Tag key={`driven-${index}`} color="orange">{tag}</Tag>
+               ))}
+       
+               <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+                 Class of exRNA:
+               </Typography>
+               {classTags?.map((tag, index) => (
+                 <Tag key={`class-${index}`} color="purple">{tag}</Tag>
+               ))}
+       
+               <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+                 Carrier of exRNA:
+               </Typography>
+               {carrierTags?.map((tag, index) => (
+                 <Tag key={`carrier-${index}`} color="green">{tag}</Tag>
+               ))}
+       
+               <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+                 Application Area:
+               </Typography>
+               {applicationAreaTags?.map((tag, index) => (
+                 <Tag key={`apparea-${index}`} color="gold">{tag}</Tag>
+               ))}
+       
+               <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+                 Research Expertise:
+               </Typography>
+               {researchExpertiseTags?.map((tag, index) => (
+                 <Tag key={`research-${index}`} color="cyan">{tag}</Tag>
+               ))}
+       
+               <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
+                 Technical Expertise:
+               </Typography>
+               {technicalExpertiseTags?.map((tag, index) => (
+                 <Tag key={`techx-${index}`} color="volcano">{tag}</Tag>
+               ))}
 
-        <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
-          Model Organisms:
-        </Typography>
-        {modelTags.map((tag, index) => (
-          <Tag key={index} color="purple">{tag}</Tag>
-        ))}
-
-        <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}>
-          Area(s) of Expertise:
-        </Typography>
-        {expertiseAreaTags.map((tag, index) => (
-          <Tag key={index} color="blue">{tag}</Tag>
-        ))}
-
-        <Typography variant="body2" sx={{ mt: 2, mb: 1 , fontWeight: 'bold' }}>
-          Visit Status:
-        </Typography>
-        <Box sx={{ mt: 1, mb: 2 }}>
-          <Tag color={getStatusColor(visitStatus)}>{visitStatus}</Tag>
-        </Box>
+       <Box sx={{ mt: 2 }}>
         <Button variant="contained" color="error" startIcon={<DeleteIcon />} sx={{ mt: 1 }} onClick={handleDelete}>
           Delete
         </Button>
+      </Box>
       </CardContent>
     </Card>
   );

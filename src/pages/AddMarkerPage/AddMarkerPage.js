@@ -11,7 +11,7 @@ import SearchControl from '../../components/SearchControl';
 import { useNavigate } from 'react-router-dom';
 import MultipleSelectChip from '../../components/MultipleSelectChip';
 import ExRNAIcon from '../../icons/ExRNA_PATH_Logo-3.png'; // Import the image (correct the path if needed)
-import { fetchExpertiseAreaTags, fetchModelTags, fetchRoles, fetchTechTags, validateForm } from './Helper';
+import { fetchDrivenProcessTags, fetchOrganismTags, fetchCarrierOfExrnaTags,fetchClassOfExrnaTags,fetchApplicationAreaTags, fetchResearchExpertiseTags, fetchTechnicalExpertiseTags, fetchRoles, validateForm } from './Helper';
 import axios from 'axios';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import TagIcon from '@mui/icons-material/Tag';
@@ -55,23 +55,39 @@ const AddPage = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [details, setDetails] = useState('');
   const [location, setLocation] = useState(null);
-  const [selectedAreasOfExpertise, setSelectedAreasOfExpertise] = useState([]);
-  const [selectedTechnologies, setSelectedTechnologies] = useState([]);
-  const [selectedModelOrganisms, setSelectedModelOrganisms] = useState([]);
+
   const [role, setRole] = useState('');
   const [errors, setErrors] = useState({});
-  const [areaTags, setAreaTags] = useState([]); 
-  const [technologyTags, setTechnologTags] = useState([]); 
   const [organismTags, setOrganismTags] = useState([]); 
+  const [drivenProcessTags, setDrivenProcessTags] = useState([]); 
+  const [classOfExrnaTags, setClassOfExrnaTags] = useState([]); 
+  const [carrierOfExrnaTags, setCarrierOfExrnaTags] = useState([]); 
+  const [applicationAreaTags, setApplicationAreaTags] = useState([]);
+  const [researchExpertiseTags, setResearchExpertiseTags] = useState([]);
+  const [technicalExpertiseTags, setTechnicalExpertiseTags] = useState([]);
+
+
+  const [selectedOrganism, setSelectedOrganism] = useState([]);
+  const [selectedDrivenProcess, setSelectedDrivenProcess] = useState([]);
+  const [selectedClassOfExrna, setSelectedClassOfExrna] = useState([]);
+  const [selectedCarrierOfExrna, setSelectedCarrierOfExrna] = useState([]);
+  const [selectedApplicationArea, setSelectedApplicationArea] = useState([]);
+  const [selectedResearchExpertise, setSelectedResearchExpertise] = useState([]);
+  const [selectedTechnicalExpertise, setSelectedTechnicalExpertise] = useState([]);
+
   const [rolesList, setRolesList] = useState([]); 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
 
 useEffect(() => {
-  fetchExpertiseAreaTags(setAreaTags);
-  fetchTechTags(setTechnologTags);
-  fetchModelTags(setOrganismTags);
+  fetchOrganismTags(setOrganismTags);
+  fetchDrivenProcessTags(setDrivenProcessTags)
+  fetchClassOfExrnaTags(setClassOfExrnaTags)
+  fetchCarrierOfExrnaTags(setCarrierOfExrnaTags)
+  fetchApplicationAreaTags(setApplicationAreaTags)
+  fetchResearchExpertiseTags(setResearchExpertiseTags)
+  fetchTechnicalExpertiseTags(setTechnicalExpertiseTags)
   fetchRoles(setRolesList);
 }, []);
 
@@ -86,10 +102,13 @@ const handleClick = () => {
     details,  
     location, 
     role,
-    selectedAreasOfExpertise,
-    selectedTechnologies,
-    selectedModelOrganisms
-
+    selectedOrganism,
+    selectedDrivenProcess,
+    selectedClassOfExrna,
+    selectedCarrierOfExrna,
+    selectedApplicationArea,
+    selectedResearchExpertise,
+    selectedTechnicalExpertise
   });
 
   //console.log(newErrors); // Debugging validation errors
@@ -107,10 +126,17 @@ const handleClick = () => {
       details,
       geocode: geocode,             // API expects 'geocode' for location
       //researchFieldTopic: selectedTags,  // API expects 'researchFieldTopic' for selectedTags
-      expertiseAreaTags: selectedAreasOfExpertise,
-      techTags: selectedTechnologies,
-      modelTags: selectedModelOrganisms,
-      role
+      //expertiseAreaTags: selectedAreasOfExpertise,
+      //techTags: selectedTechnologies,
+      //modelTags: selectedModelOrganisms,
+      organismTags:selectedOrganism,
+      drivenProcessTags:selectedDrivenProcess,
+      classTags:selectedClassOfExrna,
+      carrierTags:selectedCarrierOfExrna,
+      applicationAreaTags:selectedApplicationArea,
+      researchExpertiseTags:selectedResearchExpertise,
+      technicalExpertiseTags:selectedTechnicalExpertise,
+      role:role
     };
 
     //console.log(formDataForAPI)
@@ -227,35 +253,77 @@ const handleClick = () => {
         </FormControl>
 
         <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Details About Research</Divider>
-        <FormControl fullWidth error={!!errors.selectedAreasOfExpertise} >
+        <FormControl fullWidth error={!!errors.selectedOrganism} >
           <MultipleSelectChip
-            label="Area(s) of Expertise" 
-            tags={areaTags} 
-            selectedTags={selectedAreasOfExpertise} 
-            setSelectedTags={setSelectedAreasOfExpertise} 
-          />
-          {errors.selectedAreasOfExpertise && <FormHelperText error>{errors.selectedAreasOfExpertise}</FormHelperText>}
-        </FormControl>
-
-        <FormControl fullWidth error={!!errors.selectedTechnologies} >
-          <MultipleSelectChip 
-            label="Technology(s)"
-            tags={technologyTags} 
-            selectedTags={selectedTechnologies} 
-            setSelectedTags={setSelectedTechnologies} 
-          />
-          {errors.selectedTechnologies && <FormHelperText error>{errors.selectedTechnologies}</FormHelperText>}
-        </FormControl>
-
-        <FormControl fullWidth error={!!errors.selectedModelOrganisms} >
-          <MultipleSelectChip 
-            label="Model Organism"
+            label="Organism" 
             tags={organismTags} 
-            selectedTags={selectedModelOrganisms} 
-            setSelectedTags={setSelectedModelOrganisms} 
+            selectedTags={selectedOrganism} 
+            setSelectedTags={setSelectedOrganism} 
           />
-          {errors.selectedModelOrganisms && <FormHelperText error>{errors.selectedModelOrganisms}</FormHelperText>}
+          {errors.selectedOrganism && <FormHelperText error>{errors.selectedOrganism}</FormHelperText>}
         </FormControl>
+
+        <FormControl fullWidth error={!!errors.selectedDrivenProcess} >
+          <MultipleSelectChip
+            label="exRNA-Driven Process" 
+            tags={drivenProcessTags} 
+            selectedTags={selectedDrivenProcess} 
+            setSelectedTags={setSelectedDrivenProcess} 
+          />
+          {errors.selectedDrivenProcess && <FormHelperText error>{errors.selectedDrivenProcess}</FormHelperText>}
+        </FormControl>
+
+        <FormControl fullWidth error={!!errors.selectedClassOfExrna} >
+          <MultipleSelectChip
+            label="Class of exRNA" 
+            tags={classOfExrnaTags} 
+            selectedTags={selectedClassOfExrna} 
+            setSelectedTags={setSelectedClassOfExrna} 
+          />
+          {errors.selectedClassOfExrna && <FormHelperText error>{errors.selectedClassOfExrna}</FormHelperText>}
+        </FormControl>
+
+        <FormControl fullWidth error={!!errors.selectedCarrierOfExrna} >
+          <MultipleSelectChip
+            label="Carrier of exRNA" 
+            tags={carrierOfExrnaTags} 
+            selectedTags={selectedCarrierOfExrna} 
+            setSelectedTags={setSelectedCarrierOfExrna} 
+          />
+          {errors.selectedCarrierOfExrna && <FormHelperText error>{errors.selectedCarrierOfExrna}</FormHelperText>}
+        </FormControl>
+          
+        <FormControl fullWidth error={!!errors.selectedApplicationArea} >
+          <MultipleSelectChip
+            label="Application Area" 
+            tags={applicationAreaTags} 
+            selectedTags={selectedApplicationArea} 
+            setSelectedTags={setSelectedApplicationArea} 
+          />
+          {errors.selectedApplicationArea && <FormHelperText error>{errors.selectedApplicationArea}</FormHelperText>}
+        </FormControl>
+
+        <FormControl fullWidth error={!!errors.selectedResearchExpertise} >
+          <MultipleSelectChip
+            label="Research Expertise" 
+            tags={researchExpertiseTags} 
+            selectedTags={selectedResearchExpertise} 
+            setSelectedTags={setSelectedResearchExpertise} 
+          />
+          {errors.selectedResearchExpertise && <FormHelperText error>{errors.selectedResearchExpertise}</FormHelperText>}
+        </FormControl>
+
+        <FormControl fullWidth error={!!errors.selectedTechnicalExpertise} >
+          <MultipleSelectChip
+            label="Technical Expertise" 
+            tags={technicalExpertiseTags} 
+            selectedTags={selectedTechnicalExpertise} 
+            setSelectedTags={setSelectedTechnicalExpertise} 
+          />
+          {errors.selectedTechnicalExpertise && <FormHelperText error>{errors.selectedTechnicalExpertise}</FormHelperText>}
+        </FormControl>
+        
+        
 
         <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Location of the Institute or Laboratory</Divider>
         <Container>

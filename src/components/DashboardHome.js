@@ -13,7 +13,7 @@ function AdminGuide() {
   const theme = useTheme();
 
   return (
-    <Box sx={{ padding: 3 }}>
+    <Box sx={{ width: '100%', maxWidth: 1000, minWidth: 275, margin: '16px auto',  borderRadius: 2 }}>
       <Typography
         variant="h4"
         sx={{ color: theme.palette.primary.main, marginBottom: 2, textAlign: 'center' }}

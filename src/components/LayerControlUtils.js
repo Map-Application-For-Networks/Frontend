@@ -54,22 +54,52 @@ export function createOverlayControl(
                   <hr></hr>
                   <br></br>
                   {/* Research Fields / Topics */}
-                  <h2>Area(s) of Expertise: </h2>
+                  <h2>Organisms: </h2>
                   <ul>
-                    {marker.expertiseAreaTags.map((topic, idx) => (
+                    {marker.organismTags.map((topic, idx) => (
                       <Tag color="blue" key={idx}>{topic}</Tag>
                     ))}
                   </ul>
-                  <h2>Technologies:</h2>
+
+                  <h2>exRNA-Driven Process:</h2>
                   <ul>
-                    {marker.techTags.map((topic, idx) => (
+                    {marker.drivenProcessTags.map((topic, idx) => (
                       <Tag color="orange" key={idx}>{topic}</Tag>
                     ))}
                   </ul>
-                  <h2>Model Organism:</h2>
+
+                  <h2>Class of exRNA:</h2>
                   <ul>
-                    {marker.modelTags.map((topic, idx) => (
+                    {marker.classOfExrnaTags.map((topic, idx) => (
                       <Tag color="purple" key={idx}>{topic}</Tag>
+                    ))}
+                  </ul>
+
+                  <h2>Carrier of exRNA:</h2>
+                  <ul>
+                    {marker.carrierOfExrnaTags.map((topic, idx) => (
+                      <Tag color="green" key={idx}>{topic}</Tag>
+                    ))}
+                  </ul>
+
+                  <h2>Application Area:</h2>
+                  <ul>
+                    {marker.applicationAreaTags.map((topic, idx) => (
+                      <Tag color="gold" key={idx}>{topic}</Tag>
+                    ))}
+                  </ul>
+
+                  <h2>Research Expertise:</h2>
+                  <ul>
+                    {marker.researchExpertiseTags.map((topic, idx) => (
+                      <Tag color="cyan" key={idx}>{topic}</Tag>
+                    ))}
+                  </ul>
+
+                  <h2>Technical Expertise:</h2>
+                  <ul>
+                    {marker.techExpertiseTags.map((topic, idx) => (
+                      <Tag color="volcano" key={idx}>{topic}</Tag>
                     ))}
                   </ul>
                   {/* Divider */}

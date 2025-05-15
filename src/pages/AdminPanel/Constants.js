@@ -1,4 +1,5 @@
-import { Tag, Room, Dashboard, CheckCircle, Delete, Logout, Biotech, Science, Coronavirus, AddCircle, RemoveCircle } from '@mui/icons-material';
+import { RoomOutlined, DashboardOutlined, CheckCircleOutline, DeleteOutline, Logout, AddCircleOutline,
+  RemoveCircleOutline, LabelOutlined, } from '@mui/icons-material';
 import { createTheme } from '@mui/material/styles';
 import { ADMIN_DASHBORD_VERSION } from '../../components/Version'; 
 
@@ -10,22 +11,22 @@ export const NAVIGATION = [
     {
       segment: 'dashboard',
       title: 'Dashboard',
-      icon: <Dashboard />,
+      icon: <DashboardOutlined />,
     },
     {
       segment: 'markers',
       title: 'Markers',
-      icon: <Room />,
+      icon: <RoomOutlined />,
       children: [
           {
             segment: 'approve_marker',
             title: 'Approve/Disapprove Marker',
-            icon: <CheckCircle/>,
+            icon: <CheckCircleOutline/>,
           },
           {
             segment: 'delete_marker',
             title: 'Delete Marker',
-            icon: <Delete />,
+            icon: <DeleteOutline />,
           },
         ],
     },
@@ -38,68 +39,123 @@ export const NAVIGATION = [
       title: 'Settings',
     },
     {
-      segment: 'tags',
-      title: 'Tags',
-      icon: <Tag />,
+      segment: 'organism_tags',
+      title: 'Organism Tags',
+      icon: <LabelOutlined />,
       children: [
         {
-          segment: 'expertise_tags',
-          title: 'Area(s) of Expertise Tags',
-          icon: <Science/>,
-          children:
-          [
-            {
-              segment: 'add_expertise_tags',
-              title: 'Add Tags',
-              icon: <AddCircle/>
-            },
-            {
-              segment: 'delete_expertise_tags',
-              title: 'Delete Tags',
-              icon: <RemoveCircle/>
-            },
-
-          ]
+          segment: 'add_organism_tags',
+          title: 'Add Tags',
+          icon: <AddCircleOutline />
         },
         {
-          segment: 'tech_tags',
-          title: 'Technology(s) Tags',
-          icon: <Biotech/>,
-          children:
-          [
-            {
-              segment: 'add_tech_tags',
-              title: 'Add Tags',
-              icon: <AddCircle/>
-            },
-            {
-              segment: 'delete_tech_tags',
-              title: 'Delete Tags',
-              icon: <RemoveCircle/>
-            },
-
-          ]
+          segment: 'delete_organism_tags',
+          title: 'Delete Tags',
+          icon: <RemoveCircleOutline />
+        }
+      ]
+    },
+    {
+      segment: 'driven_process_tags',
+      title: 'exRNA-Driven Process Tags',
+      icon: <LabelOutlined />,
+      children: [
+        {
+          segment: 'add_driven_process_tags',
+          title: 'Add Tags',
+          icon: <AddCircleOutline />
         },
         {
-          segment: 'model_organism_tags',
-          title: 'Model Organism Tags',
-          icon: <Coronavirus />,
-          children:
-          [
-            {
-              segment: 'add_model_organism_tags',
-              title: 'Add Tags',
-              icon: <AddCircle/>
-            },
-            {
-              segment: 'delete_model_organism_tags',
-              title: 'Delete Tags',
-              icon: <RemoveCircle/>
-            },
-
-          ]
+          segment: 'delete_driven_process_tags',
+          title: 'Delete Tags',
+          icon: <RemoveCircleOutline />
+        }
+      ]
+    },
+    {
+      segment: 'class_of_exrna_tags',
+      title: 'Class of exRNA Tags',
+      icon: <LabelOutlined />,
+      children: [
+        {
+          segment: 'add_class_of_exrna_tags',
+          title: 'Add Tags',
+          icon: <AddCircleOutline />
         },
-      ],
+        {
+          segment: 'delete_class_of_exrna_tags',
+          title: 'Delete Tags',
+          icon: <RemoveCircleOutline />
+        }
+      ]
+    },
+    {
+      segment: 'carrier_of_exrna_tags',
+      title: 'Carrier of exRNA Tags',
+      icon: <LabelOutlined />,
+      children: [
+        {
+          segment: 'add_carrier_of_exrna_tags',
+          title: 'Add Tags',
+          icon: <AddCircleOutline />
+        },
+        {
+          segment: 'delete_carrier_of_exrna_tags',
+          title: 'Delete Tags',
+          icon: <RemoveCircleOutline />
+        }
+      ]
+    },
+    {
+      segment: 'application_area_tags',
+      title: 'Application Area Tags',
+      icon: <LabelOutlined />,
+      children: [
+        {
+          segment: 'add_application_area_tags',
+          title: 'Add Tags',
+          icon: <AddCircleOutline />
+        },
+        {
+          segment: 'delete_application_area_tags',
+          title: 'Delete Tags',
+          icon: <RemoveCircleOutline />
+        }
+      ]
+    },
+    {
+      segment: 'research_expertise_tags',
+      title: 'Research Expertise Tags',
+      icon: <LabelOutlined />,
+      children: [
+        {
+          segment: 'add_research_expertise_tags',
+          title: 'Add Tags',
+          icon: <AddCircleOutline />
+        },
+        {
+          segment: 'delete_research_expertise_tags',
+          title: 'Delete Tags',
+          icon: <RemoveCircleOutline />
+        }
+      ]
+    },
+    {
+      segment: 'technical_expertise_tags',
+      title: 'Technical Expertise Tags',
+      icon: <LabelOutlined />,
+      children: [
+        {
+          segment: 'add_technical_expertise_tags',
+          title: 'Add Tags',
+          icon: <AddCircleOutline />
+        },
+        {
+          segment: 'delete_technical_expertise_tags',
+          title: 'Delete Tags',
+          icon: <RemoveCircleOutline />
+        }
+      ]
     },
     {
       segment: 'logout',

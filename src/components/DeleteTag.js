@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box, List, ListItem, ListItemText, IconButton, Typography,
+  Box, List, ListItem, ListItemText, IconButton, Typography, Grid,
   CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText,
   DialogTitle, Button, Card, CardContent, Divider,Snackbar, AlertTitle,
     Alert,
@@ -20,6 +20,27 @@ const DeleteTag = ({ tagType }) => {
 
   const apiTagType = tagType.replace('add', '');
   const token = localStorage.getItem('token'); // Retrieve token
+
+  let tagTitle = '';
+
+    if (tagType.includes('organism')) {
+      tagTitle = 'Organism';
+    } else if (tagType.includes('class')) {
+      tagTitle = 'Class of exRNA';
+    } else if (tagType.includes('carrier')) {
+      tagTitle = 'Carrier of exRNA';
+    } else if (tagType.includes('application')) {
+      tagTitle = 'Application Area';
+    } else if (tagType.includes('driven')) {
+      tagTitle = 'exRNA-Driven Process';
+    } else if (tagType.includes('research')) {
+      tagTitle = 'Research Expertise';
+    } else if (tagType.includes('technical')) {
+      tagTitle = 'Technical Expertise';
+    } else {
+      tagTitle = 'Tag';
+}
+
 
   useEffect(() => {
     const fetchTags = async () => {
@@ -54,7 +75,7 @@ const DeleteTag = ({ tagType }) => {
     if (!selectedTag) return;
 
     try {
-      await axios.delete(`http://localhost:3001/api/${apiTagType}/${selectedTag._id}/delete`, {
+      await axios.delete(`https://backend-delta-seven-47.vercel.app/api/${apiTagType}/${selectedTag._id}/delete`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -67,95 +88,91 @@ const DeleteTag = ({ tagType }) => {
     }
   };
 
-  return (
-    <Card
-      sx={{
-        maxWidth: 600,
-        minWidth:400,
-        mx: 'auto',
-        mt: 5,
-        boxShadow: 6,
-        borderRadius: 2,
-        bgcolor: 'background.paper',
-        overflow: 'hidden',
-      }}
-    >
-      <Box sx={{ bgcolor: 'error.main', color: 'white', p: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-        <LabelOffIcon />
-        <Typography variant="h6">
-          Delete {tagType.replace(/add/, '').replace(/tags/, '').toUpperCase()} Tags
-        </Typography>
-      </Box>
+      return (
+        <Box sx={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto', padding: 2 }}>
+          <Card
+          sx={{ width: '100%', maxWidth: 1000, minWidth: 500, margin: '16px auto', boxShadow: 3, borderRadius: 2 }}
+          >
+            <Box sx={{ bgcolor: 'error.main', color: 'white', p: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+              <LabelOffIcon />
+              <Typography variant="h6">
+                Delete {tagTitle} Tags
+              </Typography>
+            </Box>
 
-      <Divider />
+            <Divider />
 
-      <CardContent>
-        {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-            <CircularProgress />
-          </Box>
-        ) : (
-          <List >
-            {tags.map((tag) => (
-              <ListItem
-                key={tag._id}
-                sx={{
-                  borderBottom: '1px solid #eee',
-                  '&:hover': { backgroundColor: '#f9f9f9' },
-                }}
-                secondaryAction={
-                  <IconButton
-                    edge="end"
-                    color="error"
-                    onClick={() => handleOpenDialog(tag)}
-                    disabled={tag.tagName.trim().toUpperCase() === 'NULL'}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                }
+            <CardContent>
+              {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <List >
+                  {tags.map((tag) => (
+                    <ListItem
+                      key={tag._id}
+                      sx={{
+                        borderBottom: '1px solid #eee',
+                        '&:hover': { backgroundColor: '#f9f9f9' },
+                      }}
+                      secondaryAction={
+                        <IconButton
+                          edge="end"
+                          color="error"
+                          onClick={() => handleOpenDialog(tag)}
+                          disabled={tag.tagName.trim().toUpperCase() === 'NULL'}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      }
+                    >
+                      <ListItemText primary={tag.tagName} />
+                    </ListItem>
+                  ))}
+                </List>
+              )}
+            </CardContent>
+
+            <Dialog open={openDialog} onClose={handleCloseDialog}>
+              <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1, borderRadius: 2 }}>
+                <WarningIcon color="error" />
+                Confirm Deletion
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Are you sure you want to delete the tag <strong>{selectedTag?.tagName}</strong>?
+                  This action cannot be undone. All markers using this tag will be affected.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseDialog}>Cancel</Button>
+                <Button onClick={handleDeleteTag} color="error" variant="contained">
+                  Delete
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <Snackbar
+              open={successMessage}
+              autoHideDuration={3000}
+              onClose={() => setSuccessMessage(false)}
+            >
+              <Alert
+                onClose={() => setSuccessMessage(false)}
+                severity="success"
+                sx={{ width: '100%' }}
               >
-                <ListItemText primary={tag.tagName} />
-              </ListItem>
-            ))}
-          </List>
-        )}
-      </CardContent>
+                <AlertTitle>Success</AlertTitle>
+                Tag deleted successfully!
+              </Alert>
+            </Snackbar>
 
-      <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1, borderRadius: 2 }}>
-          <WarningIcon color="error" />
-          Confirm Deletion
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete the tag <strong>{selectedTag?.tagName}</strong>?
-            This action cannot be undone. All markers using this tag will be affected.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog}>Cancel</Button>
-          <Button onClick={handleDeleteTag} color="error" variant="contained">
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Snackbar
-        open={successMessage}
-        autoHideDuration={3000}
-        onClose={() => setSuccessMessage(false)}
-      >
-        <Alert
-          onClose={() => setSuccessMessage(false)}
-          severity="success"
-          sx={{ width: '100%' }}
-        >
-          <AlertTitle>Success</AlertTitle>
-          Tag deleted successfully!
-        </Alert>
-      </Snackbar>
-
-    </Card>
+          </Card>
+    </Box>
   );
-};
+}; 
 
 export default DeleteTag;
+
+
+

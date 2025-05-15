@@ -90,12 +90,22 @@ function DashboardLayoutBasic() {
     setLoading(true);
 
     try {
-      const [markersResponse, rolesResponse, techTagsResponse, modelTagsResponse, expertiseTagsResponse] = await Promise.all([
+      const [markersResponse, rolesResponse, organismTagsResponse,
+      drivenProcessTagsResponse,
+      classOfExrnaTagsResponse,
+      carrierOfExrnaTagsResponse,
+      applicationAreaTagsResponse,
+      researchExpertiseTagsResponse,
+      technicalExpertiseTagsResponse] = await Promise.all([
         axios.get(endpoint, { headers: { Authorization: `Bearer ${token}` } }),
         axios.get('https://backend-delta-seven-47.vercel.app/api/roles'),
-        axios.get('https://backend-delta-seven-47.vercel.app/api/techtags'),
-        axios.get('https://backend-delta-seven-47.vercel.app/api/modeltags'),
-        axios.get('https://backend-delta-seven-47.vercel.app/api/expertisetags'),
+        axios.get('https://backend-delta-seven-47.vercel.app/api/organismtags'),
+        axios.get('https://backend-delta-seven-47.vercel.app/api/drivenprocesstags'),
+        axios.get('https://backend-delta-seven-47.vercel.app/api/classofexrnatags'),
+        axios.get('https://backend-delta-seven-47.vercel.app/api/carrierofexrnatags'),
+        axios.get('https://backend-delta-seven-47.vercel.app/api/applicationareatags'),
+        axios.get('https://backend-delta-seven-47.vercel.app/api/researchexpertisetags'),
+        axios.get('https://backend-delta-seven-47.vercel.app/api/techexpertisetags')
       ]);
 
       const rolesMap = rolesResponse.data.reduce((acc, role) => {
@@ -103,17 +113,38 @@ function DashboardLayoutBasic() {
         return acc;
       }, {});
 
-      const techTagsMap = techTagsResponse.data.reduce((acc, tag) => {
+
+      const organismTagsMap = organismTagsResponse.data.reduce((acc, tag) => {
         acc[tag._id] = tag.tagName;
         return acc;
       }, {});
 
-      const modelTagsMap = modelTagsResponse.data.reduce((acc, tag) => {
+      const drivenProcessTagsMap = drivenProcessTagsResponse.data.reduce((acc, tag) => {
         acc[tag._id] = tag.tagName;
         return acc;
       }, {});
 
-      const expertiseTagsMap = expertiseTagsResponse.data.reduce((acc, tag) => {
+      const classTagsMap = classOfExrnaTagsResponse.data.reduce((acc, tag) => {
+        acc[tag._id] = tag.tagName;
+        return acc;
+      }, {});
+
+      const carrierTagsMap = carrierOfExrnaTagsResponse.data.reduce((acc, tag) => {
+        acc[tag._id] = tag.tagName;
+        return acc;
+      }, {});
+
+      const applicationAreaTagsMap = applicationAreaTagsResponse.data.reduce((acc, tag) => {
+        acc[tag._id] = tag.tagName;
+        return acc;
+      }, {});
+
+      const researchExpertiseTagsMap = researchExpertiseTagsResponse.data.reduce((acc, tag) => {
+        acc[tag._id] = tag.tagName;
+        return acc;
+      }, {});
+
+      const technicalExpertiseTagsMap = technicalExpertiseTagsResponse.data.reduce((acc, tag) => {
         acc[tag._id] = tag.tagName;
         return acc;
       }, {});
@@ -121,14 +152,26 @@ function DashboardLayoutBasic() {
       const enhancedMarkers = markersResponse.data.map((marker) => ({
         ...marker,
         role: rolesMap[marker.role] || marker.role,
-        techTags: Array.isArray(marker.techTags)
-          ? marker.techTags.map((tagId) => techTagsMap[tagId] || tagId)
+        organismTags: Array.isArray(marker.organismTags)
+          ? marker.organismTags.map((tagId) => organismTagsMap[tagId] || tagId)
           : [],
-        modelTags: Array.isArray(marker.modelTags)
-          ? marker.modelTags.map((tagId) => modelTagsMap[tagId] || tagId)
+        drivenProcessTags: Array.isArray(marker.drivenProcessTags)
+          ? marker.drivenProcessTags.map((tagId) => drivenProcessTagsMap[tagId] || tagId)
           : [],
-        expertiseAreaTags: Array.isArray(marker.expertiseAreaTags)
-          ? marker.expertiseAreaTags.map((tagId) => expertiseTagsMap[tagId] || tagId)
+        classTags: Array.isArray(marker.classTags)
+          ? marker.classTags.map((tagId) => classTagsMap[tagId] || tagId)
+          : [],
+        carrierTags: Array.isArray(marker.carrierTags)
+          ? marker.carrierTags.map((tagId) => carrierTagsMap[tagId] || tagId)
+          : [],
+        applicationAreaTags: Array.isArray(marker.applicationAreaTags)
+          ? marker.applicationAreaTags.map((tagId) => applicationAreaTagsMap[tagId] || tagId)
+          : [],
+        researchExpertiseTags: Array.isArray(marker.researchExpertiseTags)
+          ? marker.researchExpertiseTags.map((tagId) => researchExpertiseTagsMap[tagId] || tagId)
+          : [],
+        technicalExpertiseTags: Array.isArray(marker.technicalExpertiseTags)
+          ? marker.technicalExpertiseTags.map((tagId) => technicalExpertiseTagsMap[tagId] || tagId)
           : [],
       }));
 
@@ -164,21 +207,31 @@ function DashboardLayoutBasic() {
         </Box>); 
     }
 
-    if (pathname.includes('/tags/')) {
+    if (pathname.includes('tags/')) {
       let pathTag = pathname.split('/')[2]; // expertise_tags, tech_tags, vs.
       let action = pathname.includes('/add_') ? 'add' : pathname.includes('/delete_') ? 'delete' : null;
       if (!action) return null;
     
       let tagType = "";
-      if (pathTag.includes("expertise")) {
-        tagType = "addexpertisetags";
-      } else if (pathTag.includes("tech")) {
-        tagType = "addtechtags";
-      } else if (pathTag.includes("model")) {
-        tagType = "addmodeltags";
-      }
-    
-      return action === 'add' ? <AddTag tagType={tagType} /> : <DeleteTag tagType={tagType} />;
+      if (pathTag.includes("organism")) {
+          tagType = "addorganismtags";
+        }
+        else if (pathTag.includes("class")) {
+          tagType = "addclassofexrnatags";
+        } else if (pathTag.includes("carrier")) {
+          tagType = "addcarrierofexrnatags";
+        } else if (pathTag.includes("application")) {
+          tagType = "addapplicationareatags";
+        } else if (pathTag.includes("driven")) {
+          tagType = "adddrivenprocesstags";
+        } else if (pathTag.includes("research")) {
+          tagType = "addresearchexpertisetags";
+        } else if (pathTag.includes("technical")) {
+          tagType = "addtechexpertisetags";
+        } else {
+          return null; // Eşleşme yoksa bileşeni döndürme
+        }
+        return (action === 'add' ? <AddTag tagType={tagType} /> : <DeleteTag tagType={tagType} />);
     }
 
     if ((pathname === '/markers/approve_marker' || pathname === '/markers/delete_marker') && markers.length === 0) {

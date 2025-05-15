@@ -3,7 +3,7 @@ import { Autocomplete, TextField } from '@mui/material';
 import { useMap } from 'react-leaflet';
 import axios from 'axios';
 
-const DEFAULT_ZOOM = 5;
+const DEFAULT_ZOOM = 14;
 
 function SearchComponent({ markers }) {
   const map = useMap();
@@ -11,37 +11,57 @@ function SearchComponent({ markers }) {
 
   // Fetch tag names for Tech, Model, and Expertise
   useEffect(() => {
-    const fetchTags = async () => {
-      try {
-        const [techTagsRes, modelTagsRes, expertiseTagsRes] = await Promise.all([
-          axios.get('https://backend-delta-seven-47.vercel.app/api/techtags'),
-          axios.get('https://backend-delta-seven-47.vercel.app/api/modeltags'),
-          axios.get('https://backend-delta-seven-47.vercel.app/api/expertisetags'),
-        ]);
+  const fetchTags = async () => {
+    try {
+      const [
+  organismTagsRes,
+  drivenProcessTagsRes,
+  classTagsRes,
+  carrierTagsRes,
+  applicationAreaTagsRes,
+  researchExpertiseTagsRes,
+  technicalExpertiseTagsRes
+] = await Promise.all([
+  axios.get('https://backend-delta-seven-47.vercel.app/api/organismtags'),
+  axios.get('https://backend-delta-seven-47.vercel.app/api/drivenprocesstags'),
+  axios.get('https://backend-delta-seven-47.vercel.app/api/classofexrnatags'),
+  axios.get('https://backend-delta-seven-47.vercel.app/api/carrierofexrnatags'),
+  axios.get('https://backend-delta-seven-47.vercel.app/api/applicationareatags'),
+  axios.get('https://backend-delta-seven-47.vercel.app/api/researchexpertisetags'),
+  axios.get('https://backend-delta-seven-47.vercel.app/api/techexpertisetags')
+]);
 
-        const tagsMapping = {
-          ...Object.fromEntries(techTagsRes.data.map((tag) => [tag._id, tag.tagName])),
-          ...Object.fromEntries(modelTagsRes.data.map((tag) => [tag._id, tag.tagName])),
-          ...Object.fromEntries(expertiseTagsRes.data.map((tag) => [tag._id, tag.tagName])),
-        };
+const tagsMapping = {
+  ...Object.fromEntries(organismTagsRes.data.map(tag => [tag._id, tag.tagName])),
+  ...Object.fromEntries(drivenProcessTagsRes.data.map(tag => [tag._id, tag.tagName])),
+  ...Object.fromEntries(classTagsRes.data.map(tag => [tag._id, tag.tagName])),         // should match classTags in marker
+  ...Object.fromEntries(carrierTagsRes.data.map(tag => [tag._id, tag.tagName])),       // should match carrierTags in marker
+  ...Object.fromEntries(applicationAreaTagsRes.data.map(tag => [tag._id, tag.tagName])),
+  ...Object.fromEntries(researchExpertiseTagsRes.data.map(tag => [tag._id, tag.tagName])),
+  ...Object.fromEntries(technicalExpertiseTagsRes.data.map(tag => [tag._id, tag.tagName]))  // should match technicalExpertiseTags
+};
 
-        setTagsMap(tagsMapping);
-      } catch (error) {
-        console.error('Error fetching tags:', error);
-      }
-    };
+      setTagsMap(tagsMapping);
+    } catch (error) {
+      console.error('Error fetching tags:', error);
+    }
+  };
 
-    fetchTags();
-  }, []);
+  fetchTags();
+}, []);
 
   // Format markers for Autocomplete
   const items = markers.map((marker, index) => ({
     id: index,
     title: marker.title,
     tags: [
-      ...(marker.techTags || []).map((tagId) => tagsMap[tagId] || tagId),
-      ...(marker.modelTags || []).map((tagId) => tagsMap[tagId] || tagId),
-      ...(marker.expertiseAreaTags || []).map((tagId) => tagsMap[tagId] || tagId),
+    ...(marker.organismTags || []).map(tagId => tagsMap[tagId] || tagId),
+    ...(marker.drivenProcessTags || []).map(tagId => tagsMap[tagId] || tagId),
+    ...(marker.classTags || []).map(tagId => tagsMap[tagId] || tagId),
+    ...(marker.carrierTags || []).map(tagId => tagsMap[tagId] || tagId),
+    ...(marker.applicationAreaTags || []).map(tagId => tagsMap[tagId] || tagId),
+    ...(marker.researchExpertiseTags || []).map(tagId => tagsMap[tagId] || tagId),
+    ...(marker.technicalExpertiseTags || []).map(tagId => tagsMap[tagId] || tagId)
     ].filter(Boolean), // Remove undefined values
     marker,
   }));

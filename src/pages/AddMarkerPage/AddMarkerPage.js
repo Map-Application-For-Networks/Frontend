@@ -151,10 +151,13 @@ const handleClick = () => {
         navigate('/confirmation', { state: { referenceNumber: response.data._id }});
       })
       .catch(error => {
-        // Handle any errors during the API call
-        console.error('Error adding marker:', error);
-        console.log(location)
-      })
+      const errorMessage = error?.response?.data?.message || 'An unexpected error occurred while submitting the marker.';
+
+      // Navigate to error page with a friendly message
+      navigate('/error', {
+       state: { error: errorMessage }
+      });
+  })
       .finally(() => {
         setLoading(false);
       });

@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import SignupPage from './pages/SignupPage/SignupPage';
 import AdminPanel from './pages/AdminPanel/AdminPanel';
 import ProtectedRoute from './components/ProtectedRoute';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<MainPage />}> </Route>
         <Route path="/addmarker" element={<AddMarkerPage />}> </Route>
         <Route path="/confirmation" element ={<ConfimationPage />}> </Route>
+        <Route path="/error" element ={<ErrorPage />}> </Route>
         <Route path="/login" element={<LoginPage />}> </Route>
         <Route path="/signup" element={<SignupPage />}> </Route>
         <Route path="/admin" element={

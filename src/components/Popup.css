@@ -42,6 +42,12 @@
     text-align: center; /* Center the text content */
     max-width: 300px; /* Optional: to limit the width of the popup */
   }
+
+.leaflet-popup-content-wrapper {
+  max-height: 800px;          /* Set max visible height */
+  overflow-y: auto;           /* Enable vertical scrolling */
+}
+
   
   .leaflet-popup-content h2 {
     margin-top: 0;

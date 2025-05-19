@@ -18,11 +18,13 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { MAIN_VERSION } from '../../components/Version';
+import ScrollZoomControl from '../../components/ScrollZoomControl';
 
 
-const DEFAULT_LATITUDE = 40.89;
-const DEFAULT_LONGITUDE = 29.37;
-const DEFAULT_ZOOM = 14;
+
+const DEFAULT_LATITUDE = 50.32;
+const DEFAULT_LONGITUDE = 12.49;
+const DEFAULT_ZOOM = 7;
 const DEFAULT_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
 
 const AddPage = () => {
@@ -137,11 +139,12 @@ const AddPage = () => {
           </Typography>
         </div>
       ) : (
-        <MapContainer center={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom={DEFAULT_ZOOM} fullscreenControl>
+        <MapContainer center={[DEFAULT_LATITUDE, DEFAULT_LONGITUDE]} zoom={DEFAULT_ZOOM} scrollWheelZoom={false} fullscreenControl >
           <TileLayer
             attribution='&copy; <a href="https://www.carto.com/attributions">CARTO</a>'
             url={DEFAULT_URL}
           />
+          <ScrollZoomControl />
           <div>
             <LocateControl />
             <SearchControl />

@@ -127,7 +127,7 @@ const AddPage = () => {
   const processedMarkers = processMarkers(markers);
 
   return (
-    <div style={{ width: '100%', height: '100vh', position: 'relative' }}>
+    <div style={{ width: '100%', height: '95vh', position: 'relative' }}>
       {loading ? (
         <div style={{
           display: 'flex', flexDirection: 'column', alignItems: 'center',

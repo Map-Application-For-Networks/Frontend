@@ -19,9 +19,9 @@ import SendIcon from '@mui/icons-material/Send';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 
-const DEFAULT_LATITUDE = 40.89;
-const DEFAULT_LONGITUDE = 29.37;
-const DEFAULT_ZOOM = 14;
+const DEFAULT_LATITUDE = 50.32;
+const DEFAULT_LONGITUDE = 12.49;
+const DEFAULT_ZOOM = 7;
 const DEFAULT_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
 
 const defaultIcon = L.icon({

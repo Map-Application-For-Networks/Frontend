@@ -9,20 +9,22 @@ const ScrollZoomControl = () => {
   useEffect(() => {
     const container = map.getContainer();
 
+    const isModifierKeyHeld = (e) => {
+      return e.ctrlKey || e.metaKey || e.altKey;
+    };
+
     const handleWheel = (e) => {
-      if (e.metaKey || e.altKey) {
+      if (isModifierKeyHeld(e)) {
         map.scrollWheelZoom.enable();
         clearTimeout(warningTimeout.current);
         setShowWarning(false);
       } else {
         map.scrollWheelZoom.disable();
-
-        // Show warning and clear it faster (e.g., after 1s max)
         setShowWarning(true);
         clearTimeout(warningTimeout.current);
         warningTimeout.current = setTimeout(() => {
           setShowWarning(false);
-        }, 1000); // faster auto-dismiss
+        }, 1000);
       }
     };
 
@@ -33,7 +35,7 @@ const ScrollZoomControl = () => {
     };
 
     container.addEventListener('wheel', handleWheel);
-    window.addEventListener('keyup', handleKeyUp); // catch Cmd/Alt release
+    window.addEventListener('keyup', handleKeyUp);
 
     return () => {
       container.removeEventListener('wheel', handleWheel);
@@ -50,7 +52,7 @@ const ScrollZoomControl = () => {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.3)', // lighter transparent background
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -58,16 +60,16 @@ const ScrollZoomControl = () => {
         pointerEvents: 'none'
       }}>
         <div style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.65)', // semi-transparent white
+          backgroundColor: 'rgba(255, 255, 255, 0.6)',
           color: '#d32f2f',
-          padding: '20px 40px',
+          padding: '16px 32px',
           borderRadius: '10px',
           fontSize: '1.4rem',
           fontWeight: '600',
           textAlign: 'center',
-          boxShadow: '0 0 10px rgba(0,0,0,0.2)',
+          boxShadow: '0 0 10px rgba(0,0,0,0.1)',
         }}>
-          Hold ⌘ or ⌥ to zoom the map
+          Hold <kbd>⌘</kbd> / <kbd>⌥</kbd> / <kbd>Ctrl</kbd> to zoom
         </div>
       </div>
     )

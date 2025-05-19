@@ -24,7 +24,7 @@ const ScrollZoomControl = () => {
         clearTimeout(warningTimeout.current);
         warningTimeout.current = setTimeout(() => {
           setShowWarning(false);
-        }, 1000);
+        }, 500);
       }
     };
 

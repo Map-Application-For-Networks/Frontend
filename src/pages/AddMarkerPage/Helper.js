@@ -26,13 +26,14 @@ export const validateForm = ({
   selectedTechnicalExpertise
 }) => {
   const newErrors = {};
-  const phoneRegex = /^\+?[0-9]*$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!institutionTitle) newErrors.institutionTitle = '*Institution title is required!';
+  else if (institutionTitle.length > 150) newErrors.institutionTitle = '*Title must include at most 150 characters!';
   if (!email) newErrors.email = '*Email is required!';
   else if (!emailRegex.test(email)) newErrors.email = '*Please enter a valid email address!';
-  if (!phoneRegex.test(phoneNumber)) newErrors.phoneNumber = '*Phone number must include only + and digits!';
+  if (!nameSurname || typeof nameSurname !== 'string' || nameSurname.trim() === '') newErrors.nameSurname = '*Name and surname are required!'; 
+  if (!nameSurname || typeof nameSurname !== 'string' || nameSurname.trim() === '') newErrors.nameSurname = '*Name and surname are required!'; 
   if (!details) newErrors.details = '*Details are required!';
   if (details.length > 500) newErrors.details = '*Details must include at most 500 characters!';
   if (selectedOrganism.length === 0) newErrors.selectedOrganism = '*At least one organism must be selected!';

@@ -3,7 +3,6 @@ import { Card, CardContent, Typography, Grid, IconButton, Button, Box} from '@mu
 import { Tag } from 'antd';
 import RoomIcon from '@mui/icons-material/Room';
 import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,7 +11,7 @@ import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import axios from 'axios';
 
 const MarkerCardForDeletion = ({ marker, onMarkerUpdate }) => {
-  const { _id ,title, details, geocode, email, phone, verified, date, createdAt, updatedAt,  organismTags,
+  const { _id ,title, details, geocode, email, name_and_surname, verified, date, createdAt, updatedAt,  organismTags,
     drivenProcessTags,
     classTags,
     carrierTags,
@@ -27,10 +26,6 @@ const MarkerCardForDeletion = ({ marker, onMarkerUpdate }) => {
     return date.toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });
   };
 
-  // Function to determine the color of the visit status chip
-  const getStatusColor = (status) => {
-    return status.toLowerCase() === 'open' ? 'success' : 'error';
-  };
 
   const handleDelete = async () => {
     try {
@@ -76,10 +71,10 @@ const MarkerCardForDeletion = ({ marker, onMarkerUpdate }) => {
             {email}
           </Grid>
           <Grid item>
-            <IconButton color="primary" aria-label="phone">
-              <PhoneIcon />
+            <IconButton color="primary">
+              <AssignmentIcon />
             </IconButton>
-            {phone}
+            {name_and_surname}
           </Grid>
           <Grid item>
             <IconButton color="primary" aria-label="calendar">

@@ -6,7 +6,7 @@ import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
 import { TextField, Button, Divider, FormControl, InputLabel, MenuItem, Select, FormHelperText, Container,CircularProgress, Typography  } from '@mui/material';
 import './AddMarkerPage.css';
-import LocateControl from '../../components/LocateControl';
+//import LocateControl from '../../components/LocateControl';
 import SearchControl from '../../components/SearchControl';
 import { useNavigate } from 'react-router-dom';
 import MultipleSelectChip from '../../components/MultipleSelectChip';
@@ -52,7 +52,7 @@ const LocationMarker = ({ setLocation }) => {
 const AddPage = () => {
   const [institutionTitle, setInstitutionTitle] = useState('');
   const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [nameSurname, setNameNumber] = useState('');
   const [details, setDetails] = useState('');
   const [location, setLocation] = useState(null);
 
@@ -98,7 +98,7 @@ const handleClick = () => {
   const newErrors = validateForm({
     institutionTitle, 
     email, 
-    phoneNumber, 
+    nameSurname,  
     details,  
     location, 
     role,
@@ -121,8 +121,8 @@ const handleClick = () => {
     
     const formDataForAPI = {
       title: institutionTitle,       // API expects 'title' for institution title
-      email, 
-      phone: phoneNumber,            // API expects 'phone' for phone number
+      email,
+      name_and_surname: nameSurname,
       details,
       geocode: geocode,             // API expects 'geocode' for location
       //researchFieldTopic: selectedTags,  // API expects 'researchFieldTopic' for selectedTags
@@ -190,7 +190,26 @@ const handleClick = () => {
         {/* Adding the logo at the top */}
         <img src={ExRNAIcon} alt="ExRNA PATH Logo" className="form-logo" />
 
-        <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Name of the Institute or Laboratory</Divider>
+      <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Category of the Research Entity</Divider>
+        <FormControl  fullWidth error={!!errors.role}>
+          <InputLabel id="role-label">Role of the Research Entity</InputLabel>
+          <Select
+            labelId="role-label"
+            value={role}
+            onChange={handleRoleChange }
+            label="Role of the Research Entity"
+          >
+            {/* Dynamically rendering the rolesList */}
+            {rolesList.map((roleItem) => (
+              <MenuItem key={roleItem.value} value={roleItem.value}>
+                {roleItem.label}
+              </MenuItem>
+            ))}
+          </Select>
+          {errors.role && <FormHelperText error>{errors.role}</FormHelperText>}
+        </FormControl>
+
+        <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Name of the Research Entity</Divider>
         <TextField 
           label="Institution Title" 
           variant="outlined" 
@@ -199,6 +218,16 @@ const handleClick = () => {
           onChange={(e) => setInstitutionTitle(e.target.value)}
           error={!!errors.institutionTitle}
           helperText={errors.institutionTitle}
+        />
+
+         <TextField 
+          label="Name & Surname" 
+          variant="outlined"  
+          fullWidth 
+          value={nameSurname}
+          onChange={(e) => setNameNumber(e.target.value)}
+          error={!!errors.nameSurname}
+          helperText={errors.nameSurname}
         />
 
         <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Contact Information</Divider>
@@ -211,16 +240,6 @@ const handleClick = () => {
           onChange={(e) => setEmail(e.target.value)}
           error={!!errors.email}
           helperText={errors.email}
-        />
-        <TextField 
-          label="Phone Number (Optional)" 
-          variant="outlined" 
-          type="tel" 
-          fullWidth 
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-          error={!!errors.phoneNumber}
-          helperText={errors.phoneNumber}
         />
 
         <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Details About the Laboratory</Divider>
@@ -237,23 +256,6 @@ const handleClick = () => {
           helperText={errors.details || `${details.length}/500`} // Show character count
         />
        
-       <FormControl  fullWidth error={!!errors.role}>
-          <InputLabel id="role-label">Role of Facility</InputLabel>
-          <Select
-            labelId="role-label"
-            value={role}
-            onChange={handleRoleChange }
-            label="Role of Facility"
-          >
-            {/* Dynamically rendering the rolesList */}
-            {rolesList.map((roleItem) => (
-              <MenuItem key={roleItem.value} value={roleItem.value}>
-                {roleItem.label}
-              </MenuItem>
-            ))}
-          </Select>
-          {errors.role && <FormHelperText error>{errors.role}</FormHelperText>}
-        </FormControl>
 
         <Divider textAlign="left" style={{ fontWeight: 'bold' }}>Details About Research</Divider>
         <FormControl fullWidth error={!!errors.selectedOrganism} >
@@ -336,7 +338,6 @@ const handleClick = () => {
             url={DEFAULT_URL}
           />
           <div>
-            <LocateControl />
             <SearchControl/>
           </div>
           <LocationMarker setLocation={setLocation} />

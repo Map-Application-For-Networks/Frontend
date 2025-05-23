@@ -6,7 +6,7 @@ import "react-leaflet-fullscreen/styles.css";
 import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css';
 import 'leaflet.locatecontrol';
 import 'leaflet-geosearch/dist/geosearch.css';
-import LocateControl from '../../components/LocateControl';
+//import LocateControl from '../../components/LocateControl';
 import SearchControl from '../../components/SearchControl';
 import { setIconForRole } from '../../components/iconHelper';
 import { createOverlayControl } from '../../components/LayerControlUtils';
@@ -146,7 +146,6 @@ const AddPage = () => {
           />
           <ScrollZoomControl />
           <div>
-            <LocateControl />
             <SearchControl />
           </div>
           <SearchComponent markers={processedMarkers} />

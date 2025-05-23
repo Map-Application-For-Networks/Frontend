@@ -3,7 +3,6 @@ import { Card, CardContent, Typography, Grid, IconButton, Button, Box } from '@m
 import { Tag } from 'antd';
 import RoomIcon from '@mui/icons-material/Room';
 import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,7 +11,7 @@ import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import axios from 'axios';
 
 const MarkerCardForVerification = ({ marker, onMarkerUpdate }) => {
-  const { _id, title, details, geocode, email, phone, verified, date, createdAt, updatedAt, organismTags,
+  const { _id, title, details, geocode, email, name_and_surname, verified, date, createdAt, updatedAt, organismTags,
     drivenProcessTags,
     classTags,
     carrierTags,
@@ -85,9 +84,9 @@ const MarkerCardForVerification = ({ marker, onMarkerUpdate }) => {
           </Grid>
           <Grid item>
             <IconButton color="primary">
-              <PhoneIcon />
+              <AssignmentIcon />
             </IconButton>
-            {phone && phone.trim() !== '' ? phone : 'No phone number is provided.'}
+            {name_and_surname}
           </Grid>
           <Grid item>
             <IconButton color="primary">

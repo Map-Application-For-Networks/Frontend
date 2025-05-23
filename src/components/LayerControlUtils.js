@@ -110,9 +110,7 @@ export function createOverlayControl(
                   <br></br>
                   <h2>Contact Information</h2>
                   <p><strong>Email:</strong> <a href={`mailto:${marker.email}`}>{marker.email}</a></p>
-                  {marker.phone && (
-                    <p><strong>Phone:</strong> <a href={`tel:${marker.phone}`}>{marker.phone}</a></p>
-                  )}
+                  <p><strong>Name & Surname:</strong> {marker.name_and_surname}</p>
                 </div>
               </Popup>
               </Marker>

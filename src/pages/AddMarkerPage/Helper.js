@@ -13,7 +13,7 @@ const filterValidTags = (tags) =>
 export const validateForm = ({
   institutionTitle,
   email,
-  phoneNumber,
+  nameSurname,
   details,
   location,
   role,

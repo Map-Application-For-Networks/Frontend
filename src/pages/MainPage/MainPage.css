@@ -65,20 +65,20 @@
    
   }
   
-  .float_button {
+    .float_button {
     z-index: 1000;
     position: absolute;
-    top: 12px;
-    right: 8px;
+    top: 16px;
+    right: 48px;
     overflow: hidden;
     background-color: #1976d2; /* Material-UI blue */
     color: white;
-    width: 81px; /* Icon size */
-    height: 81px;
+    width: 100px; /* Icon size */
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: flex-start; 
-    padding-left: 23px; 
+    padding-left: 32px; 
     border-radius: 50%;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -91,12 +91,12 @@
   
   .float_button_text {
     color: white;
-    margin-left: 8px;
+    margin-left: 2px;
     opacity: 0;
     white-space: nowrap;
     transition: opacity 0.3s ease;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 18px;
   }
   
   .float_button:hover .float_button_text {

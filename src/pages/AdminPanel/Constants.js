@@ -15,7 +15,7 @@ export const NAVIGATION = [
     },
     {
       segment: 'markers',
-      title: 'Entry',
+      title: 'Entries',
       icon: <RoomOutlined />,
       children: [
           {

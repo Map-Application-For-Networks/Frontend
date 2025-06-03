@@ -15,17 +15,17 @@ export const NAVIGATION = [
     },
     {
       segment: 'markers',
-      title: 'Markers',
+      title: 'Entry',
       icon: <RoomOutlined />,
       children: [
           {
             segment: 'approve_marker',
-            title: 'Approve/Disapprove Marker',
+            title: 'Approve/Disapprove Entry',
             icon: <CheckCircleOutline/>,
           },
           {
             segment: 'delete_marker',
-            title: 'Delete Marker',
+            title: 'Delete Entry',
             icon: <DeleteOutline />,
           },
         ],

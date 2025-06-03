@@ -156,7 +156,7 @@ const AddPage = () => {
           </LayersControl>
           <div className="float_button" onClick={handleClick}>
           <AddIcon style={{ fontSize: 32 }} /> 
-            <span className="float_button_text">Add Marker</span>
+            <span className="float_button_text">Add Entry</span>
           </div>
 
           <div className="version-label">Network App v{MAIN_VERSION}</div>

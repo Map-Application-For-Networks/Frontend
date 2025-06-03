@@ -30,14 +30,14 @@ function AdminGuide() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography variant="body1" paragraph>
-            The Admin Dashboard enables you to manage essential components of the system, including <strong>markers</strong> and <strong>tags</strong>.
+            The Admin Dashboard enables you to manage essential components of the system, including <strong>entries</strong> and <strong>tags</strong>.
           </Typography>
           <Typography variant="body1" paragraph>
             To get started, use the <strong>sidebar on the left</strong> to navigate:
           </Typography>
           <Box sx={{ pl: 2 }}>
             <ul>
-              <li><strong>Markers:</strong> Select this tab to view or update marker components.</li>
+              <li><strong>Entries:</strong> Select this tab to view or update entry components.</li>
               <li><strong>Tags:</strong> Use this section to manage and modify available tags.</li>
             </ul>
           </Box>
@@ -55,31 +55,31 @@ function AdminGuide() {
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="h6" sx={{ color: theme.palette.info.main }}>
-            📍 Markers Management
+            📍 Entries Management
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography variant="body1" paragraph>
-            This section allows admins to approve, disapprove, and delete markers submitted by regular users.
-            Each marker includes detailed information about an institute, such as:
-            the <strong>institute name</strong>, <strong>description</strong>, <strong>coordinates</strong>, <strong>contact info</strong>, <strong>marker type</strong>, and <strong>tags</strong>.
+            This section allows admins to approve, disapprove, and delete entries submitted by regular users.
+            Each entry includes detailed information about an institute, such as:
+            the <strong>institute name</strong>, <strong>description</strong>, <strong>coordinates</strong>, <strong>contact info</strong>, <strong>entry type</strong>, and <strong>tags</strong>.
           </Typography>
           <Box sx={{ pl: 2 }}>
             <ul>
               <li>
-                <strong>Approve/Disapprove Tab:</strong> Review newly submitted markers awaiting admin verification.
-                If everything looks correct, click <strong>Approve</strong>. If the marker is invalid or incorrect, click <strong>Disapprove</strong> — this will <strong>permanently remove</strong> the marker.
+                <strong>Approve/Disapprove Tab:</strong> Review newly submitted entries awaiting admin verification.
+                If everything looks correct, click <strong>Approve</strong>. If the entry is invalid or incorrect, click <strong>Disapprove</strong> — this will <strong>permanently remove</strong> the entry.
               </li>
               <li>
-                <strong>Delete Tab:</strong> Remove previously approved markers from the system.
+                <strong>Delete Tab:</strong> Remove previously approved entries from the system.
                 Use this if an institute you’ve already approved needs to be removed.
-                This action will also <strong>permanently delete</strong> the marker.
+                This action will also <strong>permanently delete</strong> the entry.
               </li>
             </ul>
           </Box>
           <Typography variant="body2" color="text.secondary" sx={{ marginTop: 1 }}>
-            ⚠️ Markers submitted by users are <strong>not visible</strong> to others until approved.
-            Once verified through the <em>Approve/Disapprove</em> tab, the marker becomes visible on the map to all users.
+            ⚠️ Entries submitted by users are <strong>not visible</strong> to others until approved.
+            Once verified through the <em>Approve/Disapprove</em> tab, the entry becomes visible on the map to all users.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -108,10 +108,10 @@ function AdminGuide() {
             </ul>
           </Box>
           <Typography variant="body2" color="text.secondary" sx={{ marginTop: 1 }}>
-            🔐 If all tags of a certain type are deleted from a marker, that tag type will return a <strong>NULL</strong> value. It is not possible to leave a tag type blank once defined.
+            🔐 If all tags of a certain type are deleted from a entry, that tag type will return a <strong>NULL</strong> value. It is not possible to leave a tag type blank once defined.
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ marginTop: 1 }}>
-            🛑 Deleted tags will be removed from all verified markers they are attached to.
+            🛑 Deleted tags will be removed from all verified entries they are attached to.
           </Typography>
         </AccordionDetails>
       </Accordion>
